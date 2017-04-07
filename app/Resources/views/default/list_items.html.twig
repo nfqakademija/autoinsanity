@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>ProviderId</th>
+            <th>Provider</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Price</th>
+            <th>Year</th>
+            <th>Counthy</th>
+            <th>City</th>
+            <th>Engine size</th>
+            <th>Body type</th>
+            <th>Power</th>
+            <th>Fuel type</th>
+            <th>Number of doors</th>
+            <th>Number of seats</th>
+            <th>Drive type</th>
+            <th>Transmission</th>
+            <th>Climate conthol</th>
+            <th>Color</th>
+            <th>Defects</th>
+            <th>Steering wheel</th>
+            <th>Wheels diameter</th>
+            <th>Weight</th>
+            <th>Mileage</th>
+        </tr>
+        {% for item in items %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.providerId }}</td>
+                <td>{{ item.provider }}</td>
+                <td>{{ item.brand.name }}</td>
+                <td>{{ item.model.name }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.year }}</td>
+                <td>{{ item.country.name }}</td>
+                <td>{{ item.city.name }}</td>
+                <td>{{ item.engineSize }}</td>
+                <td>{{ item.bodyType.name }}</td>
+                <td>{{ item.power }}</td>
+                <td>{{ item.fuelType.name }}</td>
+                <td>{{ item.doorsNumber }}</td>
+                <td>{{ item.seatsNumber }}</td>
+                <td>{{ item.driveType }}</td>
+                <td>{{ item.transmission }}</td>
+                <td>{{ item.climateControl }}</td>
+                <td>{{ item.color.name }}</td>
+                <td>{{ item.defects }}</td>
+                <td>{{ item.steeringWheel }}</td>
+                <td>{{ item.wheelsDiameter }}</td>
+                <td>{{ item.weight }}</td>
+                <td>{{ item.mileage }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

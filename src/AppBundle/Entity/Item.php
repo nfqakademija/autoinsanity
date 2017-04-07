@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Item
  *
- * @ORM\Entity(repositoryClass="ItemRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ItemRepository")
  * @ORM\Table(name="item")
  */
 
@@ -584,6 +584,7 @@ class Item
     {
         return $this->mileage;
     }
+
 
     /**
      * Set brand
