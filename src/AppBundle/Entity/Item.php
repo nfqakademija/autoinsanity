@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Repository\ItemRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
