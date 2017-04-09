@@ -39,22 +39,16 @@ class Model
 
     /**
      * Get id
-     *
-     * @return int
      */
-    public function getId()
+    public function getId(): integer
     {
         return $this->id;
     }
 
     /**
      * Set name
-     *
-     * @param string $name
-     *
-     * @return Model
      */
-    public function setName($name)
+    public function setName(string $name): Model
     {
         $this->name = $name;
 
@@ -63,22 +57,16 @@ class Model
 
     /**
      * Get name
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
      * Set brand
-     *
-     * @param integer $brand
-     *
-     * @return Model
      */
-    public function setBrand($brand)
+    public function setBrand(integer $brand): Model
     {
         $this->brand = $brand;
 
@@ -87,10 +75,8 @@ class Model
 
     /**
      * Get brand
-     *
-     * @return int
      */
-    public function getBrand()
+    public function getBrand(): integer
     {
         return $this->brand;
     }

@@ -2,6 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Model;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,23 +38,25 @@ class Brand
     private $models;
 
     /**
-     * Get id
-     *
-     * @return int
+     * Constructor
      */
-    public function getId()
+    public function __construct()
+    {
+        $this->models = new ArrayCollection();
+    }
+
+    /**
+     * Get id
+     */
+    public function getId(): integer
     {
         return $this->id;
     }
 
     /**
      * Set name
-     *
-     * @param string $name
-     *
-     * @return Brand
      */
-    public function setName($name)
+    public function setName(string $name): Brand
     {
         $this->name = $name;
 
@@ -60,29 +65,15 @@ class Brand
 
     /**
      * Get name
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->models = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Add model
-     *
-     * @param \AppBundle\Entity\Model $model
-     *
-     * @return Brand
      */
-    public function addModel(\AppBundle\Entity\Model $model)
+    public function addModel(Model $model): Brand
     {
         $this->models[] = $model;
 
@@ -91,20 +82,16 @@ class Brand
 
     /**
      * Remove model
-     *
-     * @param \AppBundle\Entity\Model $model
      */
-    public function removeModel(\AppBundle\Entity\Model $model)
+    public function removeModel(Model $model)
     {
         $this->models->removeElement($model);
     }
 
     /**
      * Get models
-     *
-     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getModels()
+    public function getModels(): Collection
     {
         return $this->models;
     }

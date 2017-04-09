@@ -31,22 +31,16 @@ class Color
 
     /**
      * Get id
-     *
-     * @return int
      */
-    public function getId()
+    public function getId(): integer
     {
         return $this->id;
     }
 
     /**
      * Set name
-     *
-     * @param string $name
-     *
-     * @return Color
      */
-    public function setName($name)
+    public function setName(string $name): Color
     {
         $this->name = $name;
 
@@ -55,10 +49,8 @@ class Color
 
     /**
      * Get name
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }

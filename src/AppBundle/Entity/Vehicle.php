@@ -5,13 +5,13 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Item
+ * Vehicle
  *
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ItemRepository")
- * @ORM\Table(name="item")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\VehicleRepository")
+ * @ORM\Table(name="vehicle")
  */
 
-class Item
+class Vehicle
 {
     /**
      * @var int
@@ -192,22 +192,16 @@ class Item
 
     /**
      * Get id
-     *
-     * @return integer
      */
-    public function getId()
+    public function getId(): integer
     {
         return $this->id;
     }
 
     /**
      * Set providerId
-     *
-     * @param integer $providerId
-     *
-     * @return Item
      */
-    public function setProviderId($providerId)
+    public function setProviderId(integer $providerId): Vehicle
     {
         $this->providerId = $providerId;
 
@@ -216,22 +210,16 @@ class Item
 
     /**
      * Get providerId
-     *
-     * @return integer
      */
-    public function getProviderId()
+    public function getProviderId():integer
     {
         return $this->providerId;
     }
 
     /**
      * Set provider
-     *
-     * @param string $provider
-     *
-     * @return Item
      */
-    public function setProvider($provider)
+    public function setProvider(string $provider): Vehicle
     {
         $this->provider = $provider;
 
@@ -240,22 +228,16 @@ class Item
 
     /**
      * Get provider
-     *
-     * @return string
      */
-    public function getProvider()
+    public function getProvider(): string
     {
         return $this->provider;
     }
 
     /**
      * Set price
-     *
-     * @param integer $price
-     *
-     * @return Item
      */
-    public function setPrice($price)
+    public function setPrice(integer $price): Vehicle
     {
         $this->price = $price;
 
@@ -264,22 +246,16 @@ class Item
 
     /**
      * Get price
-     *
-     * @return integer
      */
-    public function getPrice()
+    public function getPrice(): integer
     {
         return $this->price;
     }
 
     /**
      * Set year
-     *
-     * @param integer $year
-     *
-     * @return Item
      */
-    public function setYear($year)
+    public function setYear(integer $year): Vehicle
     {
         $this->year = $year;
 
@@ -288,22 +264,16 @@ class Item
 
     /**
      * Get year
-     *
-     * @return integer
      */
-    public function getYear()
+    public function getYear(): integer
     {
         return $this->year;
     }
 
     /**
      * Set engineSize
-     *
-     * @param integer $engineSize
-     *
-     * @return Item
      */
-    public function setEngineSize($engineSize)
+    public function setEngineSize(integer $engineSize): Vehicle
     {
         $this->engineSize = $engineSize;
 
@@ -312,22 +282,16 @@ class Item
 
     /**
      * Get engineSize
-     *
-     * @return integer
      */
-    public function getEngineSize()
+    public function getEngineSize():integer
     {
         return $this->engineSize;
     }
 
     /**
      * Set power
-     *
-     * @param integer $power
-     *
-     * @return Item
      */
-    public function setPower($power)
+    public function setPower(integer $power): Vehicle
     {
         $this->power = $power;
 
@@ -336,22 +300,16 @@ class Item
 
     /**
      * Get power
-     *
-     * @return integer
      */
-    public function getPower()
+    public function getPower(): integer
     {
         return $this->power;
     }
 
     /**
      * Set doorsNumber
-     *
-     * @param integer $doorsNumber
-     *
-     * @return Item
      */
-    public function setDoorsNumber($doorsNumber)
+    public function setDoorsNumber(integer $doorsNumber): Vehicle
     {
         $this->doorsNumber = $doorsNumber;
 
@@ -360,22 +318,16 @@ class Item
 
     /**
      * Get doorsNumber
-     *
-     * @return integer
      */
-    public function getDoorsNumber()
+    public function getDoorsNumber():integer
     {
         return $this->doorsNumber;
     }
 
     /**
      * Set seatsNumber
-     *
-     * @param integer $seatsNumber
-     *
-     * @return Item
      */
-    public function setSeatsNumber($seatsNumber)
+    public function setSeatsNumber(integer $seatsNumber): Vehicle
     {
         $this->seatsNumber = $seatsNumber;
 
@@ -384,22 +336,16 @@ class Item
 
     /**
      * Get seatsNumber
-     *
-     * @return integer
      */
-    public function getSeatsNumber()
+    public function getSeatsNumber(): integer
     {
         return $this->seatsNumber;
     }
 
     /**
      * Set driveType
-     *
-     * @param string $driveType
-     *
-     * @return Item
      */
-    public function setDriveType($driveType)
+    public function setDriveType(string $driveType): Vehicle
     {
         $this->driveType = $driveType;
 
@@ -408,22 +354,16 @@ class Item
 
     /**
      * Get driveType
-     *
-     * @return string
      */
-    public function getDriveType()
+    public function getDriveType(): string
     {
         return $this->driveType;
     }
 
     /**
      * Set transmission
-     *
-     * @param string $transmission
-     *
-     * @return Item
      */
-    public function setTransmission($transmission)
+    public function setTransmission(string $transmission): Vehicle
     {
         $this->transmission = $transmission;
 
@@ -432,22 +372,16 @@ class Item
 
     /**
      * Get transmission
-     *
-     * @return string
      */
-    public function getTransmission()
+    public function getTransmission(): string
     {
         return $this->transmission;
     }
 
     /**
      * Set climateControl
-     *
-     * @param string $climateControl
-     *
-     * @return Item
      */
-    public function setClimateControl($climateControl)
+    public function setClimateControl(string $climateControl): Vehicle
     {
         $this->climateControl = $climateControl;
 
@@ -456,22 +390,16 @@ class Item
 
     /**
      * Get climateControl
-     *
-     * @return string
      */
-    public function getClimateControl()
+    public function getClimateControl(): string
     {
         return $this->climateControl;
     }
 
     /**
      * Set defects
-     *
-     * @param string $defects
-     *
-     * @return Item
      */
-    public function setDefects($defects)
+    public function setDefects(string $defects): Vehicle
     {
         $this->defects = $defects;
 
@@ -480,22 +408,16 @@ class Item
 
     /**
      * Get defects
-     *
-     * @return string
      */
-    public function getDefects()
+    public function getDefects(): string
     {
         return $this->defects;
     }
 
     /**
      * Set steeringWheel
-     *
-     * @param integer $steeringWheel
-     *
-     * @return Item
      */
-    public function setSteeringWheel($steeringWheel)
+    public function setSteeringWheel(integer $steeringWheel): Vehicle
     {
         $this->steeringWheel = $steeringWheel;
 
@@ -504,22 +426,16 @@ class Item
 
     /**
      * Get steeringWheel
-     *
-     * @return integer
      */
-    public function getSteeringWheel()
+    public function getSteeringWheel(): integer
     {
         return $this->steeringWheel;
     }
 
     /**
      * Set wheelsDiameter
-     *
-     * @param integer $wheelsDiameter
-     *
-     * @return Item
      */
-    public function setWheelsDiameter($wheelsDiameter)
+    public function setWheelsDiameter(integer $wheelsDiameter): Vehicle
     {
         $this->wheelsDiameter = $wheelsDiameter;
 
@@ -528,22 +444,16 @@ class Item
 
     /**
      * Get wheelsDiameter
-     *
-     * @return integer
      */
-    public function getWheelsDiameter()
+    public function getWheelsDiameter(): integer
     {
         return $this->wheelsDiameter;
     }
 
     /**
      * Set weight
-     *
-     * @param integer $weight
-     *
-     * @return Item
      */
-    public function setWeight($weight)
+    public function setWeight(integer $weight): Vehicle
     {
         $this->weight = $weight;
 
@@ -552,22 +462,16 @@ class Item
 
     /**
      * Get weight
-     *
-     * @return integer
      */
-    public function getWeight()
+    public function getWeight(): integer
     {
         return $this->weight;
     }
 
     /**
      * Set mileage
-     *
-     * @param integer $mileage
-     *
-     * @return Item
      */
-    public function setMileage($mileage)
+    public function setMileage(integer $mileage): Vehicle
     {
         $this->mileage = $mileage;
 
@@ -576,10 +480,8 @@ class Item
 
     /**
      * Get mileage
-     *
-     * @return integer
      */
-    public function getMileage()
+    public function getMileage(): integer
     {
         return $this->mileage;
     }
@@ -587,12 +489,8 @@ class Item
 
     /**
      * Set brand
-     *
-     * @param \AppBundle\Entity\Brand $brand
-     *
-     * @return Item
      */
-    public function setBrand(\AppBundle\Entity\Brand $brand = null)
+    public function setBrand(Brand $brand = null): Vehicle
     {
         $this->brand = $brand;
 
@@ -601,22 +499,16 @@ class Item
 
     /**
      * Get brand
-     *
-     * @return \AppBundle\Entity\Brand
      */
-    public function getBrand()
+    public function getBrand(): Brand
     {
         return $this->brand;
     }
 
     /**
      * Set model
-     *
-     * @param \AppBundle\Entity\Model $model
-     *
-     * @return Item
      */
-    public function setModel(\AppBundle\Entity\Model $model = null)
+    public function setModel(Model $model = null): Vehicle
     {
         $this->model = $model;
 
@@ -625,22 +517,16 @@ class Item
 
     /**
      * Get model
-     *
-     * @return \AppBundle\Entity\Model
      */
-    public function getModel()
+    public function getModel(): Model
     {
         return $this->model;
     }
 
     /**
      * Set country
-     *
-     * @param \AppBundle\Entity\Country $country
-     *
-     * @return Item
      */
-    public function setCountry(\AppBundle\Entity\Country $country = null)
+    public function setCountry(Country $country = null): Vehicle
     {
         $this->country = $country;
 
@@ -649,22 +535,16 @@ class Item
 
     /**
      * Get country
-     *
-     * @return \AppBundle\Entity\Country
      */
-    public function getCountry()
+    public function getCountry(): Country
     {
         return $this->country;
     }
 
     /**
      * Set city
-     *
-     * @param \AppBundle\Entity\City $city
-     *
-     * @return Item
      */
-    public function setCity(\AppBundle\Entity\City $city = null)
+    public function setCity(City $city = null): Vehicle
     {
         $this->city = $city;
 
@@ -673,22 +553,16 @@ class Item
 
     /**
      * Get city
-     *
-     * @return \AppBundle\Entity\City
      */
-    public function getCity()
+    public function getCity(): City
     {
         return $this->city;
     }
 
     /**
      * Set bodyType
-     *
-     * @param \AppBundle\Entity\BodyType $bodyType
-     *
-     * @return Item
      */
-    public function setBodyType(\AppBundle\Entity\BodyType $bodyType = null)
+    public function setBodyType(BodyType $bodyType = null): Vehicle
     {
         $this->bodyType = $bodyType;
 
@@ -697,22 +571,16 @@ class Item
 
     /**
      * Get bodyType
-     *
-     * @return \AppBundle\Entity\BodyType
      */
-    public function getBodyType()
+    public function getBodyType(): BodyType
     {
         return $this->bodyType;
     }
 
     /**
      * Set fuelType
-     *
-     * @param \AppBundle\Entity\FuelType $fuelType
-     *
-     * @return Item
      */
-    public function setFuelType(\AppBundle\Entity\FuelType $fuelType = null)
+    public function setFuelType(FuelType $fuelType = null): Vehicle
     {
         $this->fuelType = $fuelType;
 
@@ -721,22 +589,16 @@ class Item
 
     /**
      * Get fuelType
-     *
-     * @return \AppBundle\Entity\FuelType
      */
-    public function getFuelType()
+    public function getFuelType(): FuelType
     {
         return $this->fuelType;
     }
 
     /**
      * Set color
-     *
-     * @param \AppBundle\Entity\Color $color
-     *
-     * @return Item
      */
-    public function setColor(\AppBundle\Entity\Color $color = null)
+    public function setColor(Color $color = null): Vehicle
     {
         $this->color = $color;
 
@@ -745,10 +607,8 @@ class Item
 
     /**
      * Get color
-     *
-     * @return \AppBundle\Entity\Color
      */
-    public function getColor()
+    public function getColor(): Color
     {
         return $this->color;
     }

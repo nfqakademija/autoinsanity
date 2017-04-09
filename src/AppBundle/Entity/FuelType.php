@@ -31,22 +31,16 @@ class FuelType
 
     /**
      * Get id
-     *
-     * @return int
      */
-    public function getId()
+    public function getId(): integer
     {
         return $this->id;
     }
 
     /**
      * Set name
-     *
-     * @param string $name
-     *
-     * @return FuelType
      */
-    public function setName($name)
+    public function setName(string $name): FuelType
     {
         $this->name = $name;
 
@@ -55,10 +49,8 @@ class FuelType
 
     /**
      * Get name
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
