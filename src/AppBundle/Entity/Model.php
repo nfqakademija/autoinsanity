@@ -36,6 +36,10 @@ class Model
      */
     private $brand;
 
+    public function __construct(string $name = null)
+    {
+        $this->name = $name;
+    }
 
     /**
      * Get id

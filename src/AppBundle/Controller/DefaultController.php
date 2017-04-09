@@ -17,8 +17,7 @@ class DefaultController extends Controller
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
         $repository = $entityManager->getRepository('AppBundle:Vehicle');
         $items = $repository->findAll();
-        // replace this example code with whatever you need
-        return $this->render('default/list_items.html.twig', [
+        return $this->render('AppBundle:default:list_items.html.twig', [
             'items' => $items,
         ]);
     }
