@@ -46,7 +46,7 @@ class Vehicle
     /**
      * @var Brand
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Brand", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Brand")
      * @ORM\JoinColumn(name="brand", referencedColumnName="id")
      */
     private $brand;
@@ -54,7 +54,7 @@ class Vehicle
     /**
      * @var Model
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Model", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Model")
      * @ORM\JoinColumn(name="model", referencedColumnName="id")
      */
     private $model;
@@ -76,7 +76,7 @@ class Vehicle
     /**
      * @var Country
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country")
      * @ORM\JoinColumn(name="country", referencedColumnName="id")
      */
     private $country;
@@ -84,7 +84,7 @@ class Vehicle
     /**
      * @var City
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City")
      * @ORM\JoinColumn(name="city", referencedColumnName="id")
      */
     private $city;
@@ -99,7 +99,7 @@ class Vehicle
     /**
      * @var BodyType
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BodyType", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BodyType")
      * @ORM\JoinColumn(name="body_type", referencedColumnName="id")
      */
     private $bodyType;
@@ -114,7 +114,7 @@ class Vehicle
     /**
      * @var FuelType
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\FuelType", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\FuelType")
      * @ORM\JoinColumn(name="fuel_type", referencedColumnName="id")
      */
     private $fuelType;
@@ -157,7 +157,7 @@ class Vehicle
     /**
      * @var Color
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Color", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Color")
      * @ORM\JoinColumn(name="color", referencedColumnName="id")
      */
     private $color;

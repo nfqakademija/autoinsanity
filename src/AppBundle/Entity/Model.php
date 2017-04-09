@@ -31,7 +31,7 @@ class Model
     /**
      * @var Brand
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Brand", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Brand", inversedBy="models")
      * @ORM\JoinColumn(name="brand", referencedColumnName="id")
      */
     private $brand;
