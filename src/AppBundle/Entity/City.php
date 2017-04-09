@@ -32,7 +32,7 @@ class City
     /**
      * Get id
      */
-    public function getId(): integer
+    public function getId(): int
     {
         return $this->id;
     }

@@ -40,7 +40,7 @@ class Model
     /**
      * Get id
      */
-    public function getId(): integer
+    public function getId(): int
     {
         return $this->id;
     }
@@ -66,7 +66,7 @@ class Model
     /**
      * Set brand
      */
-    public function setBrand(integer $brand): Model
+    public function setBrand(int $brand): Model
     {
         $this->brand = $brand;
 
@@ -76,7 +76,7 @@ class Model
     /**
      * Get brand
      */
-    public function getBrand(): integer
+    public function getBrand(): int
     {
         return $this->brand;
     }

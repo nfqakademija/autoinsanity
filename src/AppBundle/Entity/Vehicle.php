@@ -37,6 +37,13 @@ class Vehicle
     private $provider;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="link", type="string")
+     */
+    private $link;
+
+    /**
      * @var Brand
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Brand", inversedBy="id")
@@ -193,7 +200,7 @@ class Vehicle
     /**
      * Get id
      */
-    public function getId(): integer
+    public function getId(): int
     {
         return $this->id;
     }
@@ -201,7 +208,7 @@ class Vehicle
     /**
      * Set providerId
      */
-    public function setProviderId(integer $providerId): Vehicle
+    public function setProviderId(int $providerId): Vehicle
     {
         $this->providerId = $providerId;
 
@@ -211,7 +218,7 @@ class Vehicle
     /**
      * Get providerId
      */
-    public function getProviderId():integer
+    public function getProviderId():int
     {
         return $this->providerId;
     }
@@ -237,7 +244,7 @@ class Vehicle
     /**
      * Set price
      */
-    public function setPrice(integer $price): Vehicle
+    public function setPrice(int $price): Vehicle
     {
         $this->price = $price;
 
@@ -247,7 +254,7 @@ class Vehicle
     /**
      * Get price
      */
-    public function getPrice(): integer
+    public function getPrice(): int
     {
         return $this->price;
     }
@@ -255,7 +262,7 @@ class Vehicle
     /**
      * Set year
      */
-    public function setYear(integer $year): Vehicle
+    public function setYear(int $year): Vehicle
     {
         $this->year = $year;
 
@@ -265,7 +272,7 @@ class Vehicle
     /**
      * Get year
      */
-    public function getYear(): integer
+    public function getYear(): int
     {
         return $this->year;
     }
@@ -273,7 +280,7 @@ class Vehicle
     /**
      * Set engineSize
      */
-    public function setEngineSize(integer $engineSize): Vehicle
+    public function setEngineSize(int $engineSize): Vehicle
     {
         $this->engineSize = $engineSize;
 
@@ -283,7 +290,7 @@ class Vehicle
     /**
      * Get engineSize
      */
-    public function getEngineSize():integer
+    public function getEngineSize():int
     {
         return $this->engineSize;
     }
@@ -291,7 +298,7 @@ class Vehicle
     /**
      * Set power
      */
-    public function setPower(integer $power): Vehicle
+    public function setPower(int $power): Vehicle
     {
         $this->power = $power;
 
@@ -301,7 +308,7 @@ class Vehicle
     /**
      * Get power
      */
-    public function getPower(): integer
+    public function getPower(): int
     {
         return $this->power;
     }
@@ -309,7 +316,7 @@ class Vehicle
     /**
      * Set doorsNumber
      */
-    public function setDoorsNumber(integer $doorsNumber): Vehicle
+    public function setDoorsNumber(int $doorsNumber): Vehicle
     {
         $this->doorsNumber = $doorsNumber;
 
@@ -319,7 +326,7 @@ class Vehicle
     /**
      * Get doorsNumber
      */
-    public function getDoorsNumber():integer
+    public function getDoorsNumber():int
     {
         return $this->doorsNumber;
     }
@@ -327,7 +334,7 @@ class Vehicle
     /**
      * Set seatsNumber
      */
-    public function setSeatsNumber(integer $seatsNumber): Vehicle
+    public function setSeatsNumber(int $seatsNumber): Vehicle
     {
         $this->seatsNumber = $seatsNumber;
 
@@ -337,7 +344,7 @@ class Vehicle
     /**
      * Get seatsNumber
      */
-    public function getSeatsNumber(): integer
+    public function getSeatsNumber(): int
     {
         return $this->seatsNumber;
     }
@@ -417,7 +424,7 @@ class Vehicle
     /**
      * Set steeringWheel
      */
-    public function setSteeringWheel(integer $steeringWheel): Vehicle
+    public function setSteeringWheel(int $steeringWheel): Vehicle
     {
         $this->steeringWheel = $steeringWheel;
 
@@ -427,7 +434,7 @@ class Vehicle
     /**
      * Get steeringWheel
      */
-    public function getSteeringWheel(): integer
+    public function getSteeringWheel(): int
     {
         return $this->steeringWheel;
     }
@@ -435,7 +442,7 @@ class Vehicle
     /**
      * Set wheelsDiameter
      */
-    public function setWheelsDiameter(integer $wheelsDiameter): Vehicle
+    public function setWheelsDiameter(int $wheelsDiameter): Vehicle
     {
         $this->wheelsDiameter = $wheelsDiameter;
 
@@ -445,7 +452,7 @@ class Vehicle
     /**
      * Get wheelsDiameter
      */
-    public function getWheelsDiameter(): integer
+    public function getWheelsDiameter(): int
     {
         return $this->wheelsDiameter;
     }
@@ -453,7 +460,7 @@ class Vehicle
     /**
      * Set weight
      */
-    public function setWeight(integer $weight): Vehicle
+    public function setWeight(int $weight): Vehicle
     {
         $this->weight = $weight;
 
@@ -463,7 +470,7 @@ class Vehicle
     /**
      * Get weight
      */
-    public function getWeight(): integer
+    public function getWeight(): int
     {
         return $this->weight;
     }
@@ -471,7 +478,7 @@ class Vehicle
     /**
      * Set mileage
      */
-    public function setMileage(integer $mileage): Vehicle
+    public function setMileage(int $mileage): Vehicle
     {
         $this->mileage = $mileage;
 
@@ -481,7 +488,7 @@ class Vehicle
     /**
      * Get mileage
      */
-    public function getMileage(): integer
+    public function getMileage(): int
     {
         return $this->mileage;
     }
@@ -611,5 +618,23 @@ class Vehicle
     public function getColor(): Color
     {
         return $this->color;
+    }
+
+    /**
+     * Set link
+     */
+    public function setLink(string $link): Vehicle
+    {
+        $this->link = $link;
+
+        return $this;
+    }
+
+    /**
+     * Get link
+     */
+    public function getLink():string
+    {
+        return $this->link;
     }
 }
