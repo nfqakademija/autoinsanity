@@ -13,9 +13,12 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..').DIRECTORY_SEPARATOR,
+        // display database entries
+        $entityManager = $this->get('doctrine.orm.default_entity_manager');
+        $repository = $entityManager->getRepository('AppBundle:Vehicle');
+        $items = $repository->findAll();
+        return $this->render('AppBundle:default:list_items.html.twig', [
+            'items' => $items,
         ]);
     }
 }
