@@ -18,11 +18,11 @@ class DefaultController extends Controller
         //set_time_limit(60);
         $hasItems = true;
         $cars = [];
+        $pageNumber = 1;
         while ( $hasItems ) {
-            $pageNumber = 1;
             $url = "https://autoplius.lt/skelbimai/naudoti-automobiliai?make_id=99&page_nr=" . $pageNumber;
             $html = $this->getHtml($url);
-            //$html = file_get_contents('test.txt');
+//            $html = file_get_contents('test.txt');
 
             $hasItems = false;
             $crawler = new Crawler($html);
@@ -39,10 +39,9 @@ class DefaultController extends Controller
             }
 
             $pageNumber++;
-            sleep(1);
+            sleep(2);
 
-            // page 5 not exist so cralwer will stop
-            if ($pageNumber == 5) {
+            if ($pageNumber > 3) {
                 break;
             }
 
