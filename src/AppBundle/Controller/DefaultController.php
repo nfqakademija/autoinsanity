@@ -34,7 +34,9 @@ class DefaultController extends Controller
                 $title = $row->filter('.title-list a')->text();
                 $price = trim($row->filter('.price-list')->text());
                 $date = $row->filter('.param-list span[title="Pagaminimo data"]')->text();
-                $car = [$title, $price, $date];
+                $car = ['title' => $title,
+                    'price' => $price,
+                    'date' => $date];
                 $cars[] = $car;
             }
 
@@ -46,7 +48,10 @@ class DefaultController extends Controller
             }
 
         }
-        return new JsonResponse($cars);
+        $response = new JsonResponse($cars);
+        $response->setEncodingOptions(JSON_PRETTY_PRINT);
+
+        return $response;
     }
 
     public function getHtml($url)	{
