@@ -3,8 +3,11 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Brand;
+use AppBundle\Entity\Model;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Yaml\Exception\ParseException;
+use Symfony\Component\Yaml\Yaml;
 
 class LoadBrandData implements FixtureInterface
 {
@@ -135,12 +138,28 @@ class LoadBrandData implements FixtureInterface
     ];
     public function load(ObjectManager $manager)
     {
-        foreach($this->brandNames as $name)
+        try {
+            $vehicleData = Yaml::parse(file_get_contents(__DIR__ . '/../brands_models.yml'));
+        } catch (ParseException $e) {
+            printf("Unable to parse the YAML string: %s", $e->getMessage());
+        }
+        foreach($vehicleData as $brandData)
         {
             $brand = new Brand();
-            $brand->setName($name);
+            $brand->setName(key($vehicleData));
             $manager->persist($brand);
             $manager->flush();
+            foreach($brandData['models'] as $modelName) {
+                $model = new Model();
+                $model->setName((string) $modelName);
+                //$model->setBrand($brand->getId());
+                $brand->addModel($model);
+                $manager->persist($model);
+                //$manager->flush();
+            }
+            //$manager->persist($brand);
+            var_dump($brand);
+            //$manager->flush();
         }
     }
 }

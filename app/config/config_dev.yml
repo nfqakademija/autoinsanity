@@ -32,3 +32,9 @@ monolog:
 
 #swiftmailer:
 #    delivery_addresses: ['me@example.com']
+
+khepin_yaml_fixtures:
+   # directory: Resources/FixtureData
+    resources:
+        - AppBundle/models
+        - AppBundle/brands
