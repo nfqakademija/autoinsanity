@@ -15,6 +15,20 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        // display database entries
+        $entityManager = $this->get('doctrine.orm.default_entity_manager');
+        $repository = $entityManager->getRepository('AppBundle:Vehicle');
+        $items = $repository->findAll();
+        return $this->render('AppBundle:default:list_items.html.twig', [
+            'items' => $items,
+        ]);
+    }
+
+    /**
+     * @Route("/crawler", name="crawler")
+     */
+    public function crawlerAction(Request $request)
+    {
         //set_time_limit(60);
         $hasItems = true;
         $cars = [];
