@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\City;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,6 +30,12 @@ class Country
      */
     private $name;
 
+    /**
+     * @var City[]
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\City", mappedBy="country", cascade="persist")
+     */
+    private $cities;
 
     /**
      * Get id
@@ -54,5 +62,37 @@ class Country
     {
         return $this->name;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->cities = new ArrayCollection();
+    }
 
+    /**
+     * Add city
+     */
+    public function addCity(City $city): Country
+    {
+        $this->cities[] = $city;
+
+        return $this;
+    }
+
+    /**
+     * Remove city
+     */
+    public function removeCity(City $city)
+    {
+        $this->cities->removeElement($city);
+    }
+
+    /**
+     * Get cities
+     */
+    public function getCities(): ArrayCollection
+    {
+        return $this->cities;
+    }
+}

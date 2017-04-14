@@ -70,7 +70,7 @@ class Model
     /**
      * Set brand
      */
-    public function setBrand(int $brand): Model
+    public function setBrand(Brand $brand): Model
     {
         $this->brand = $brand;
 
@@ -80,7 +80,7 @@ class Model
     /**
      * Get brand
      */
-    public function getBrand(): int
+    public function getBrand(): Brand
     {
         return $this->brand;
     }

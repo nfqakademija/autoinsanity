@@ -37,4 +37,4 @@ khepin_yaml_fixtures:
    # directory: Resources/FixtureData
     resources:
         - AppBundle/models
-        - AppBundle/brands
+        - AppBundle
