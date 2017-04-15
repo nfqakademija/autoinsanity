@@ -95,4 +95,9 @@ class Country
     {
         return $this->cities;
     }
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
 }

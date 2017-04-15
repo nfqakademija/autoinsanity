@@ -1,0 +1,83 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    {% for item in items %}
+    <div class="panel panel-default">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="#" />
+                <p>{{ item.provider }}</p>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-8">
+                        <a href="{{ item.link }}">
+                            <h3>{{ item.brand.name }} {{ item.model.name }}</h3>
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="small">
+                            Id: {{ item.providerId}}
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p>
+                            Metai: {{ item.year }}
+                        </p>
+                        <p>
+                            Darbinis tūris: {{ item.engineSize }}
+                        </p>
+                        <p>
+                            Kėbulo tipas: {{ item.bodyType.name }}
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>
+                            Galia: {{ item.power }}
+                        </p>
+                        <p>
+                            Kuro tipas: {{ item.fuelType.name }}
+                        </p>
+                        <p>
+                            Rida: {{ item.mileage }}
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <p>
+                            Spalva: {{ item.color.name }}
+                        </p>
+                        <p>
+                            Pavarų dėžė: {{ item.driveType }}
+                        </p>
+                        <p>
+                            Vairo padėtis: {% if item.steeringWheel == 0 %}kairėje{% else %}dešinėje{% endif %}
+                        </p>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#more-info-{{ loop.index }}"
+                        aria-expanded="false">Daugiau</button>
+                <div class="row small collapse" id="more-info-{{ loop.index }}">
+                    <p><b>Kita informacija:</b></p>
+                    <p>Durų skaičius: {{ item.doorsNumber }}</p>
+                    <p>Sėdimų vietų skaičius: {{ item.seatsNumber }}</p>
+                    <p>Transmisija: {{ item.transmission }}</p>
+                    <p>Klimato kontrolė: {{ item.climateControl }}</p>
+                    <p>Defektai: {{ item.defects }}</p>
+                    <p>Padangų diametras: {{ item.wheelsDiameter }}</p>
+                    <p>Masė: {{ item.weight }}</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>{{ item.price }}€</h3>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>{{ item.city.name }}, {{ item.country.name }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

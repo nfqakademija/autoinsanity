@@ -70,6 +70,7 @@ class Brand
     {
         return $this->name;
     }
+
     /**
      * Add model
      */
@@ -80,23 +81,6 @@ class Brand
         return $this;
     }
 
-    /*
-     *
-     */
-    public function setModels(array $models = null): Brand
-    {
-        if($models !== null)
-        {
-            foreach($models as $model)
-            {
-                $this->addModel($model);
-                $model->setBrand($this);
-                var_dump($model);
-            }
-        }
-
-        return $this;
-    }
     /**
      * Remove model
      */
@@ -111,5 +95,10 @@ class Brand
     public function getModels(): Collection
     {
         return $this->models;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

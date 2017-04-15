@@ -84,5 +84,10 @@ class Model
     {
         return $this->brand;
     }
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
 }
 
