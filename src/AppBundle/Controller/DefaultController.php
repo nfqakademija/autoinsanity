@@ -24,9 +24,7 @@ class DefaultController extends Controller
         $repository = $entityManager->getRepository('AppBundle:Vehicle');
         $items = $repository->findAllJoinedTables();
 
-        return $this->render('results_page.html.twig', [
-            'items' => $items,
-        ]);
+        return $this->render('AppBundle:default:index.html.twig');
     }
 
     /**
@@ -42,19 +40,20 @@ class DefaultController extends Controller
         {
 
         }
-        return $this->render('detailed_search.html.twig',
+        return $this->render('AppBundle:default:detailed_search.html.twig',
             ['searchForm' => $searchForm->createView()]);
     }
 
     /**
-     * @Route("/results/{page}", name="results_page", requirements={"page": "\d+"})
+     * @Route("/results/{page}", name="results_page", requirements={"page": "^[1-9]\d*$"})
      */
     public function resultsAction(Request $request, $page = 1)
     {
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
         $repository = $entityManager->getRepository('AppBundle:Vehicle');
-        $results = $repository->findAllByCriteria($request->query->all()['vehicle'], $page);
-        return $this->render('results_page.html.twig', [
+        $queryVehicleParams = ($request->query->all() === null) ? $request->query->all()['vehicle'] : array();
+        $results = $repository->findAllByCriteria($queryVehicleParams, $page);
+        return $this->render('AppBundle:default:results_page.html.twig', [
             'items' => $results['vehicles'],
             'total_pages_count' => $results['total_pages_count'],
         ]);
@@ -105,8 +104,6 @@ class DefaultController extends Controller
 
         }
         $entityManager->flush();
-        return $this->render('results_page.html.twig', [
-            'items' => null,
-        ]);
+        return $this->render('AppBundle:default:index.html.twig');
     }
 }

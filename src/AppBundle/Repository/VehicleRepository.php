@@ -128,7 +128,8 @@ class VehicleRepository extends EntityRepository
             $query = $query->andWhere('v.wheelsDiameter = :wheelsDiameter')
                 ->setParameter('wheelsDiameter', $criteria['wheelsDiameter']);
         }
-        if(!empty($criteria['steering_wheel']) || $criteria['steering_wheel'] === '0')
+        if(!empty($criteria['steering_wheel']) ||
+            (isset($criteria['steering_wheel']) && $criteria['steering_wheel'] === '0'))
         {
             $query = $query->andWhere('v.steeringWheel = :steering_wheel')
                 ->setParameter('steering_wheel', $criteria['steering_wheel']);
@@ -149,7 +150,6 @@ class VehicleRepository extends EntityRepository
         {
             $totalPagesCount++;
         }
-
         // filter results for pagination
         $query->setFirstResult(self::resultsPerPage * ($page-1))
             ->setMaxResults(self::resultsPerPage);
