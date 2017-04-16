@@ -24,7 +24,7 @@ class DefaultController extends Controller
         $repository = $entityManager->getRepository('AppBundle:Vehicle');
         $items = $repository->findAllJoinedTables();
 
-        return $this->render('AppBundle:default:list_vehicles.html.twig', [
+        return $this->render('results_page.html.twig', [
             'items' => $items,
         ]);
     }
@@ -42,7 +42,7 @@ class DefaultController extends Controller
         {
 
         }
-        return $this->render('AppBundle:default:search_form.html.twig',
+        return $this->render('detailed_search.html.twig',
             ['searchForm' => $searchForm->createView()]);
     }
 
@@ -54,7 +54,7 @@ class DefaultController extends Controller
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
         $repository = $entityManager->getRepository('AppBundle:Vehicle');
         $results = $repository->findAllByCriteria($request->query->all()['vehicle'], $page);
-        return $this->render('AppBundle:default:list_vehicles.html.twig', [
+        return $this->render('results_page.html.twig', [
             'items' => $results['vehicles'],
             'total_pages_count' => $results['total_pages_count'],
         ]);
@@ -105,7 +105,7 @@ class DefaultController extends Controller
 
         }
         $entityManager->flush();
-        return $this->render('list_vehicles.html.twig', [
+        return $this->render('results_page.html.twig', [
             'items' => null,
         ]);
     }
