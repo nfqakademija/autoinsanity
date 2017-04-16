@@ -2,14 +2,10 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Brand;
-use AppBundle\Entity\Model;
 use AppBundle\Entity\Vehicle;
 use AppBundle\Type\VehicleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
@@ -64,7 +60,6 @@ class DefaultController extends Controller
      */
     public function generateFakesAction()
     {
-        //$faker = $this->get('faker');
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
         $brands = $entityManager->getRepository('AppBundle:Brand')->findAll();
         $models = $entityManager->getRepository('AppBundle:Model')->findAll();
