@@ -17,31 +17,8 @@ class DefaultController extends Controller
     {
         // display database entries
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
-        /*$repository = $entityManager->getRepository('AppBundle:Vehicle');
-        $items = $repository->findAll();*/
-
-
-        /*
-         *
-         *
-         */
-
-        $repository = $entityManager->getRepository('AppBundle:Model');
-        $brand = new Brand();
-        $brand->setName('ddddddd');
-        $model = new Model();
-        $model->setName('eedddee');
-
-        $brand->addModel($model);
-        $model->setBrand($brand);
-
-        $entityManager->persist($model);
-        $entityManager->persist($brand);
-
-        $entityManager->flush();
-
-        var_dump($brand);
-        //var_dump($model);
+        $repository = $entityManager->getRepository('AppBundle:Vehicle');
+        $items = $repository->findAll();
 
         return $this->render('AppBundle:default:list_items.html.twig', [
             'items' => $items,
