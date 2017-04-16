@@ -15,11 +15,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        // display database entries
-        $entityManager = $this->get('doctrine.orm.default_entity_manager');
-        $repository = $entityManager->getRepository('AppBundle:Vehicle');
-        $items = $repository->findAllJoinedTables();
-
         return $this->render('AppBundle:default:index.html.twig');
     }
 
@@ -32,10 +27,6 @@ class DefaultController extends Controller
             'action' => $this->generateUrl('results_page')
         ]);
         $searchForm->handleRequest($request);
-        if($searchForm->isSubmitted() && $searchForm->isValid())
-        {
-
-        }
         return $this->render('AppBundle:default:detailed_search.html.twig',
             ['searchForm' => $searchForm->createView()]);
     }
@@ -47,7 +38,7 @@ class DefaultController extends Controller
     {
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
         $repository = $entityManager->getRepository('AppBundle:Vehicle');
-        $queryVehicleParams = ($request->query->all() === null) ? $request->query->all()['vehicle'] : array();
+        $queryVehicleParams = (isset($request->query->all()['vehicle'])) ? $request->query->all()['vehicle'] : array();
         $results = $repository->findAllByCriteria($queryVehicleParams, $page);
         return $this->render('AppBundle:default:results_page.html.twig', [
             'items' => $results['vehicles'],
