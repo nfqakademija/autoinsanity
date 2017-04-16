@@ -8,12 +8,14 @@ use AppBundle\Entity\Vehicle;
 use AppBundle\Type\VehicleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="adverts_list")
+     * @Route("/", name="homepage")
      */
     public function indexAction()
     {
@@ -51,9 +53,10 @@ class DefaultController extends Controller
     {
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
         $repository = $entityManager->getRepository('AppBundle:Vehicle');
-        $items = $repository->findAllByCriteria($request->query->all()['vehicle'], $page);
+        $results = $repository->findAllByCriteria($request->query->all()['vehicle'], $page);
         return $this->render('AppBundle:default:list_vehicles.html.twig', [
-            'items' => $items
+            'items' => $results['vehicles'],
+            'total_pages_count' => $results['total_pages_count'],
         ]);
     }
 

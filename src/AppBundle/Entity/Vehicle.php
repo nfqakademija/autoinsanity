@@ -197,6 +197,11 @@ class Vehicle
      */
     private $mileage;
 
+    public function __construct()
+    {
+
+    }
+
     /**
      * Get id
      */
@@ -218,7 +223,7 @@ class Vehicle
     /**
      * Get providerId
      */
-    public function getProviderId():int
+    public function getProviderId(): int
     {
         return $this->providerId;
     }

@@ -23,7 +23,6 @@ class VehicleRepository extends EntityRepository
     public function findAllByCriteria(array $criteria, int $page): array
     {
         $query = $this->getJoinedTablesQuery();
-        var_dump($criteria);
         if(!empty($criteria['provider']))
         {
             $query = $query->andWhere('v.provider = :prov')
@@ -144,12 +143,18 @@ class VehicleRepository extends EntityRepository
             $query = $query->andWhere('v.mileage <= :mileage_to')
                 ->setParameter('mileage_to', $criteria['mileage_to']);
         }
+        $allResults = $query->getQuery()->getResult();
+        $totalPagesCount = intdiv(count($allResults), self::resultsPerPage);
+        if(count($allResults) % self::resultsPerPage != 0)
+        {
+            $totalPagesCount++;
+        }
 
         // filter results for pagination
         $query->setFirstResult(self::resultsPerPage * ($page-1))
             ->setMaxResults(self::resultsPerPage);
 
-        return $query->getQuery()->getResult();
+        return ['vehicles' => $query->getQuery()->getResult(), 'total_pages_count' => $totalPagesCount];
     }
 
     /**

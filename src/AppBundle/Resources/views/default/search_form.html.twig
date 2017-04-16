@@ -1,20 +1,22 @@
 {% extends 'AppBundle::base.html.twig' %}
 {% form_theme searchForm 'bootstrap_3_layout.html.twig' %}
 
+{% block title %}
+    Detalioji paieška
+{% endblock %}
+
 {% block body %}
-    <h3>Paieškos forma</h3>
+    <h3>Detalioji paieška</h3>
     {{ form_start(searchForm, { attr: {novalidate: 'novalidate'} }) }}
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
             {{ form_row(searchForm.brand) }}
             {{ form_row(searchForm.model) }}
             {{ form_row(searchForm.country) }}
             {{ form_row(searchForm.city) }}
             {{ form_row(searchForm.defects) }}
-            {{ form_row(searchForm.steering_wheel) }}
-            {{ form_row(searchForm.wheelsDiameter) }}
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="row">
                 <div class="col-md-6">
                     {{ form_row(searchForm.price_from) }}
@@ -31,17 +33,73 @@
                     {{ form_row(searchForm.mileage_to) }}
                 </div>
             </div>
-            {{ form_row(searchForm.drive_type) }}
-            {{ form_row(searchForm.climate_control) }}
+
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             {{ form_row(searchForm.fuel_type) }}
             {{ form_row(searchForm.color) }}
             {{ form_row(searchForm.doors_number) }}
             {{ form_row(searchForm.seats_number) }}
             {{ form_row(searchForm.provider) }}
-            <button type="submit" class="btn btn-primary">Ieškoti</button>
         </div>
+        <div class="col-md-3">
+            {{ form_row(searchForm.wheelsDiameter) }}
+            {{ form_row(searchForm.climate_control) }}
+            {{ form_row(searchForm.steering_wheel) }}
+            {{ form_row(searchForm.drive_type) }}
+        </div>
+
+    </div>
+    {{ form_rest(searchForm) }}
+    <div class="row text-center">
+        <button type="submit" class="btn btn-primary btn-lg">Ieškoti</button>
     </div>
     {{ form_end(searchForm) }}
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    // get models when brand is selected
+    var $brand = $('#vehicle_brand');
+    var $view_results = $('#vehicle_view_results');
+    $brand.change(function () {
+        var $form = $(this).closest('form');
+        var data = { };
+        data[$brand.attr('name')] = $brand.val();
+        data[$view_results.attr('name')] = 'false'
+        $.ajax({
+            url : "{{ url('detailed_search') }}",
+            type: $form.attr('method'),
+            data : data,
+            success: function(html) {
+                console.log($('#vehicle_model').innerHTML);
+                $('#vehicle_model').replaceWith(
+                    $(html).find('#vehicle_model')
+                );
+            }
+        });
+    });
+
+    // get cities when country is selected
+    var $country = $('#vehicle_country');
+    var $view_results = $('#vehicle_view_results');
+    $country.change(function () {
+        var $form = $(this).closest('form');
+        var data = { };
+        data[$country.attr('name')] = $country.val();
+        data[$view_results.attr('name')] = 'false'
+        $.ajax({
+            url : "{{ url('detailed_search') }}",
+            type: $form.attr('method'),
+            data : data,
+            success: function(html) {
+                console.log($('#vehicle_city').innerHTML);
+                $('#vehicle_city').replaceWith(
+                    $(html).find('#vehicle_city')
+                );
+            }
+        });
+    });
+</script>
+
 {% endblock %}
