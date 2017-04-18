@@ -85,4 +85,3 @@ class Model
         return $this->brand;
     }
 }
-

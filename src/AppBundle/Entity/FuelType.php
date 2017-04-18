@@ -55,4 +55,3 @@ class FuelType
         return $this->name;
     }
 }
-
