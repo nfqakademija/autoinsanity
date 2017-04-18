@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Country;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,6 +29,12 @@ class City
      */
     private $name;
 
+    /**
+     * @var Country
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country", inversedBy="cities")
+     * @ORM\JoinColumn(name="country", referencedColumnName="id")
+     */
+    private $country;
 
     /**
      * Get id
@@ -54,5 +61,27 @@ class City
     {
         return $this->name;
     }
-}
 
+    /**
+     * Set country
+     */
+    public function setCountry(Country $country = null): City
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     */
+    public function getCountry(): Country
+    {
+        return $this->country;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+}

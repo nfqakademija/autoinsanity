@@ -1,0 +1,11 @@
+body_types:
+    - { name: "Sedanas" }
+    - { name: "Hečbekas" }
+    - { name: "Universalas" }
+    - { name: "Vienatūris" }
+    - { name: "Visureigis" }
+    - { name: "Kupė (Coupe)" }
+    - { name: "Komercinis" }
+    - { name: "Kabrioletas / Roadster" }
+    - { name: "Limuzinas" }
+    - { name: "Pikapas" }

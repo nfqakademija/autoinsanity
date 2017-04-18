@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * VehicleRepository
@@ -12,4 +13,164 @@ use Doctrine\ORM\EntityRepository;
  */
 class VehicleRepository extends EntityRepository
 {
+    const resultsPerPage = 20;
+
+    public function findAllJoinedTables(): array
+    {
+        return $this->getJoinedTablesQuery()->orderBy('v.id')->getQuery()->getResult();
+    }
+
+    public function findAllByCriteria(array $criteria, int $page): array
+    {
+        $query = $this->getJoinedTablesQuery();
+        if(!empty($criteria['provider']))
+        {
+            $query = $query->andWhere('v.provider = :prov')
+                ->setParameter('prov', $criteria['provider']);
+        }
+        if(!empty($criteria['brand']))
+        {
+            $query = $query->andWhere('v.brand = :brand')
+                ->setParameter('brand', $criteria['brand']);
+        }
+        if(!empty($criteria['model']))
+        {
+            $query = $query->andWhere('v.model = :model')
+                ->setParameter('model', $criteria['model']);
+        }
+        if(!empty($criteria['price_from']))
+        {
+            $query = $query->andWhere('v.price >= :price_from')
+                ->setParameter('price_from', $criteria['price_from']);
+        }
+        if(!empty($criteria['price_to']))
+        {
+            $query = $query->andWhere('v.price <= :price_to')
+                ->setParameter('price_to', $criteria['price_to']);
+        }
+        if(!empty($criteria['year_from']))
+        {
+            $query = $query->andWhere('v.year >= :year_from')
+                ->setParameter('year_from', $criteria['year_from']);
+        }
+        if(!empty($criteria['year_to']))
+        {
+            $query = $query->andWhere('v.year <= :year_to')
+                ->setParameter('year_to', $criteria['year_to']);
+        }
+        if(!empty($criteria['country']))
+        {
+            $query = $query->andWhere('v.country = :country')
+                ->setParameter('country', $criteria['country']);
+        }
+        if(!empty($criteria['city']))
+        {
+            $query = $query->andWhere('v.city = :city')
+                ->setParameter('city', $criteria['city']);
+        }
+        if(!empty($criteria['engine_size_from']))
+        {
+            $query = $query->andWhere('v.engineSize >= :engine_size_from')
+                ->setParameter('engine_size_from', $criteria['engine_size_from']);
+        }
+        if(!empty($criteria['engine_size_to']))
+        {
+            $query = $query->andWhere('v.engineSize <= :engine_size_to')
+                ->setParameter('engine_size_to', $criteria['engine_size_to']);
+        }
+        if(!empty($criteria['power_from']))
+        {
+            $query = $query->andWhere('v.power >= :power_from')
+                ->setParameter('power_from', $criteria['power_from']);
+        }
+        if(!empty($criteria['power_to']))
+        {
+            $query = $query->andWhere('v.power <= :power_to')
+                ->setParameter('power_to', $criteria['power_to']);
+        }
+        if(!empty($criteria['fuel_type']))
+        {
+            $query = $query->andWhere('v.fuelType = :fuel_type')
+                ->setParameter('fuel_type', $criteria['fuel_type']);
+        }
+        if(!empty($criteria['doors_number']))
+        {
+            $query = $query->andWhere('v.doorsNumber = :doors_number')
+                ->setParameter('doors_number', $criteria['doors_number']);
+        }
+        if(!empty($criteria['seats_number']))
+        {
+            $query = $query->andWhere('v.seatsNumber = :seats_number')
+                ->setParameter('seats_number', $criteria['seats_number']);
+        }
+        if(!empty($criteria['drive_type']))
+        {
+            $query = $query->andWhere('v.driveType = :drive_type')
+                ->setParameter('drive_type', $criteria['drive_type']);
+        }
+        if(!empty($criteria['climate_control']))
+        {
+            $query = $query->andWhere('v.climateControl = :climate_control')
+                ->setParameter('climate_control', $criteria['climate_control']);
+        }
+        if(!empty($criteria['color']))
+        {
+            $query = $query->andWhere('v.color = :color')
+                ->setParameter('color', $criteria['color']);
+        }
+        if(!empty($criteria['defects']))
+        {
+            $query = $query->andWhere('v.defects = :defects')
+                ->setParameter('defects', $criteria['defects']);
+        }
+        if(!empty($criteria['wheelsDiameter']))
+        {
+            $query = $query->andWhere('v.wheelsDiameter = :wheelsDiameter')
+                ->setParameter('wheelsDiameter', $criteria['wheelsDiameter']);
+        }
+        if(!empty($criteria['steering_wheel']) ||
+            (isset($criteria['steering_wheel']) && $criteria['steering_wheel'] === '0'))
+        {
+            $query = $query->andWhere('v.steeringWheel = :steering_wheel')
+                ->setParameter('steering_wheel', $criteria['steering_wheel']);
+        }
+        if(!empty($criteria['mileage_from']))
+        {
+            $query = $query->andWhere('v.mileage >= :mileage_from')
+                ->setParameter('mileage_from', $criteria['mileage_from']);
+        }
+        if(!empty($criteria['mileage_to']))
+        {
+            $query = $query->andWhere('v.mileage <= :mileage_to')
+                ->setParameter('mileage_to', $criteria['mileage_to']);
+        }
+        $allResults = $query->getQuery()->getResult();
+        $totalPagesCount = intdiv(count($allResults), self::resultsPerPage);
+        if(count($allResults) % self::resultsPerPage != 0)
+        {
+            $totalPagesCount++;
+        }
+        // filter results for pagination
+        $query->setFirstResult(self::resultsPerPage * ($page-1))
+            ->setMaxResults(self::resultsPerPage);
+
+        return ['vehicles' => $query->getQuery()->getResult(), 'total_pages_count' => $totalPagesCount];
+    }
+
+    /**
+     * Generates database query that joins vehicle table with other related tables
+     */
+    private function getJoinedTablesQuery(): QueryBuilder
+    {
+        return $this->getEntityManager()->createQueryBuilder('v')
+            ->select('v, bra, mod, bod, col, cou, cit, fue')
+            ->from('AppBundle:Vehicle', 'v')
+            ->join('v.brand', 'bra')
+            ->join('v.model', 'mod')
+            ->join('v.bodyType', 'bod')
+            ->join('v.color', 'col')
+            ->join('v.country', 'cou')
+            ->join('v.city', 'cit')
+            ->join('v.fuelType', 'fue');
+    }
 }

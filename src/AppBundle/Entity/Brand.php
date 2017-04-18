@@ -70,6 +70,7 @@ class Brand
     {
         return $this->name;
     }
+
     /**
      * Add model
      */
@@ -94,5 +95,10 @@ class Brand
     public function getModels(): Collection
     {
         return $this->models;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }
