@@ -47,6 +47,7 @@
             {{ form_row(searchForm.climate_control) }}
             {{ form_row(searchForm.steering_wheel) }}
             {{ form_row(searchForm.drive_type) }}
+            {{ form_row(searchForm.sort) }}
         </div>
 
     </div>
@@ -58,48 +59,5 @@
 {% endblock %}
 
 {% block javascripts %}
-<script>
-    // get models when brand is selected
-    var $brand = $('#vehicle_brand');
-    var $view_results = $('#vehicle_view_results');
-    $brand.change(function () {
-        var $form = $(this).closest('form');
-        var data = { };
-        data[$brand.attr('name')] = $brand.val();
-        data[$view_results.attr('name')] = 'false'
-        $.ajax({
-            url : "{{ url('detailed_search') }}",
-            type: $form.attr('method'),
-            data : data,
-            success: function(html) {
-                console.log($('#vehicle_model').innerHTML);
-                $('#vehicle_model').replaceWith(
-                    $(html).find('#vehicle_model')
-                );
-            }
-        });
-    });
-
-    // get cities when country is selected
-    var $country = $('#vehicle_country');
-    var $view_results = $('#vehicle_view_results');
-    $country.change(function () {
-        var $form = $(this).closest('form');
-        var data = { };
-        data[$country.attr('name')] = $country.val();
-        data[$view_results.attr('name')] = 'false'
-        $.ajax({
-            url : "{{ url('detailed_search') }}",
-            type: $form.attr('method'),
-            data : data,
-            success: function(html) {
-                console.log($('#vehicle_city').innerHTML);
-                $('#vehicle_city').replaceWith(
-                    $(html).find('#vehicle_city')
-                );
-            }
-        });
-    });
-</script>
-
+    {% include('@App/default/search_form.html.twig') %}
 {% endblock %}
