@@ -10,7 +10,6 @@
             type: $form.attr('method'),
             data : data,
             success: function(html) {
-                console.log($('#model').innerHTML);
                 $('#model').replaceWith(
                     $(html).find('#model')
                 );
@@ -29,7 +28,6 @@
             type: $form.attr('method'),
             data : data,
             success: function(html) {
-                console.log($('#city').innerHTML);
                 $('#city').replaceWith(
                     $(html).find('#city')
                 );

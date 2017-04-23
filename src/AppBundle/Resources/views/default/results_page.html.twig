@@ -135,11 +135,16 @@
                                                 <p>Masė: {{ item.weight }}</p>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-4">
                                                     <h3>{{ item.price }}€</h3>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-4">
                                                     <h4>{{ item.city.name }}, {{ item.country.name }}</h4>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <button type="button" class="vehicle-pin-button btn btn-default" value="{{ item.id }}">
+                                                        {{ 'results.button.pin'|trans() }}
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
