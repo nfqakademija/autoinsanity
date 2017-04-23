@@ -1,6 +1,10 @@
 {% extends 'AppBundle::base.html.twig' %}
 {% form_theme searchForm 'bootstrap_3_layout.html.twig' %}
 
+{% block title %}
+    {{ 'title.index'|trans }}
+{% endblock %}
+
 {% block body %}
     {{ form_start(searchForm, { attr: {novalidate: 'novalidate'} }) }}
     <div class="row center">
@@ -28,13 +32,13 @@
     </div>
     <div class="row text-center">
         <div class="btn btn-default btn-lg">
-            <a href="{{ path("detailed_search") }}">Detalioji paieška</a>
+            <a href="{{ path("detailed_search") }}">{{ 'form.button.detailed_search'|trans() }}</a>
         </div>
-        <button type="submit" class="btn btn-primary btn-lg">Ieškoti</button>
+        <button type="submit" class="btn btn-primary btn-lg">{{ 'form.button.search'|trans() }}</button>
     </div>
     {{ form_end(searchForm, {'render_rest': false}) }}
 {% endblock %}
 
 {% block javascripts %}
-    {% include('@App/default/search_form.html.twig') %} }}
+    {% include('@App/default/search_form.html.twig') %}
 {% endblock %}
