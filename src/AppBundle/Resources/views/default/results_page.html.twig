@@ -181,6 +181,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    {% include('@App/default/search_form.html.twig') %} }}
+    {% include('@App/default/search_form.html.twig') %}
+    <script src="{{ asset('js/search_form_results.js') }}"></script>
 {% endblock %}
 

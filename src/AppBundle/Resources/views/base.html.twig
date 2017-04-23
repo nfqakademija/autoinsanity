@@ -20,6 +20,23 @@
                             <a href="{{ path('detailed_search') }}">Paieška</a>
                         </li>
                     </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            <li>
+                                <a href="{{ path('fos_user_profile_show') }}">Mano profilis</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('fos_user_security_logout') }}">Atsijungti</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="{{ path('fos_user_registration_register') }}">Registruotis</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('fos_user_security_login') }}">Prisijungti</a>
+                            </li>
+                        {% endif %}
+                    </ul>
                 </div>
             </div>
 
