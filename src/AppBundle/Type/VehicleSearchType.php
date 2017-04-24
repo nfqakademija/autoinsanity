@@ -29,8 +29,8 @@ class VehicleSearchType extends AbstractType
         $modelModifier = function (FormInterface $form, Brand $brand = null) {
             $form->add('model', EntityType::class, [
                 'class' => Model::class,
-                'label' => 'Modelis',
-                'placeholder' => 'Visi modeliai',
+                'label' => 'form.field.model',
+                'placeholder' => 'form.placeholder.all.model',
                 'query_builder' => function (EntityRepository $repo) use ($brand) {
                     return $repo->createQueryBuilder('model')
                         ->where('model.brand = :brand')
@@ -43,8 +43,8 @@ class VehicleSearchType extends AbstractType
         $cityModifier = function (FormInterface $form, Country $country = null) {
             $form->add('city', EntityType::class, [
                 'class' => City::class,
-                'label' => 'Miestas',
-                'placeholder' => 'Visi miestai',
+                'label' => 'form.field.city',
+                'placeholder' => 'form.placeholder.all.city',
                 'query_builder' => function (EntityRepository $repo) use ($country) {
                     return $repo->createQueryBuilder('city')
                         ->where('city.country = :country')
@@ -58,77 +58,77 @@ class VehicleSearchType extends AbstractType
             ->setMethod('GET')
             ->add('brand', EntityType::class, [
                 'class' => Brand::class,
-                'label' => 'Markė',
-                'placeholder' => 'Visos markės',
+                'label' => 'form.field.brand',
+                'placeholder' => 'form.placeholder.all.brand',
                 'query_builder' => function(EntityRepository $repo) {
                     return $repo->createQueryBuilder('brand')->orderBy('brand.name', 'ASC');
                 },
                 'required' => false,
             ])
-            ->add('price_from', IntegerType::class, ['label' => 'Kaina nuo'])
-            ->add('price_to', IntegerType::class, ['label' => 'Kaina iki'])
-            ->add('year_from', IntegerType::class, ['label' => 'Metai nuo'])
-            ->add('year_to', IntegerType::class, ['label' => 'Metai iki'])
+            ->add('price_from', IntegerType::class, ['label' => 'form.field.price_from'])
+            ->add('price_to', IntegerType::class, ['label' => 'form.field.price_to'])
+            ->add('year_from', IntegerType::class, ['label' => 'form.field.year_from'])
+            ->add('year_to', IntegerType::class, ['label' => 'form.field.year_to'])
 
             ->add('fuel_type', EntityType::class, [
                 'class' => FuelType::class,
-                'label' => 'Kuro tipas',
-                'placeholder' => 'Visi kuro tipai',
+                'label' => 'form.field.fuel_type',
+                'placeholder' => 'form.placeholder.all.fuel_type',
                 'query_builder' => function(EntityRepository $repo) {
                     return $repo->createQueryBuilder('fuel_type')->orderBy('fuel_type.name', 'ASC');
                 },
                 'required' => false,
             ])
-            ->add('provider', TextType::class, ['label' => 'Šaltinis', ])
+            ->add('provider', TextType::class, ['label' => 'form.field.provider', ])
             ->add('country', EntityType::class, [
                 'class' => Country::class,
-                'label' => 'Valstybė',
-                'placeholder' => 'Visos valstybės',
+                'label' => 'form.field.country',
+                'placeholder' => 'form.placeholder.all.country',
                 'query_builder' => function(EntityRepository $repo) {
                     return $repo->createQueryBuilder('country')->orderBy('country.name', 'ASC');
                 },
                 'required' => false,
             ])
-            ->add('engine_size_from', IntegerType::class, ['label' => 'Variklio tūris nuo'])
-            ->add('engine_size_to', IntegerType::class, ['label' => 'Variklio tūris iki'])
-            ->add('power_from', IntegerType::class, ['label' => 'Galia nuo'])
-            ->add('power_to', IntegerType::class, ['label' => 'Galia iki'])
-            ->add('doors_number', IntegerType::class, ['label' => 'Durų skaičius'])
-            ->add('seats_number', IntegerType::class, ['label' => 'Sėdimų vietų skaičius'])
-            ->add('drive_type', TextType::class, ['label' => 'Varantieji ratai'])
-            ->add('climate_control', TextType::class, ['label' => 'Klimato kontrolė'])
+            ->add('engine_size_from', IntegerType::class, ['label' => 'form.field.engine_size_from'])
+            ->add('engine_size_to', IntegerType::class, ['label' => 'form.field.engine_size_to'])
+            ->add('power_from', IntegerType::class, ['label' => 'form.field.power_from'])
+            ->add('power_to', IntegerType::class, ['label' => 'form.field.power_to'])
+            ->add('doors_number', IntegerType::class, ['label' => 'form.field.doors_number'])
+            ->add('seats_number', IntegerType::class, ['label' => 'form.field.seats_number'])
+            ->add('drive_type', TextType::class, ['label' => 'form.field.drive_type'])
+            ->add('climate_control', TextType::class, ['label' => 'form.field.climate_control'])
             ->add('color', EntityType::class, [
                 'class' => Color::class,
-                'label' => 'Spalva',
-                'placeholder' => 'Visos spalvos',
+                'label' => 'form.field.color',
+                'placeholder' => 'form.placeholder.all.color',
                 'query_builder' => function(EntityRepository $repo) {
                     return $repo->createQueryBuilder('color')->orderBy('color.name', 'ASC');
                 },
                 'required' => false,
             ])
-            ->add('defects', TextType::class, ['label' => 'Defektai'])
+            ->add('defects', TextType::class, ['label' => 'form.field.defects'])
             ->add('steering_wheel', ChoiceType::class, [
                 'choices' => [
-                    'Kairė' => 0,
-                    'Dešinė' => 1,
+                    'form.choice.steering_wheel.left' => 0,
+                    'form.choice.steering_wheel.right' => 1,
                 ],
                 'data' => 0,
-                'label' => 'Vairo padėtis',
-                'placeholder' => 'Bet kokia padėtis',
+                'label' => 'form.field.steering_wheel',
+                'placeholder' => 'form.placeholder.all.steering_wheel',
                 'required' => false,
             ])
-            ->add('wheelsDiameter', IntegerType::class, ['label' => 'Padangų diametras'])
-            ->add('mileage_from', IntegerType::class, ['label' => 'Rida nuo'])
-            ->add('mileage_to', IntegerType::class, ['label' => 'Rida iki'])
+            ->add('wheelsDiameter', IntegerType::class, ['label' => 'form.field.wheels_diameter'])
+            ->add('mileage_from', IntegerType::class, ['label' => 'form.field.mileage_from'])
+            ->add('mileage_to', IntegerType::class, ['label' => 'form.field.mileage_to'])
             ->add('sort', ChoiceType::class, [
                 'choices' => [
-                    'pirmiau pigiausi' => 'cost_min',
-                    'pirmiau brangiausi' => 'cost_max',
-                    'pirmiau naujausi' => 'date_new',
-                    'pirmiau seniausi' => 'date_old',
+                    'form.choice.sort.cost_min' => 'cost_min',
+                    'form.choice.sort.cost_max' => 'cost_max',
+                    'form.choice.sort.date_new' => 'date_new',
+                    'form.choice.sort.date_old' => 'date_old',
                 ],
                 'data' => 'cost_min',
-                'label' => 'Skelbimų rodymas',
+                'label' => 'form.field.sort',
                 'placeholder' => false,
                 'required' => false,
             ]);

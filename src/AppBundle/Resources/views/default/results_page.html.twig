@@ -5,7 +5,7 @@
 {% set search_form_id = 'search_form' %}
 
 {% block title %}
-    Paieškos rezultatai - {{ page }} puslapis
+    {{ 'title.results'|trans({'%page%': page, '%pages%': total_pages_count}) }}
 {% endblock %}
 
 {% block pagination %}
@@ -18,7 +18,7 @@
                         {% else %}
                         <a href="#">
                             {% endif %}
-                            <span>&laquo</span>
+                            <span>&laquo</span> {{ 'pagination.previous'|trans() }}
                         </a>
                 </li>
                 {% for i in page-3..page+3 %}
@@ -40,7 +40,7 @@
                         {% else %}
                         <a href="#">
                             {% endif %}
-                            <span>&raquo</span>
+                            {{ 'pagination.next'|trans() }} <span>&raquo</span>
                         </a>
                 </li>
             </ul>
@@ -49,105 +49,117 @@
 {% endblock %}
 
 {% block body %}
+    <h4>{{ 'title.results'|trans({'%page%': page, '%pages%': total_pages_count}) }}</h4>
     <div class="row">
         <div class="col-md-8">
         {% if items|length == 0 %}
-            <div class="alert alert-danger">Skelbimų pagal nurodytus paieškos kriterijus nebuvo rasta.</div>
+            <div class="alert alert-danger">{{ 'results.error.no_results'|trans() }}</div>
         {% else %}
             <div class="row">
-                <div class="row">
-                    <div class="col-md-8">
-                        {{ block('pagination') }}
-                    </div>
-                    <div class="col-md-4">
-                        {{ form_row(searchForm.sort, {'attr': {'form': search_form_id}}) }}
-                    </div>
-                </div>
-                {% for item in items %}
-                    <div class="panel panel-default">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img src="#" />
-                                <p>{{ item.provider }}</p>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <a href="{{ item.link }}">
-                                            <h3>{{ item.brand.name }} {{ item.model.name }}</h3>
-                                        </a>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <p class="small">
-                                            Id: {{ item.providerId}}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <p>
-                                            Metai: {{ item.year }}
-                                        </p>
-                                        <p>
-                                            Darbinis tūris: {{ item.engineSize }}
-                                        </p>
-                                        <p>
-                                            Kėbulo tipas: {{ item.bodyType.name }}
-                                        </p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <p>
-                                            Galia: {{ item.power }}
-                                        </p>
-                                        <p>
-                                            Kuro tipas: {{ item.fuelType.name }}
-                                        </p>
-                                        <p>
-                                            Rida: {{ item.mileage }}
-                                        </p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <p>
-                                            Spalva: {{ item.color.name }}
-                                        </p>
-                                        <p>
-                                            Pavarų dėžė: {{ item.driveType }}
-                                        </p>
-                                        <p>
-                                            Vairo padėtis: {% if item.steeringWheel == 0 %}kairėje{% else %}dešinėje{% endif %}
-                                        </p>
-                                    </div>
-                                </div>
-                                <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#more-info-{{ loop.index }}"
-                                        aria-expanded="false">Daugiau</button>
-                                <div class="row small collapse" id="more-info-{{ loop.index }}">
-                                    <p><b>Kita informacija:</b></p>
-                                    <p>Durų skaičius: {{ item.doorsNumber }}</p>
-                                    <p>Sėdimų vietų skaičius: {{ item.seatsNumber }}</p>
-                                    <p>Transmisija: {{ item.transmission }}</p>
-                                    <p>Klimato kontrolė: {{ item.climateControl }}</p>
-                                    <p>Defektai: {{ item.defects }}</p>
-                                    <p>Padangų diametras: {{ item.wheelsDiameter }}</p>
-                                    <p>Masė: {{ item.weight }}</p>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <h3>{{ item.price }}€</h3>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <h4>{{ item.city.name }}, {{ item.country.name }}</h4>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-8">
+                            {{ block('pagination') }}
+                        </div>
+                        <div class="col-md-4">
+                            {{ form_row(searchForm.sort, {'attr': {'form': search_form_id}}) }}
                         </div>
                     </div>
-                {% endfor %}
-                {{ block('pagination') }}
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% for item in items %}
+                                <div class="panel panel-default">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img src="#" />
+                                            <p>{{ item.provider }}</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <a href="{{ item.link }}">
+                                                        <h3>{{ item.brand.name }} {{ item.model.name }}</h3>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p class="small">
+                                                        Id: {{ item.providerId}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <p>
+                                                        Metai: {{ item.year }}
+                                                    </p>
+                                                    <p>
+                                                        Darbinis tūris: {{ item.engineSize }}
+                                                    </p>
+                                                    <p>
+                                                        Kėbulo tipas: {{ item.bodyType.name }}
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p>
+                                                        Galia: {{ item.power }}
+                                                    </p>
+                                                    <p>
+                                                        Kuro tipas: {{ item.fuelType.name }}
+                                                    </p>
+                                                    <p>
+                                                        Rida: {{ item.mileage }}
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p>
+                                                        Spalva: {{ item.color.name }}
+                                                    </p>
+                                                    <p>
+                                                        Pavarų dėžė: {{ item.driveType }}
+                                                    </p>
+                                                    <p>
+                                                        Vairo padėtis: {% if item.steeringWheel == 0 %}kairėje{% else %}dešinėje{% endif %}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#more-info-{{ loop.index }}"
+                                                    aria-expanded="false">Daugiau</button>
+                                            <div class="row small collapse" id="more-info-{{ loop.index }}">
+                                                <p><b>Kita informacija:</b></p>
+                                                <p>Durų skaičius: {{ item.doorsNumber }}</p>
+                                                <p>Sėdimų vietų skaičius: {{ item.seatsNumber }}</p>
+                                                <p>Transmisija: {{ item.transmission }}</p>
+                                                <p>Klimato kontrolė: {{ item.climateControl }}</p>
+                                                <p>Defektai: {{ item.defects }}</p>
+                                                <p>Padangų diametras: {{ item.wheelsDiameter }}</p>
+                                                <p>Masė: {{ item.weight }}</p>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <h3>{{ item.price }}€</h3>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <h4>{{ item.city.name }}, {{ item.country.name }}</h4>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <button type="button" class="vehicle-pin-button btn btn-default" value="{{ item.id }}">
+                                                        {{ 'results.button.pin'|trans() }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {{ block('pagination') }}
+                </div>
             </div>
            {% endif %}
         </div>
         <div class="col-md-4">
-            <h4>Pakeiskite paieškos nustatymus:</h4>
+            <h4>{{ 'form.header.update_form'|trans() }}</h4>
             {{ form_start(searchForm, { attr: {novalidate: 'novalidate', id: search_form_id} }) }}
             {{ form_row(searchForm.brand) }}
             {{ form_row(searchForm.model) }}
@@ -173,7 +185,7 @@
             {{ form_row(searchForm.steering_wheel) }}
             <!--{{ form_rest(searchForm) }}-->
             <div class="row text-center">
-                <button type="submit" class="btn btn-primary btn-lg">Atnaujinti paiešką</button>
+                <button type="submit" class="btn btn-primary btn-lg">{{ 'form.button.update'|trans() }}</button>
             </div>
             {{ form_end(searchForm) }}
         </div>
@@ -181,6 +193,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    {% include('@App/default/search_form.html.twig') %} }}
+    {% include('@App/default/search_form.html.twig') %}
+    <script src="{{ asset('js/search_form_results.js') }}"></script>
 {% endblock %}
 

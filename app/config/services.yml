@@ -7,3 +7,13 @@ services:
     #service_name:
     #    class: AppBundle\Directory\ClassName
     #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
+
+    app.type.profile:
+        class: AppBundle\Type\ProfileFormType
+        tags:
+            - {name: form.type, alias: app_user_profile}
+
+    app.type.registration:
+        class: AppBundle\Type\RegistrationFormType
+        tags:
+            - {name: form.type, alias: app_user_registration}

@@ -7,6 +7,7 @@ use AppBundle\Type\VehicleSearchType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
@@ -55,6 +56,41 @@ class DefaultController extends Controller
             'total_pages_count' => $results['total_pages_count'],
             'searchForm' => $searchForm->createView()
         ]);
+    }
+
+    /**
+     * @Route(
+     *     "/vehicle/{pin_action}/{id}",
+     *     name="pin_vehicle",
+     *     options = {"expose" = true},
+     *     requirements={"id": "\d+", "pin_action": "pin|unpin"}
+     * )
+     */
+    public function pinVehicleAction($id, $pin_action)
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return new JsonResponse('error');
+        }
+        $entityManager = $this->get('doctrine.orm.default_entity_manager');
+        $repository = $entityManager->getRepository('AppBundle:Vehicle');
+        $vehicle = $repository->find($id);
+        if ($vehicle !== null) {
+            $user = $this->getUser();
+            if ($pin_action === 'pin') {
+                $user->addPinnedVehicle($vehicle);
+            } elseif ($pin_action === 'unpin') {
+                $user->removePinnedVehicle($vehicle);
+            }
+            $entityManager->persist($user);
+            $entityManager->flush();
+            $translator = $this->get('translator.default');
+            if ($pin_action === 'pin') {
+                return new JsonResponse($translator->trans('results.pin.pinned'));
+            } elseif ($pin_action === 'unpin') {
+                return new JsonResponse($translator->trans('results.pin.unpinned'));
+            }
+        }
+        return new JsonResponse('error');
     }
 
     /**

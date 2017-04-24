@@ -1,0 +1,83 @@
+header:
+    link:
+        detailed_search: 'Paieška'
+        profile: 'Mano profilis'
+        logout: 'Atsijungti'
+        register: 'Užsiregistruoti'
+        login: 'Prisijungti'
+
+form:
+    button:
+        detailed_search: 'Eiti į detaliąją paiešką'
+        update: 'Atnaujinti paiešką'
+        search: 'Ieškoti'
+    choice:
+        sort:
+            cost_min: 'pirmiau pigiausi'
+            cost_max: 'pirmiau brangiausi'
+            date_new: 'pirmiau naujausi'
+            date_old: 'pirmiau seniausi'
+        steering_wheel:
+            left: 'Kairė'
+            right: 'Dešinė'
+    header:
+        update_form: 'Pakeiskite paieškos nustatymus'
+    field:
+        brand: 'Markė'
+        model: 'Modelis'
+        country: 'Valstybė'
+        city: 'Miestas'
+        price_from: 'Kaina nuo'
+        price_to: 'Kaina iki'
+        year_from: 'Metai nuo'
+        year_to: 'Metai iki'
+        fuel_type: 'Kuro tipas'
+        provider: 'Šaltinis'
+        engine_size_from: 'Variklio tūris nuo'
+        engine_size_to: 'Variklio tūris iki'
+        power_from: 'Galia nuo'
+        power_to: 'Galia iki'
+        doors_number: 'Durų skaičius'
+        seats_number: 'Sėdimų vietų skaičius'
+        defects: 'Defektai'
+        drive_type: 'Varantieji ratai'
+        climate_control: 'Klimato kontrolė'
+        color: 'Spalva'
+        steering_wheel: 'Vairo padėtis'
+        wheels_diameter: 'Padangų diametras'
+        mileage_from: 'Rida nuo'
+        mileage_to: 'Rida iki'
+        sort: 'Skelbimų eiliškumas'
+
+    placeholder:
+        all:
+            brand: 'Visos markės'
+            model: 'Visi modeliai'
+            country: 'Visos valstybės'
+            city: 'Visi miestai'
+            fuel_type: 'Visi kuro tipai'
+            color: 'Visos spalvos'
+            steering_wheel: 'Bet kokia padėtis'
+
+pagination:
+    previous: 'Ankstesnis'
+    next: 'Kitas'
+
+results:
+    button:
+        pin: 'Išsaugoti'
+    error:
+        no_results: 'Skelbimų pagal nurodytus paieškos kriterijus nebuvo rasta.'
+    features:
+    pin:
+        pinned: 'Išsaugota'
+        unpinned: 'Išsaugoti'
+
+
+
+title:
+    index: 'Pagrindinis'
+    detailed_search: 'Detalioji paieška'
+    results: 'Paieškos rezultatai (%page% psl. iš %pages%)'
+    website_name: 'AutoInsanity'
+
