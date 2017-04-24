@@ -8,36 +8,30 @@ use AppBundle\Entity\Color;
 use AppBundle\Entity\Country;
 use AppBundle\Entity\FuelType;
 use AppBundle\Entity\Model;
-use AppBundle\Entity\Vehicle;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\EqualTo;
-use Symfony\Component\Validator\Constraints\IdenticalTo;
 
-class VehicleType extends AbstractType
+class VehicleSearchType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $modelModifier = function (FormInterface $form, Brand $brand = null)
-        {
+        $modelModifier = function (FormInterface $form, Brand $brand = null) {
             $form->add('model', EntityType::class, [
                 'class' => Model::class,
                 'label' => 'Modelis',
                 'placeholder' => 'Visi modeliai',
-                'query_builder' => function(EntityRepository $repo) use ($brand) {
+                'query_builder' => function (EntityRepository $repo) use ($brand) {
                     return $repo->createQueryBuilder('model')
                         ->where('model.brand = :brand')
                         ->setParameter('brand', $brand === null ? null : $brand->getId())
@@ -46,13 +40,12 @@ class VehicleType extends AbstractType
                 'required' => false,
             ]);
         };
-        $cityModifier = function (FormInterface $form, Country $country = null)
-        {
+        $cityModifier = function (FormInterface $form, Country $country = null) {
             $form->add('city', EntityType::class, [
                 'class' => City::class,
                 'label' => 'Miestas',
                 'placeholder' => 'Visi miestai',
-                'query_builder' => function(EntityRepository $repo) use ($country) {
+                'query_builder' => function (EntityRepository $repo) use ($country) {
                     return $repo->createQueryBuilder('city')
                         ->where('city.country = :country')
                         ->setParameter('country', $country === null ? null : $country->getId())
@@ -63,7 +56,6 @@ class VehicleType extends AbstractType
         };
         $builder
             ->setMethod('GET')
-            ->add('provider', TextType::class, ['label' => 'Šaltinis', ])
             ->add('brand', EntityType::class, [
                 'class' => Brand::class,
                 'label' => 'Markė',
@@ -77,6 +69,17 @@ class VehicleType extends AbstractType
             ->add('price_to', IntegerType::class, ['label' => 'Kaina iki'])
             ->add('year_from', IntegerType::class, ['label' => 'Metai nuo'])
             ->add('year_to', IntegerType::class, ['label' => 'Metai iki'])
+
+            ->add('fuel_type', EntityType::class, [
+                'class' => FuelType::class,
+                'label' => 'Kuro tipas',
+                'placeholder' => 'Visi kuro tipai',
+                'query_builder' => function(EntityRepository $repo) {
+                    return $repo->createQueryBuilder('fuel_type')->orderBy('fuel_type.name', 'ASC');
+                },
+                'required' => false,
+            ])
+            ->add('provider', TextType::class, ['label' => 'Šaltinis', ])
             ->add('country', EntityType::class, [
                 'class' => Country::class,
                 'label' => 'Valstybė',
@@ -90,15 +93,6 @@ class VehicleType extends AbstractType
             ->add('engine_size_to', IntegerType::class, ['label' => 'Variklio tūris iki'])
             ->add('power_from', IntegerType::class, ['label' => 'Galia nuo'])
             ->add('power_to', IntegerType::class, ['label' => 'Galia iki'])
-            ->add('fuel_type', EntityType::class, [
-                'class' => FuelType::class,
-                'label' => 'Kuro tipas',
-                'placeholder' => 'Visi kuro tipai',
-                'query_builder' => function(EntityRepository $repo) {
-                    return $repo->createQueryBuilder('fuel_type')->orderBy('fuel_type.name', 'ASC');
-                },
-                'required' => false,
-            ])
             ->add('doors_number', IntegerType::class, ['label' => 'Durų skaičius'])
             ->add('seats_number', IntegerType::class, ['label' => 'Sėdimų vietų skaičius'])
             ->add('drive_type', TextType::class, ['label' => 'Varantieji ratai'])
@@ -125,7 +119,19 @@ class VehicleType extends AbstractType
             ])
             ->add('wheelsDiameter', IntegerType::class, ['label' => 'Padangų diametras'])
             ->add('mileage_from', IntegerType::class, ['label' => 'Rida nuo'])
-            ->add('mileage_to', IntegerType::class, ['label' => 'Rida iki']);
+            ->add('mileage_to', IntegerType::class, ['label' => 'Rida iki'])
+            ->add('sort', ChoiceType::class, [
+                'choices' => [
+                    'pirmiau pigiausi' => 'cost_min',
+                    'pirmiau brangiausi' => 'cost_max',
+                    'pirmiau naujausi' => 'date_new',
+                    'pirmiau seniausi' => 'date_old',
+                ],
+                'data' => 'cost_min',
+                'label' => 'Skelbimų rodymas',
+                'placeholder' => false,
+                'required' => false,
+            ]);
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
@@ -167,11 +173,15 @@ class VehicleType extends AbstractType
             }
         );
     }
-
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(array(
             'csrf_protection' => false,
-        ]);
+        ));
+    }
+
+    public function getBlockPrefix()
+    {
+        return null;
     }
 }

@@ -3,9 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Vehicle;
-use AppBundle\Type\VehicleType;
+use AppBundle\Type\VehicleSearchType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
@@ -13,36 +14,46 @@ class DefaultController extends Controller
     /**
      * @Route("/", name="homepage")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        return $this->render('AppBundle:default:index.html.twig');
-    }
-
-    /**
-     * @Route("/search", name="detailed_search")
-     */
-    public function searchAction(Request $request)
-    {
-        $searchForm = $this->createForm(VehicleType::class, null, [
-            'action' => $this->generateUrl('results_page')
+        $searchForm = $this->createForm(VehicleSearchType::class, null, [
+            'action' => $this->generateUrl('detailed_search'),
         ]);
         $searchForm->handleRequest($request);
-        return $this->render('AppBundle:default:detailed_search.html.twig',
-            ['searchForm' => $searchForm->createView()]);
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            return $this->getResultsAction($searchForm, $request);
+        }
+        return $this->render(
+            'AppBundle:default:index.html.twig',
+            ['searchForm' => $searchForm->createView()]
+        );
     }
 
     /**
-     * @Route("/results/{page}", name="results_page", requirements={"page": "^[1-9]\d*$"})
+     * @Route("/search/{page}", name="detailed_search", requirements={"page": "^[1-9]\d*$"})
      */
-    public function resultsAction(Request $request, $page = 1)
+    public function searchAction(Request $request, $page = 1)
+    {
+        $searchForm = $this->createForm(VehicleSearchType::class, null);
+        $searchForm->handleRequest($request);
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            return $this->getResultsAction($searchForm, $request, $page);
+        }
+        return $this->render('AppBundle:default:detailed_search.html.twig', [
+            'searchForm' => $searchForm->createView()
+        ]);
+    }
+
+    public function getResultsAction(Form $searchForm, Request $request, $page = 1)
     {
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
         $repository = $entityManager->getRepository('AppBundle:Vehicle');
-        $queryVehicleParams = (isset($request->query->all()['vehicle'])) ? $request->query->all()['vehicle'] : array();
+        $queryVehicleParams = $request->query->all();
         $results = $repository->findAllByCriteria($queryVehicleParams, $page);
         return $this->render('AppBundle:default:results_page.html.twig', [
             'items' => $results['vehicles'],
             'total_pages_count' => $results['total_pages_count'],
+            'searchForm' => $searchForm->createView()
         ]);
     }
 
