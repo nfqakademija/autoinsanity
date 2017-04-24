@@ -77,6 +77,9 @@ class DefaultController extends Controller
         if ($vehicle !== null) {
             $user = $this->getUser();
             if ($pin_action === 'pin') {
+                if ($user->getPinnedVehicles()->contains($vehicle)) {
+                   return new JsonResponse('error');
+                }
                 $user->addPinnedVehicle($vehicle);
             } elseif ($pin_action === 'unpin') {
                 $user->removePinnedVehicle($vehicle);
@@ -85,9 +88,15 @@ class DefaultController extends Controller
             $entityManager->flush();
             $translator = $this->get('translator.default');
             if ($pin_action === 'pin') {
-                return new JsonResponse($translator->trans('results.pin.pinned'));
+                return new JsonResponse([
+                    'pin_action' => 'unpin',
+                    'button_text' => $translator->trans('results.pin.pinned'),
+                ]);
             } elseif ($pin_action === 'unpin') {
-                return new JsonResponse($translator->trans('results.pin.unpinned'));
+                return new JsonResponse([
+                    'pin_action' => 'pin',
+                    'button_text' => $translator->trans('results.pin.unpinned'),
+                ]);
             }
         }
         return new JsonResponse('error');

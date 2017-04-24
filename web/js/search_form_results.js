@@ -6,14 +6,17 @@ $('#sort').change(function () {
 // send ajax request to pin vehicle
 $('.vehicle-pin-button').click(function () {
     var button = $(this);
+    var pin_action = button.hasClass('pin') ? 'pin' : 'unpin';
+    button.removeClass(pin_action);
     $.ajax({
-        url : Routing.generate('pin_vehicle', {id: button.val(), pin_action: 'pin'}),
+        url : Routing.generate('pin_vehicle', {id: button.val(), pin_action: pin_action}),
         type: 'POST',
         data : '',
-        success: function(html) {
-            button.html(html);
+        success: function(data) {
+            button.html('<b>' + data.button_text + '</b>');
+            button.addClass(data.pin_action);
         },
-        error: function(html) {
+        error: function(data) {
 
         }
     });
