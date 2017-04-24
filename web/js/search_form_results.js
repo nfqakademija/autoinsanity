@@ -13,7 +13,11 @@ $('.vehicle-pin-button').click(function () {
         type: 'POST',
         data : '',
         success: function(data) {
-            button.html('<b>' + data.button_text + '</b>');
+            if(data.pin_action === 'pin') {
+                button.html(data.button_text);
+            } else {
+                button.html('<b>' + data.button_text + '</b>');
+            }
             button.addClass(data.pin_action);
         },
         error: function(data) {
