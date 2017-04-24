@@ -64,9 +64,14 @@ pagination:
     next: 'Kitas'
 
 results:
+    button:
+        pin: 'Išsaugoti'
     error:
         no_results: 'Skelbimų pagal nurodytus paieškos kriterijus nebuvo rasta.'
     features:
+    pin:
+        pinned: 'Išsaugota'
+        unpinned: 'Išsaugoti'
 
 
 
