@@ -92,8 +92,6 @@ class AutogidasAdsProvider implements AdsProviderInterface
 
     public function saveToDb($cars)
     {
-//
-//        $array = [];
 //        foreach ($cars as $car) {
 //            $em = $this->em;
 //            $repository = $em->getRepository("AppBundle:Brand");
@@ -127,10 +125,14 @@ class AutogidasAdsProvider implements AdsProviderInterface
 //                'name' => $car['details']['Kuro tipas']
 //            ));
 //
-//            $repository = $em->getRepository("AppBundle:Color");
-//            $color = $repository->findOneBy(array(
-//                'name' => $car['details']['Spalva']
-//            ));
+//            if (array_key_exists('Spalva', $car['details'])) {
+//                $repository = $em->getRepository("AppBundle:Color");
+//                $color = $repository->findOneBy(array(
+//                    'name' => $car['details']['Spalva']
+//                ));
+//            } else {
+//                $color = 'Not set';
+//            }
 //
 //            $vehicle = new Vehicle();
 //            $vehicle->setBrand($brand);
@@ -141,17 +143,17 @@ class AutogidasAdsProvider implements AdsProviderInterface
 //            $vehicle->setFuelType($fuelType);
 //            $vehicle->setColor($color);
 //
-//            $vehicle->setProviderId(1);
-//            $vehicle->setProvider('autoplius');
-//            $vehicle->setLink('autoplius');
+//            $vehicle->setProviderId(2);
+//            $vehicle->setProvider('autogidas');
+//            $vehicle->setLink('autogidas');
 //
 //            $vehicle->setPrice($car['price']);
 //
-//            $tempArr = explode("-", $car['details']['Pagaminimo data']);
+//            $tempArr = explode("/", $car['details']['Metai']);
 //            $year = $tempArr[0];
 //            $vehicle->setYear($year);
 //
-//            $vehicle->setEngineSize($car['engineSize']);
+//            $vehicle->setEngineSize($car['details']['Variklis']);
 //
 //            preg_match("/\(([^\)]*)\)/", $car['details']['Variklis'] ,$matches);
 //            $enginePower = (int)$matches[1];
