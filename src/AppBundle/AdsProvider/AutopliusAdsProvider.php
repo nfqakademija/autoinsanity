@@ -5,6 +5,7 @@ namespace AppBundle\AdsProvider;
 use AppBundle\Entity\Vehicle;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\Filesystem\Filesystem;
 
 class AutopliusAdsProvider implements AdsProviderInterface
 {
@@ -51,6 +52,12 @@ class AutopliusAdsProvider implements AdsProviderInterface
                 $city = trim($tempArr[0]);
                 $country = trim($tempArr[1]);
 
+                $imageUrl = ($innerCrawler->filter('.announcement-media-gallery .thumbnail')->count()) ? trim($innerCrawler->filter('.announcement-media-gallery .thumbnail')->eq(0)->attr('style')): 'No image';
+                preg_match("/\(([^\)]*)\)/", $imageUrl ,$matches);
+                $imageUrl = $matches[1];
+                $imageUrl = trim($imageUrl, " ' ");
+                $this->saveImages($imageUrl);
+
                 $items = $innerCrawler->filterXPath('//table[@class="announcement-parameters"][1]//tr');
 
                 foreach ($items as $innerDomRow) {
@@ -84,6 +91,11 @@ class AutopliusAdsProvider implements AdsProviderInterface
         }
 
         $this->saveToDb($cars);
+    }
+
+    public function saveImages($imageUrl)
+    {
+
     }
 
     public function saveToDb($cars)

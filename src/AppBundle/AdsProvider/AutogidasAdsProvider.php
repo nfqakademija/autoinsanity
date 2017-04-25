@@ -64,7 +64,6 @@ class AutogidasAdsProvider implements AdsProviderInterface
                     $details[$key] = $value;
                 }
 
-
                 $car = [
                     'brand' => $brand,
                     'model' => $model,
@@ -88,6 +87,11 @@ class AutogidasAdsProvider implements AdsProviderInterface
 
         var_dump($cars);
 //        $this->saveToDb($cars);
+    }
+
+    public function saveImages($imageUrl)
+    {
+
     }
 
     public function saveToDb($cars)

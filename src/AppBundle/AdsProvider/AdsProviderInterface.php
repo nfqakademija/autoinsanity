@@ -10,4 +10,6 @@ interface AdsProviderInterface
     public function saveToDb($cars);
 
     public function getHtml($url);
+
+    public function saveImages($imageUrl);
 }
