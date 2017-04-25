@@ -144,7 +144,7 @@ class AutopliusAdsProvider implements AdsProviderInterface
             $vehicle->setFuelType($fuelType);
             $vehicle->setColor($color);
 
-            $vehicle->setProviderId(99);
+            $vehicle->setProviderId(1);
             $vehicle->setProvider('autoplius');
             $vehicle->setLink('autoplius');
 
