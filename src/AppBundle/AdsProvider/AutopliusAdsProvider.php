@@ -16,81 +16,74 @@ class AutopliusAdsProvider implements AdsProviderInterface
     }
 
     public function getNewAds() {
-        $hasItems = true;
-        $cars = [];
-        $details = [];
-
-        $pageNumber = 1;
-        while ( $hasItems ) {
-            $url = "https://autoplius.lt/skelbimai/naudoti-automobiliai?older_not=30&page_nr=" . $pageNumber;
-            $html = $this->getHtml($url);
-
-            $hasItems = false;
-            $crawler = new Crawler($html);
-            $crawler = $crawler->filter('.item-section');
-
-            foreach ($crawler as $domRow) {
-                $hasItems = true;
-                $row = new Crawler($domRow);
-
-                $innerUrl = $row->filter('.title-list a')->attr('href');
-                $innerHtml = $this->getHtml($innerUrl);
-                $innerCrawler = new Crawler($innerHtml);
-
-                $engineSize = $innerCrawler->filter('.classifieds-info h1')->text();
-                $tempArr = explode(",", $engineSize);
-                $engineSize = (float)trim($tempArr[1]);
-
-                $brand = trim($innerCrawler->filter('.content-container .breadcrumbs li')->eq(2)->text());
-                $model = trim($innerCrawler->filter('.content-container .breadcrumbs li')->eq(3)->text());
-                $price = trim($innerCrawler->filter('.classifieds-info .view-price')->text());
-                $price = (int)str_replace(' ', '', $price);
-
-                $location = trim($innerCrawler->filter('.owner-contacts .owner-location')->text());
-                $tempArr = explode(",", $location);
-                $city = trim($tempArr[0]);
-                $country = trim($tempArr[1]);
-
-                $items = $innerCrawler->filterXPath('//table[@class="announcement-parameters"][1]//tr');
-
-                foreach ($items as $innerDomRow) {
-                    $row = new Crawler($innerDomRow);
-                    $key = $row->filterXPath("//th")->text();
-                    $value = $row->filterXPath("//td")->text();
-
-                    $details[$key] = $value;
-                }
-
-                $car = [
-                    'brand' => $brand,
-                    'model' => $model,
-                    'engineSize' => $engineSize,
-                    'price' => $price,
-                    'city' => $city,
-                    'country' => $country,
-                    'details' => $details,
-                ];
-                $cars[] = $car;
-            }
-
-            $pageNumber++;
-
-            sleep(1);
-
-            if ($pageNumber > 1) {
-                break;
-            }
-
-        }
-
-//        var_dump($cars);
-//        foreach ($cars as $car) {
-////            echo $car['details']['Variklis'];
-//            preg_match("/\(([^\)]*)\)/", $car['details']['Variklis'] ,$matches);
-//            $enginePower = (int)$matches[1];
-//            echo $enginePower;
+//        $hasItems = true;
+//        $cars = [];
+//        $details = [];
+//
+//        $pageNumber = 1;
+//        while ( $hasItems ) {
+//            $url = "https://autoplius.lt/skelbimai/naudoti-automobiliai?older_not=30&page_nr=" . $pageNumber;
+//            $html = $this->getHtml($url);
+//
+//            $hasItems = false;
+//            $crawler = new Crawler($html);
+//            $crawler = $crawler->filter('.item-section');
+//
+//            foreach ($crawler as $domRow) {
+//                $hasItems = true;
+//                $row = new Crawler($domRow);
+//
+//                $innerUrl = $row->filter('.title-list a')->attr('href');
+//                $innerHtml = $this->getHtml($innerUrl);
+//                $innerCrawler = new Crawler($innerHtml);
+//
+//                $engineSize = $innerCrawler->filter('.classifieds-info h1')->text();
+//                $tempArr = explode(",", $engineSize);
+//                $engineSize = (float)trim($tempArr[1]);
+//
+//                $brand = trim($innerCrawler->filter('.content-container .breadcrumbs li')->eq(2)->text());
+//                $model = trim($innerCrawler->filter('.content-container .breadcrumbs li')->eq(3)->text());
+//                $price = trim($innerCrawler->filter('.classifieds-info .view-price')->text());
+//                $price = (int)str_replace(' ', '', $price);
+//
+//                $location = trim($innerCrawler->filter('.owner-contacts .owner-location')->text());
+//                $tempArr = explode(",", $location);
+//                $city = trim($tempArr[0]);
+//                $country = trim($tempArr[1]);
+//
+//                $items = $innerCrawler->filterXPath('//table[@class="announcement-parameters"][1]//tr');
+//
+//                foreach ($items as $innerDomRow) {
+//                    $row = new Crawler($innerDomRow);
+//                    $key = $row->filterXPath("//th")->text();
+//                    $value = $row->filterXPath("//td")->text();
+//
+//                    $details[$key] = $value;
+//                }
+//
+//                $car = [
+//                    'brand' => $brand,
+//                    'model' => $model,
+//                    'engineSize' => $engineSize,
+//                    'price' => $price,
+//                    'city' => $city,
+//                    'country' => $country,
+//                    'details' => $details,
+//                ];
+//                $cars[] = $car;
+//            }
+//
+//            $pageNumber++;
+//
+//            sleep(1);
+//
+//            if ($pageNumber > 1) {
+//                break;
+//            }
+//
 //        }
-        $this->saveToDb($cars);
+//
+//        $this->saveToDb($cars);
     }
 
     public function saveToDb($cars)
@@ -183,15 +176,8 @@ class AutopliusAdsProvider implements AdsProviderInterface
 
             $em->persist($vehicle);
             $em->flush();
-
-
-//            dump($color);
-
-//            $array[] = $brand->id;
-//            $array[] = $model->name;
         }
-
-//        var_dump($array);
+        echo 'Saved to DB';
     }
 
     public function getHtml($url)	{

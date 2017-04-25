@@ -32,8 +32,7 @@ class StartCrawlerCommand extends Command
     {
         foreach ($this->adsProviders as $adsProvider) {
             $crawlerManager = new $adsProvider($this->em);
-            $data = $crawlerManager->getNewAds();
-            echo $data;
+            $crawlerManager->getNewAds();
         }
     }
 }

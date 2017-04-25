@@ -8,6 +8,10 @@ services:
         class: AppBundle\AdsProvider\AutopliusAdsProvider
         arguments: ['@doctrine.orm.entity_manager']
 
+    app.ads_provider.autogidas:
+        class: AppBundle\AdsProvider\AutogidasAdsProvider
+        arguments: ['@doctrine.orm.entity_manager']
+
     app.command.start_crawler:
         class: AppBundle\Command\StartCrawlerCommand
         tags:
@@ -15,4 +19,5 @@ services:
         arguments:
           -
             - '@app.ads_provider.autoplius'
+            - '@app.ads_provider.autogidas'
           - '@doctrine.orm.entity_manager'
