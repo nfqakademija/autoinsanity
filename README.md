@@ -23,8 +23,8 @@ This web project collects vehicle adverts from various websites and allows users
 1. Run `composer install`
 
 ## Prepare database - run commands:
-1. Create database with `bin/console doctrine:database:create --if-not-exists`
-1. Create tables with `bin/console doctrine:schema:update --force`
+1. Create database with `php bin/console doctrine:database:create --if-not-exists`
+1. Create tables with `php bin/console doctrine:schema:update --force`
 1. Run `php bin/console doctrine:fixtures:load` to insert all needed fixtures to the database.
 
 ## Run project
