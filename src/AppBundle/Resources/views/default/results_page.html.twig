@@ -142,7 +142,7 @@
                                                     <h4>{{ item.city.name }}, {{ item.country.name }}</h4>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    {% if app.user.pinnedVehicles.contains(item) %}
+                                                    {% if app.user and app.user.pinnedVehicles.contains(item) %}
                                                         <button type="button" class="unpin vehicle-pin-button btn btn-default" value="{{ item.id }}">
                                                             <b>{{ 'results.pin.pinned'|trans() }}</b>
                                                         </button>

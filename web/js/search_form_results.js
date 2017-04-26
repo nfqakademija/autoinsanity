@@ -9,16 +9,18 @@ $('.vehicle-pin-button').click(function () {
     var pin_action = button.hasClass('pin') ? 'pin' : 'unpin';
     button.removeClass(pin_action);
     $.ajax({
-        url : Routing.generate('pin_vehicle', {id: button.val(), pin_action: pin_action}),
+        url : Routing.generate('pin_vehicle', {id: button.val(), pinAction: pin_action}),
         type: 'POST',
         data : '',
         success: function(data) {
-            if(data.pin_action === 'pin') {
-                button.html(data.button_text);
-            } else {
-                button.html('<b>' + data.button_text + '</b>');
-            }
-            button.addClass(data.pin_action);
+            if (typeof data.pin_action !== 'undefined') {
+                if (data.pin_action === 'pin') {
+                    button.html(data.button_text);
+                } else {
+                    button.html('<b>' + data.button_text + '</b>');
+                }
+                button.addClass(data.pin_action);
+           }
         },
         error: function(data) {
 
