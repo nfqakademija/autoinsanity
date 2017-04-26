@@ -60,4 +60,3 @@ class Color
         return $this->name;
     }
 }
-

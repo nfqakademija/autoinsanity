@@ -1,0 +1,5 @@
+language: php
+php:
+    - '7.1'
+script:
+    - vendor/bin/phpcs src/ --standard=PSR2 --extensions=php

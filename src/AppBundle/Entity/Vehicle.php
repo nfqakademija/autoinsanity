@@ -201,7 +201,6 @@ class Vehicle
 
     public function __construct()
     {
-
     }
 
     /**

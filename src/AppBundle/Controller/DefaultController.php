@@ -81,7 +81,7 @@ class DefaultController extends Controller
         $translator = $this->get('translator.default');
         if ($pinAction === 'pin') {
             if ($user->getPinnedVehicles()->contains($vehicle)) {
-               return new JsonResponse(['error' => 'pinning already pinned vehicle']);
+                return new JsonResponse(['error' => 'pinning already pinned vehicle']);
             }
             $user->addPinnedVehicle($vehicle);
             $entityManager->persist($user);
@@ -101,7 +101,6 @@ class DefaultController extends Controller
         } else {
             return new JsonResponse(['error' => 'action not implemented']);
         }
-
     }
 
     /**
@@ -117,8 +116,7 @@ class DefaultController extends Controller
         $countries = $entityManager->getRepository('AppBundle:Country')->findAll();
         $cities = $entityManager->getRepository('AppBundle:City')->findAll();
         $colors = $entityManager->getRepository('AppBundle:Color')->findAll();
-        for($i = 0; $i < 100; $i++)
-        {
+        for ($i = 0; $i < 100; $i++) {
             $vehicle = new Vehicle();
             $vehicle->setBrand($brands[$i%sizeof($brands)]);
             $vehicle->setBodyType($bodyTypes[$i%sizeof($bodyTypes)]);
@@ -145,7 +143,6 @@ class DefaultController extends Controller
             $vehicle->setWheelsDiameter($i % 20);
             $vehicle->setWeight($i * 5454 % 2000);
             $entityManager->persist($vehicle);
-
         }
         $entityManager->flush();
         return $this->render('AppBundle:default:index.html.twig');

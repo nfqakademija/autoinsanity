@@ -17,8 +17,7 @@ class LoadBodyTypeData implements FixtureInterface
         } catch (ParseException $e) {
             printf("Unable to parse the YAML file: %s", $e->getMessage());
         }
-        foreach($bodyTypesData['body_types'] as $bodyTypeData)
-        {
+        foreach ($bodyTypesData['body_types'] as $bodyTypeData) {
             $bodyType = new BodyType();
             $bodyType->setName($bodyTypeData['name']);
             $manager->persist($bodyType);
