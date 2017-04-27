@@ -90,4 +90,3 @@ class Model
         return $this->name;
     }
 }
-

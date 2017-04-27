@@ -2,7 +2,6 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-
 use AppBundle\Entity\FuelType;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -18,8 +17,7 @@ class LoadFuelTypeData implements FixtureInterface
         } catch (ParseException $e) {
             printf("Unable to parse the YAML file: %s", $e->getMessage());
         }
-        foreach($fuelTypesData['fuel_types'] as $fuelTypeData)
-        {
+        foreach ($fuelTypesData['fuel_types'] as $fuelTypeData) {
             $fuelType = new FuelType();
             $fuelType->setName($fuelTypeData['name']);
             $manager->persist($fuelType);

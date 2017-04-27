@@ -60,7 +60,7 @@ class VehicleSearchType extends AbstractType
                 'class' => Brand::class,
                 'label' => 'form.field.brand',
                 'placeholder' => 'form.placeholder.all.brand',
-                'query_builder' => function(EntityRepository $repo) {
+                'query_builder' => function (EntityRepository $repo) {
                     return $repo->createQueryBuilder('brand')->orderBy('brand.name', 'ASC');
                 },
                 'required' => false,
@@ -74,7 +74,7 @@ class VehicleSearchType extends AbstractType
                 'class' => FuelType::class,
                 'label' => 'form.field.fuel_type',
                 'placeholder' => 'form.placeholder.all.fuel_type',
-                'query_builder' => function(EntityRepository $repo) {
+                'query_builder' => function (EntityRepository $repo) {
                     return $repo->createQueryBuilder('fuel_type')->orderBy('fuel_type.name', 'ASC');
                 },
                 'required' => false,
@@ -84,7 +84,7 @@ class VehicleSearchType extends AbstractType
                 'class' => Country::class,
                 'label' => 'form.field.country',
                 'placeholder' => 'form.placeholder.all.country',
-                'query_builder' => function(EntityRepository $repo) {
+                'query_builder' => function (EntityRepository $repo) {
                     return $repo->createQueryBuilder('country')->orderBy('country.name', 'ASC');
                 },
                 'required' => false,
@@ -101,7 +101,7 @@ class VehicleSearchType extends AbstractType
                 'class' => Color::class,
                 'label' => 'form.field.color',
                 'placeholder' => 'form.placeholder.all.color',
-                'query_builder' => function(EntityRepository $repo) {
+                'query_builder' => function (EntityRepository $repo) {
                     return $repo->createQueryBuilder('color')->orderBy('color.name', 'ASC');
                 },
                 'required' => false,
@@ -135,8 +135,7 @@ class VehicleSearchType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
-            function (FormEvent $event) use ($modelModifier)
-            {
+            function (FormEvent $event) use ($modelModifier) {
                 $data = $event->getData();
                 $brand = ($data === null) ? null : $data->getBrand();
                 $modelModifier($event->getForm(), $brand);
@@ -146,8 +145,7 @@ class VehicleSearchType extends AbstractType
 
         $builder->get('brand')->addEventListener(
             FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($modelModifier)
-            {
+            function (FormEvent $event) use ($modelModifier) {
                 $brand = $event->getForm()->getData();
                 $modelModifier($event->getForm()->getParent(), $brand);
             }
@@ -155,8 +153,7 @@ class VehicleSearchType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
-            function (FormEvent $event) use ($cityModifier)
-            {
+            function (FormEvent $event) use ($cityModifier) {
                 $data = $event->getData();
                 $country = ($data === null) ? null : $data->getCountry();
                 $cityModifier($event->getForm(), $country);
@@ -166,8 +163,7 @@ class VehicleSearchType extends AbstractType
 
         $builder->get('country')->addEventListener(
             FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($cityModifier)
-            {
+            function (FormEvent $event) use ($cityModifier) {
                 $country = $event->getForm()->getData();
                 $cityModifier($event->getForm()->getParent(), $country);
             }

@@ -18,13 +18,12 @@ class LoadCountryCityData implements FixtureInterface
         } catch (ParseException $e) {
             printf("Unable to parse the YAML file: %s", $e->getMessage());
         }
-        foreach($countriesData['countries'] as $countryData)
-        {
+        foreach ($countriesData['countries'] as $countryData) {
             $country = new Country();
             $country->setName($countryData['name']);
             $manager->persist($country);
-            if($countryData['cities'] !== null) {
-                foreach($countryData['cities'] as $cityName) {
+            if ($countryData['cities'] !== null) {
+                foreach ($countryData['cities'] as $cityName) {
                     $city = new City();
                     $city->setName($cityName);
                     $city->setCountry($country);

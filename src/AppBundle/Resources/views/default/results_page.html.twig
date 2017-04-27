@@ -142,9 +142,15 @@
                                                     <h4>{{ item.city.name }}, {{ item.country.name }}</h4>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <button type="button" class="vehicle-pin-button btn btn-default" value="{{ item.id }}">
-                                                        {{ 'results.button.pin'|trans() }}
-                                                    </button>
+                                                    {% if app.user and app.user.pinnedVehicles.contains(item) %}
+                                                        <button type="button" class="unpin vehicle-pin-button btn btn-default" value="{{ item.id }}">
+                                                            <b>{{ 'results.pin.pinned'|trans() }}</b>
+                                                        </button>
+                                                    {% else %}
+                                                        <button type="button" class="pin vehicle-pin-button btn btn-default" value="{{ item.id }}">
+                                                            {{ 'results.pin.unpinned'|trans() }}
+                                                        </button>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>

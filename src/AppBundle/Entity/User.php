@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,7 +21,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Vehicle", inversedBy="")
+     * @ORM\ManyToMany(targetEntity="Vehicle", inversedBy="", fetch="EXTRA_LAZY")
      * @ORM\JoinTable(name="users_vehicles",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="vehicle_id", referencedColumnName="id")}
@@ -65,7 +66,7 @@ class User extends BaseUser
     /**
      * Get pinnedVehicles
      */
-    public function getPinnedVehicles(): ArrayCollection
+    public function getPinnedVehicles(): Collection
     {
         return $this->pinnedVehicles;
     }

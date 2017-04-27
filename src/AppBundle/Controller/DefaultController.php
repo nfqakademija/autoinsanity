@@ -60,37 +60,47 @@ class DefaultController extends Controller
 
     /**
      * @Route(
-     *     "/vehicle/{pin_action}/{id}",
+     *     "/vehicle/{pinAction}/{id}",
      *     name="pin_vehicle",
      *     options = {"expose" = true},
-     *     requirements={"id": "\d+", "pin_action": "pin|unpin"}
+     *     requirements={"id": "\d+", "pinAction": "pin|unpin"}
      * )
      */
-    public function pinVehicleAction($id, $pin_action)
+    public function pinVehicleAction($id, $pinAction)
     {
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return new JsonResponse('error');
+            return new JsonResponse(['error' => 'not authenticated']);
         }
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
         $repository = $entityManager->getRepository('AppBundle:Vehicle');
         $vehicle = $repository->find($id);
-        if ($vehicle !== null) {
-            $user = $this->getUser();
-            if ($pin_action === 'pin') {
-                $user->addPinnedVehicle($vehicle);
-            } elseif ($pin_action === 'unpin') {
-                $user->removePinnedVehicle($vehicle);
+        if ($vehicle === null) {
+            return new JsonResponse(['error' => 'vehicle was not found']);
+        }
+        $user = $this->getUser();
+        $translator = $this->get('translator.default');
+        if ($pinAction === 'pin') {
+            if ($user->getPinnedVehicles()->contains($vehicle)) {
+                return new JsonResponse(['error' => 'pinning already pinned vehicle']);
             }
+            $user->addPinnedVehicle($vehicle);
             $entityManager->persist($user);
             $entityManager->flush();
-            $translator = $this->get('translator.default');
-            if ($pin_action === 'pin') {
-                return new JsonResponse($translator->trans('results.pin.pinned'));
-            } elseif ($pin_action === 'unpin') {
-                return new JsonResponse($translator->trans('results.pin.unpinned'));
-            }
+            return new JsonResponse([
+                'pin_action' => 'unpin',
+                'button_text' => $translator->trans('results.pin.pinned'),
+            ]);
+        } elseif ($pinAction === 'unpin') {
+            $user->removePinnedVehicle($vehicle);
+            $entityManager->persist($user);
+            $entityManager->flush();
+            return new JsonResponse([
+                'pin_action' => 'pin',
+                'button_text' => $translator->trans('results.pin.unpinned'),
+            ]);
+        } else {
+            return new JsonResponse(['error' => 'action not implemented']);
         }
-        return new JsonResponse('error');
     }
 
     /**
@@ -106,8 +116,7 @@ class DefaultController extends Controller
         $countries = $entityManager->getRepository('AppBundle:Country')->findAll();
         $cities = $entityManager->getRepository('AppBundle:City')->findAll();
         $colors = $entityManager->getRepository('AppBundle:Color')->findAll();
-        for($i = 0; $i < 100; $i++)
-        {
+        for ($i = 0; $i < 100; $i++) {
             $vehicle = new Vehicle();
             $vehicle->setBrand($brands[$i%sizeof($brands)]);
             $vehicle->setBodyType($bodyTypes[$i%sizeof($bodyTypes)]);
@@ -134,7 +143,6 @@ class DefaultController extends Controller
             $vehicle->setWheelsDiameter($i % 20);
             $vehicle->setWeight($i * 5454 % 2000);
             $entityManager->persist($vehicle);
-
         }
         $entityManager->flush();
         return $this->render('AppBundle:default:index.html.twig');

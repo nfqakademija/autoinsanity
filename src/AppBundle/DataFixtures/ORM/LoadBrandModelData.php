@@ -18,13 +18,12 @@ class LoadBrandModelData implements FixtureInterface
         } catch (ParseException $e) {
             printf("Unable to parse the YAML file: %s", $e->getMessage());
         }
-        foreach($vehicleData['cars'] as $brandData)
-        {
+        foreach ($vehicleData['cars'] as $brandData) {
             $brand = new Brand();
             $brand->setName($brandData['name']);
             $manager->persist($brand);
-            if($brandData['models'] !== null) {
-                foreach($brandData['models'] as $modelName) {
+            if ($brandData['models'] !== null) {
+                foreach ($brandData['models'] as $modelName) {
                     $model = new Model();
                     $model->setName($modelName);
                     $model->setBrand($brand);
