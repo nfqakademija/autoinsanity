@@ -17,8 +17,7 @@ class LoadColorData implements FixtureInterface
         } catch (ParseException $e) {
             printf("Unable to parse the YAML file: %s", $e->getMessage());
         }
-        foreach($colorsData['colors'] as $colorData)
-        {
+        foreach ($colorsData['colors'] as $colorData) {
             $color = new Color();
             $color->setName($colorData['name']);
             $manager->persist($color);

@@ -31,13 +31,12 @@ class VehicleType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $modelModifier = function (FormInterface $form, Brand $brand = null)
-        {
+        $modelModifier = function (FormInterface $form, Brand $brand = null) {
             $form->add('model', EntityType::class, [
                 'class' => Model::class,
                 'label' => 'Modelis',
                 'placeholder' => 'Visi modeliai',
-                'query_builder' => function(EntityRepository $repo) use ($brand) {
+                'query_builder' => function (EntityRepository $repo) use ($brand) {
                     return $repo->createQueryBuilder('model')
                         ->where('model.brand = :brand')
                         ->setParameter('brand', $brand === null ? null : $brand->getId())
@@ -46,13 +45,12 @@ class VehicleType extends AbstractType
                 'required' => false,
             ]);
         };
-        $cityModifier = function (FormInterface $form, Country $country = null)
-        {
+        $cityModifier = function (FormInterface $form, Country $country = null) {
             $form->add('city', EntityType::class, [
                 'class' => City::class,
                 'label' => 'Miestas',
                 'placeholder' => 'Visi miestai',
-                'query_builder' => function(EntityRepository $repo) use ($country) {
+                'query_builder' => function (EntityRepository $repo) use ($country) {
                     return $repo->createQueryBuilder('city')
                         ->where('city.country = :country')
                         ->setParameter('country', $country === null ? null : $country->getId())
@@ -68,7 +66,7 @@ class VehicleType extends AbstractType
                 'class' => Brand::class,
                 'label' => 'Markė',
                 'placeholder' => 'Visos markės',
-                'query_builder' => function(EntityRepository $repo) {
+                'query_builder' => function (EntityRepository $repo) {
                     return $repo->createQueryBuilder('brand')->orderBy('brand.name', 'ASC');
                 },
                 'required' => false,
@@ -81,7 +79,7 @@ class VehicleType extends AbstractType
                 'class' => Country::class,
                 'label' => 'Valstybė',
                 'placeholder' => 'Visos valstybės',
-                'query_builder' => function(EntityRepository $repo) {
+                'query_builder' => function (EntityRepository $repo) {
                     return $repo->createQueryBuilder('country')->orderBy('country.name', 'ASC');
                 },
                 'required' => false,
@@ -94,7 +92,7 @@ class VehicleType extends AbstractType
                 'class' => FuelType::class,
                 'label' => 'Kuro tipas',
                 'placeholder' => 'Visi kuro tipai',
-                'query_builder' => function(EntityRepository $repo) {
+                'query_builder' => function (EntityRepository $repo) {
                     return $repo->createQueryBuilder('fuel_type')->orderBy('fuel_type.name', 'ASC');
                 },
                 'required' => false,
@@ -107,7 +105,7 @@ class VehicleType extends AbstractType
                 'class' => Color::class,
                 'label' => 'Spalva',
                 'placeholder' => 'Visos spalvos',
-                'query_builder' => function(EntityRepository $repo) {
+                'query_builder' => function (EntityRepository $repo) {
                     return $repo->createQueryBuilder('color')->orderBy('color.name', 'ASC');
                 },
                 'required' => false,
@@ -129,8 +127,7 @@ class VehicleType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
-            function (FormEvent $event) use ($modelModifier)
-            {
+            function (FormEvent $event) use ($modelModifier) {
                 $data = $event->getData();
                 $brand = ($data === null) ? null : $data->getBrand();
                 $modelModifier($event->getForm(), $brand);
@@ -140,8 +137,7 @@ class VehicleType extends AbstractType
 
         $builder->get('brand')->addEventListener(
             FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($modelModifier)
-            {
+            function (FormEvent $event) use ($modelModifier) {
                 $brand = $event->getForm()->getData();
                 $modelModifier($event->getForm()->getParent(), $brand);
             }
@@ -149,8 +145,7 @@ class VehicleType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::POST_SET_DATA,
-            function (FormEvent $event) use ($cityModifier)
-            {
+            function (FormEvent $event) use ($cityModifier) {
                 $data = $event->getData();
                 $country = ($data === null) ? null : $data->getCountry();
                 $cityModifier($event->getForm(), $country);
@@ -160,8 +155,7 @@ class VehicleType extends AbstractType
 
         $builder->get('country')->addEventListener(
             FormEvents::POST_SUBMIT,
-            function (FormEvent $event) use ($cityModifier)
-            {
+            function (FormEvent $event) use ($cityModifier) {
                 $country = $event->getForm()->getData();
                 $cityModifier($event->getForm()->getParent(), $country);
             }

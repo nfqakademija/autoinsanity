@@ -5,7 +5,7 @@ namespace AppBundle\AdsProvider;
 use AppBundle\Entity\Vehicle;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DomCrawler\Crawler;
-use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\PropertyAccess\PropertyAccess;
 
 class AutopliusAdsProvider implements AdsProviderInterface
 {
@@ -16,13 +16,15 @@ class AutopliusAdsProvider implements AdsProviderInterface
         $this->em = $em;
     }
 
-    public function getNewAds() {
+    public function getNewAds()
+    {
         $hasItems = true;
         $cars = [];
         $details = [];
 
         $pageNumber = 1;
-        while ( $hasItems ) {
+        $accessor = PropertyAccess::createPropertyAccessor();
+        while ($hasItems) {
             $url = "https://autoplius.lt/skelbimai/naudoti-automobiliai?older_not=30&page_nr=" . $pageNumber;
             $html = $this->getHtml($url);
 
@@ -47,13 +49,16 @@ class AutopliusAdsProvider implements AdsProviderInterface
                 $price = trim($innerCrawler->filter('.classifieds-info .view-price')->text());
                 $price = (int)str_replace(' ', '', $price);
 
+                $providerId = $innerCrawler->filter('.announcement-id strong')->text();
+                $providerId = preg_replace("/[^0-9,.]/", "", $providerId);
+
                 $location = trim($innerCrawler->filter('.owner-contacts .owner-location')->text());
                 $tempArr = explode(",", $location);
                 $city = trim($tempArr[0]);
                 $country = trim($tempArr[1]);
 
                 $imageUrl = ($innerCrawler->filter('.announcement-media-gallery .thumbnail')->count()) ? trim($innerCrawler->filter('.announcement-media-gallery .thumbnail')->eq(0)->attr('style')): 'No image';
-                preg_match("/\(([^\)]*)\)/", $imageUrl ,$matches);
+                preg_match("/\(([^\)]*)\)/", $imageUrl, $matches);
                 $imageUrl = $matches[1];
                 $imageUrl = trim($imageUrl, " ' ");
                 $this->saveImages($imageUrl);
@@ -75,9 +80,14 @@ class AutopliusAdsProvider implements AdsProviderInterface
                     'price' => $price,
                     'city' => $city,
                     'country' => $country,
+                    'url' => $innerUrl,
+                    'providerId' => $providerId,
                     'details' => $details,
                 ];
-                $cars[] = $car;
+
+                $vehicle = $this->saveToModel($accessor, $car);
+
+                $cars[] = $vehicle;
             }
 
             $pageNumber++;
@@ -87,110 +97,100 @@ class AutopliusAdsProvider implements AdsProviderInterface
             if ($pageNumber > 1) {
                 break;
             }
-
         }
 
-        $this->saveToDb($cars);
+        return $cars;
+    }
+
+    public function saveToModel($accessor, $car)
+    {
+        $tempArr = explode("-", $car['details']['Pagaminimo data']);
+        $year = $tempArr[0];
+
+//        preg_match("/\(([^\)]*)\)/", $car['details']['Variklis'], $matches);
+//        $enginePower = (int)$matches[1];
+//        var_dump($enginePower);
+//        die();
+        $enginePower = 60;
+
+        $vehicle = new \AppBundle\Model\Vehicle();
+        $vehicle
+            ->setBrand(
+                $accessor->getValue($car, '[brand]')
+            )
+            ->setModel(
+                $accessor->getValue($car, '[model]')
+            )
+            ->setCountry(
+                $accessor->getValue($car, '[country]')
+            )
+            ->setCity(
+                $accessor->getValue($car, '[city]')
+            )
+            ->setBodyType(
+                $accessor->getValue($car, '[details][Kėbulo tipas]')
+            )
+            ->setFuelType(
+                $accessor->getValue($car, '[details][Kuro tipas]')
+            )
+            ->setColor(
+                $accessor->getValue($car, '[details][Spalva]')
+            )
+            ->setProviderId(
+                $accessor->getValue($car, '[providerId]')
+            )
+            ->setProvider('Autoplius')
+            ->setLink(
+                $accessor->getValue($car, '[url]')
+            )
+            ->setPrice(
+                $accessor->getValue($car, '[price]')
+            )
+            ->setYear($year)
+            ->setEngineSize(
+                $accessor->getValue($car, '[engineSize]')
+            )
+            ->setPower($enginePower)
+            ->setDoorsNumber(
+                $accessor->getValue($car, '[details][Durų skaičius]')
+            )
+            ->setSeatsNumber(
+                $accessor->getValue($car, '[details][Sėdimų vietų skaičius]')
+            )
+            ->setDriveType(
+                $accessor->getValue($car, '[details][Vairo padėtis]')
+            )
+            ->setTransmission(
+                $accessor->getValue($car, '[details][Pavarų dėžė]')
+            )
+            ->setClimateControl(
+                $accessor->getValue($car, '[details][Klimato valdymas]')
+            )
+            ->setDefects(
+                $accessor->getValue($car, '[details][Defektai]')
+            )
+            ->setSteeringWheel(
+                $accessor->getValue($car, '[details][Varantieji ratai]')
+            )
+            ->setWheelsDiameter(
+                $accessor->getValue($car, '[details][Ratlankių skersmuo]')
+            )
+            ->setWeight(
+                $accessor->getValue($car, '[details][Nuosava masė, kg]')
+            )
+            ->setMileage(
+                $accessor->getValue($car, '[details][Rida]')
+            );
+
+        return $vehicle;
     }
 
     public function saveImages($imageUrl)
     {
-
     }
 
-    public function saveToDb($cars)
+    public function getHtml($url)
     {
-        foreach ($cars as $car) {
-            $em = $this->em;
-            $repository = $em->getRepository("AppBundle:Brand");
-
-            $brand = $repository->findOneBy(array(
-                'name' => $car['brand']
-            ));
-
-            $repository = $em->getRepository("AppBundle:Model");
-            $model = $repository->findOneBy(array(
-                'name' => $car['model']
-            ));
-
-            $repository = $em->getRepository("AppBundle:Country");
-            $country = $repository->findOneBy(array(
-                'name' => $car['country']
-            ));
-
-            $repository = $em->getRepository("AppBundle:City");
-            $city = $repository->findOneBy(array(
-                'name' => $car['city']
-            ));
-
-            $repository = $em->getRepository("AppBundle:BodyType");
-            $bodyType = $repository->findOneBy(array(
-                'name' => $car['details']['Kėbulo tipas']
-            ));
-
-            $repository = $em->getRepository("AppBundle:FuelType");
-            $fuelType = $repository->findOneBy(array(
-                'name' => $car['details']['Kuro tipas']
-            ));
-
-            $repository = $em->getRepository("AppBundle:Color");
-            $color = $repository->findOneBy(array(
-                'name' => $car['details']['Spalva']
-            ));
-
-            $vehicle = new Vehicle();
-            $vehicle->setBrand($brand);
-            $vehicle->setModel($model);
-            $vehicle->setCountry($country);
-            $vehicle->setCity($city);
-            $vehicle->setBodyType($bodyType);
-            $vehicle->setFuelType($fuelType);
-            $vehicle->setColor($color);
-
-            $vehicle->setProviderId(1);
-            $vehicle->setProvider('autoplius');
-            $vehicle->setLink('autoplius');
-
-            $vehicle->setPrice($car['price']);
-
-            $tempArr = explode("-", $car['details']['Pagaminimo data']);
-            $year = $tempArr[0];
-            $vehicle->setYear($year);
-
-            $vehicle->setEngineSize($car['engineSize']);
-
-            preg_match("/\(([^\)]*)\)/", $car['details']['Variklis'] ,$matches);
-            $enginePower = (int)$matches[1];
-
-            $vehicle->setPower($enginePower);
-
-            $vehicle->setDoorsNumber($car['details']['Durų skaičius']);
-
-            $vehicle->setSeatsNumber($car['details']['Sėdimų vietų skaičius']);
-
-            $vehicle->setDriveType($car['details']['Vairo padėtis']);
-            $vehicle->setTransmission($car['details']['Pavarų dėžė']);
-            $vehicle->setClimateControl($car['details']['Klimato valdymas']);
-            $vehicle->setDefects($car['details']['Defektai']);
-            $vehicle->setSteeringWheel($car['details']['Varantieji ratai']);
-
-            $vehicle->setWheelsDiameter($car['details']['Ratlankių skersmuo']);
-
-            if (array_key_exists('Nuosava masė, kg', $car['details'])) {
-                $vehicle->setWeight($car['details']['Nuosava masė, kg']);
-            }
-            if (array_key_exists('Rida', $car['details'])) {
-                $vehicle->setMileage($car['details']['Rida']);
-            }
-            $em = $this->em;
-
-            $em->persist($vehicle);
-            $em->flush();
-        }
-        echo 'Autogidas: Saved to DB';
-    }
-
-    public function getHtml($url)	{
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36");
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

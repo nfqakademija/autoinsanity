@@ -15,13 +15,14 @@ class AutogidasAdsProvider implements AdsProviderInterface
         $this->em = $em;
     }
 
-    public function getNewAds() {
+    public function getNewAds()
+    {
         $hasItems = true;
         $cars = [];
         $details = [];
 
         $pageNumber = 1;
-        while ( $hasItems ) {
+        while ($hasItems) {
             $url = "https://autogidas.lt/automobiliai/?f_60=732&f_50=kaina_asc";
             $html = $this->getHtml($url);
 
@@ -43,7 +44,7 @@ class AutogidasAdsProvider implements AdsProviderInterface
 //                $tempArr = explode(",", $engineSize);
 //                $engineSize = (float)trim($tempArr[1]);
 //
-                $brand = trim($innerCrawler->filter('.bread-crumb a')->eq(1)->text());
+                $brand = trim($innerCrawler->filter('.bread-crumb a')->eq(1)->text()) . "autogidas";
                 $model = trim($innerCrawler->filter('.bread-crumb a')->eq(2)->text());
 
                 $price = trim($innerCrawler->filter('.params-block .price')->text());
@@ -82,115 +83,23 @@ class AutogidasAdsProvider implements AdsProviderInterface
             if ($pageNumber > 1) {
                 break;
             }
-
         }
 
-        var_dump($cars);
+        return $cars;
+//        var_dump($cars);
 //        $this->saveToDb($cars);
     }
 
     public function saveImages($imageUrl)
     {
-
     }
 
-    public function saveToDb($cars)
+    public function saveToModel($accessor, $car)
     {
-//        foreach ($cars as $car) {
-//            $em = $this->em;
-//            $repository = $em->getRepository("AppBundle:Brand");
-//
-//            $brand = $repository->findOneBy(array(
-//                'name' => $car['brand']
-//            ));
-//
-//            $repository = $em->getRepository("AppBundle:Model");
-//            $model = $repository->findOneBy(array(
-//                'name' => $car['model']
-//            ));
-//
-//            $repository = $em->getRepository("AppBundle:Country");
-//            $country = $repository->findOneBy(array(
-//                'name' => $car['country']
-//            ));
-//
-//            $repository = $em->getRepository("AppBundle:City");
-//            $city = $repository->findOneBy(array(
-//                'name' => $car['city']
-//            ));
-//
-//            $repository = $em->getRepository("AppBundle:BodyType");
-//            $bodyType = $repository->findOneBy(array(
-//                'name' => $car['details']['Kėbulo tipas']
-//            ));
-//
-//            $repository = $em->getRepository("AppBundle:FuelType");
-//            $fuelType = $repository->findOneBy(array(
-//                'name' => $car['details']['Kuro tipas']
-//            ));
-//
-//            if (array_key_exists('Spalva', $car['details'])) {
-//                $repository = $em->getRepository("AppBundle:Color");
-//                $color = $repository->findOneBy(array(
-//                    'name' => $car['details']['Spalva']
-//                ));
-//            } else {
-//                $color = 'Not set';
-//            }
-//
-//            $vehicle = new Vehicle();
-//            $vehicle->setBrand($brand);
-//            $vehicle->setModel($model);
-//            $vehicle->setCountry($country);
-//            $vehicle->setCity($city);
-//            $vehicle->setBodyType($bodyType);
-//            $vehicle->setFuelType($fuelType);
-//            $vehicle->setColor($color);
-//
-//            $vehicle->setProviderId(2);
-//            $vehicle->setProvider('autogidas');
-//            $vehicle->setLink('autogidas');
-//
-//            $vehicle->setPrice($car['price']);
-//
-//            $tempArr = explode("/", $car['details']['Metai']);
-//            $year = $tempArr[0];
-//            $vehicle->setYear($year);
-//
-//            $vehicle->setEngineSize($car['details']['Variklis']);
-//
-//            preg_match("/\(([^\)]*)\)/", $car['details']['Variklis'] ,$matches);
-//            $enginePower = (int)$matches[1];
-//
-//            $vehicle->setPower($enginePower);
-//
-//            $vehicle->setDoorsNumber($car['details']['Durų skaičius']);
-//
-//            $vehicle->setSeatsNumber($car['details']['Sėdimų vietų skaičius']);
-//
-//            $vehicle->setDriveType($car['details']['Vairo padėtis']);
-//            $vehicle->setTransmission($car['details']['Pavarų dėžė']);
-//            $vehicle->setClimateControl($car['details']['Klimato valdymas']);
-//            $vehicle->setDefects($car['details']['Defektai']);
-//            $vehicle->setSteeringWheel($car['details']['Varantieji ratai']);
-//
-//            $vehicle->setWheelsDiameter($car['details']['Ratlankių skersmuo']);
-//
-//            if (array_key_exists('Nuosava masė, kg', $car['details'])) {
-//                $vehicle->setWeight($car['details']['Nuosava masė, kg']);
-//            }
-//            if (array_key_exists('Rida', $car['details'])) {
-//                $vehicle->setMileage($car['details']['Rida']);
-//            }
-//            $em = $this->em;
-//
-//            $em->persist($vehicle);
-//            $em->flush();
-//        }
-//        echo 'Saved to DB';
     }
 
-    public function getHtml($url)	{
+    public function getHtml($url)
+    {
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36");
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

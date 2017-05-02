@@ -27,8 +27,10 @@ class DefaultController extends Controller
             'action' => $this->generateUrl('results_page')
         ]);
         $searchForm->handleRequest($request);
-        return $this->render('AppBundle:default:detailed_search.html.twig',
-            ['searchForm' => $searchForm->createView()]);
+        return $this->render(
+            'AppBundle:default:detailed_search.html.twig',
+            ['searchForm' => $searchForm->createView()]
+        );
     }
 
     /**
@@ -59,8 +61,7 @@ class DefaultController extends Controller
         $countries = $entityManager->getRepository('AppBundle:Country')->findAll();
         $cities = $entityManager->getRepository('AppBundle:City')->findAll();
         $colors = $entityManager->getRepository('AppBundle:Color')->findAll();
-        for($i = 0; $i < 100; $i++)
-        {
+        for ($i = 0; $i < 100; $i++) {
             $vehicle = new Vehicle();
             $vehicle->setBrand($brands[$i%sizeof($brands)]);
             $vehicle->setBodyType($bodyTypes[$i%sizeof($bodyTypes)]);
@@ -87,7 +88,6 @@ class DefaultController extends Controller
             $vehicle->setWheelsDiameter($i % 20);
             $vehicle->setWeight($i * 5454 % 2000);
             $entityManager->persist($vehicle);
-
         }
         $entityManager->flush();
         return $this->render('AppBundle:default:index.html.twig');
