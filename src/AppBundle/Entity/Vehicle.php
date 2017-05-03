@@ -122,7 +122,7 @@ class Vehicle
     /**
      * @var int
      *
-     * @ORM\Column(name="doors_number", type="string", nullable=true)
+     * @ORM\Column(name="doors_number", type="integer", nullable=true)
      */
     private $doorsNumber = null;
 
@@ -172,14 +172,14 @@ class Vehicle
     /**
      * @var int
      *
-     * @ORM\Column(name="steering_wheel", type="string", nullable=true)
+     * @ORM\Column(name="steering_wheel", type="integer", nullable=true)
      */
     private $steeringWheel = null;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="wheels_diameter", type="string", nullable=true)
+     * @ORM\Column(name="wheels_diameter", type="integer", nullable=true)
      */
     private $wheelsDiameter = null;
 
@@ -193,7 +193,7 @@ class Vehicle
     /**
      * @var int
      *
-     * @ORM\Column(name="mileage", type="string", nullable=true)
+     * @ORM\Column(name="mileage", type="integer", nullable=true)
      */
     private $mileage = null;
 
@@ -286,7 +286,7 @@ class Vehicle
     /**
      * Set engineSize
      */
-    public function setEngineSize(int $engineSize = null): Vehicle
+    public function setEngineSize(double $engineSize = null): Vehicle
     {
         $this->engineSize = $engineSize;
 
@@ -322,7 +322,7 @@ class Vehicle
     /**
      * Set doorsNumber
      */
-    public function setDoorsNumber(string $doorsNumber = null): Vehicle
+    public function setDoorsNumber(int $doorsNumber = null): Vehicle
     {
         $this->doorsNumber = $doorsNumber;
 
@@ -430,7 +430,7 @@ class Vehicle
     /**
      * Set steeringWheel
      */
-    public function setSteeringWheel(string $steeringWheel = null): Vehicle
+    public function setSteeringWheel(int $steeringWheel = null): Vehicle
     {
         $this->steeringWheel = $steeringWheel;
 
@@ -448,7 +448,7 @@ class Vehicle
     /**
      * Set wheelsDiameter
      */
-    public function setWheelsDiameter(string $wheelsDiameter = null): Vehicle
+    public function setWheelsDiameter(int $wheelsDiameter = null): Vehicle
     {
         $this->wheelsDiameter = $wheelsDiameter;
 
@@ -484,7 +484,7 @@ class Vehicle
     /**
      * Set mileage
      */
-    public function setMileage(string $mileage = null): Vehicle
+    public function setMileage(int $mileage = null): Vehicle
     {
         $this->mileage = $mileage;
 
