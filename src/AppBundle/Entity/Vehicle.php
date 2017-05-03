@@ -25,23 +25,23 @@ class Vehicle
     /**
      * @var int
      *
-     * @ORM\Column(name="provider_id", type="integer")
+     * @ORM\Column(name="provider_id", type="integer", nullable=true)
      */
-    private $providerId;
+    private $providerId = null;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="provider", type="string")
+     * @ORM\Column(name="provider", type="string", nullable=true)
      */
-    private $provider;
+    private $provider = null;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="link", type="string")
+     * @ORM\Column(name="link", type="string", nullable=true)
      */
-    private $link;
+    private $link = null;
 
     /**
      * @var Brand
@@ -62,16 +62,16 @@ class Vehicle
     /**
      * @var int
      *
-     * @ORM\Column(name="price", type="integer")
+     * @ORM\Column(name="price", type="integer", nullable=true)
      */
-    private $price;
+    private $price = null;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="year", type="integer")
+     * @ORM\Column(name="year", type="integer", nullable=true)
      */
-    private $year;
+    private $year = null;
 
     /**
      * @var Country
@@ -90,11 +90,11 @@ class Vehicle
     private $city;
 
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(name="engine_size", type="integer")
+     * @ORM\Column(name="engine_size", type="float", nullable=true)
      */
-    private $engineSize;
+    private $engineSize = null;
 
     /**
      * @var BodyType
@@ -107,9 +107,9 @@ class Vehicle
     /**
      * @var int
      *
-     * @ORM\Column(name="power", type="integer")
+     * @ORM\Column(name="power", type="integer", nullable=true)
      */
-    private $power;
+    private $power = null;
 
     /**
      * @var FuelType
@@ -122,37 +122,37 @@ class Vehicle
     /**
      * @var int
      *
-     * @ORM\Column(name="doors_number", type="integer")
+     * @ORM\Column(name="doors_number", type="string", nullable=true)
      */
-    private $doorsNumber;
+    private $doorsNumber = null;
 
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(name="seats_number", type="integer")
+     * @ORM\Column(name="seats_number", type="float", nullable=true)
      */
-    private $seatsNumber;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="drive_type", type="string")
-     */
-    private $driveType;
+    private $seatsNumber = null;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="transmission", type="string")
+     * @ORM\Column(name="drive_type", type="string", nullable=true)
      */
-    private $transmission;
+    private $driveType = null;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="climate_control", type="string")
+     * @ORM\Column(name="transmission", type="string", nullable=true)
      */
-    private $climateControl;
+    private $transmission = null;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="climate_control", type="string", nullable=true)
+     */
+    private $climateControl = null;
 
     /**
      * @var Color
@@ -165,39 +165,37 @@ class Vehicle
     /**
      * @var string
      *
-     * @ORM\Column(name="defects", type="string")
+     * @ORM\Column(name="defects", type="string", nullable=true)
      */
-    private $defects;
+    private $defects = null;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="steering_wheel", type="integer")
+     * @ORM\Column(name="steering_wheel", type="string", nullable=true)
      */
-    private $steeringWheel;
+    private $steeringWheel = null;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="wheels_diameter", type="integer")
+     * @ORM\Column(name="wheels_diameter", type="string", nullable=true)
      */
-    private $wheelsDiameter;
+    private $wheelsDiameter = null;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="weight", type="integer")
+     * @ORM\Column(name="weight", type="integer", nullable=true)
      */
-    private $weight;
+    private $weight = null;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="mileage", type="integer")
+     * @ORM\Column(name="mileage", type="string", nullable=true)
      */
-    private $mileage;
-
-    //TODO: add date field
+    private $mileage = null;
 
     public function __construct()
     {
@@ -214,7 +212,7 @@ class Vehicle
     /**
      * Set providerId
      */
-    public function setProviderId(int $providerId): Vehicle
+    public function setProviderId(int $providerId = null): Vehicle
     {
         $this->providerId = $providerId;
 
@@ -232,7 +230,7 @@ class Vehicle
     /**
      * Set provider
      */
-    public function setProvider(string $provider): Vehicle
+    public function setProvider(string $provider = null): Vehicle
     {
         $this->provider = $provider;
 
@@ -250,7 +248,7 @@ class Vehicle
     /**
      * Set price
      */
-    public function setPrice(int $price): Vehicle
+    public function setPrice(int $price = null): Vehicle
     {
         $this->price = $price;
 
@@ -268,7 +266,7 @@ class Vehicle
     /**
      * Set year
      */
-    public function setYear(int $year): Vehicle
+    public function setYear(int $year = null): Vehicle
     {
         $this->year = $year;
 
@@ -286,7 +284,7 @@ class Vehicle
     /**
      * Set engineSize
      */
-    public function setEngineSize(int $engineSize): Vehicle
+    public function setEngineSize(int $engineSize = null): Vehicle
     {
         $this->engineSize = $engineSize;
 
@@ -304,7 +302,7 @@ class Vehicle
     /**
      * Set power
      */
-    public function setPower(int $power): Vehicle
+    public function setPower(int $power = null): Vehicle
     {
         $this->power = $power;
 
@@ -322,7 +320,7 @@ class Vehicle
     /**
      * Set doorsNumber
      */
-    public function setDoorsNumber(int $doorsNumber): Vehicle
+    public function setDoorsNumber(string $doorsNumber = null): Vehicle
     {
         $this->doorsNumber = $doorsNumber;
 
@@ -340,7 +338,7 @@ class Vehicle
     /**
      * Set seatsNumber
      */
-    public function setSeatsNumber(int $seatsNumber): Vehicle
+    public function setSeatsNumber(float $seatsNumber = null): Vehicle
     {
         $this->seatsNumber = $seatsNumber;
 
@@ -350,7 +348,7 @@ class Vehicle
     /**
      * Get seatsNumber
      */
-    public function getSeatsNumber(): int
+    public function getSeatsNumber(): float
     {
         return $this->seatsNumber;
     }
@@ -358,7 +356,7 @@ class Vehicle
     /**
      * Set driveType
      */
-    public function setDriveType(string $driveType): Vehicle
+    public function setDriveType(string $driveType = null): Vehicle
     {
         $this->driveType = $driveType;
 
@@ -376,7 +374,7 @@ class Vehicle
     /**
      * Set transmission
      */
-    public function setTransmission(string $transmission): Vehicle
+    public function setTransmission(string $transmission = null): Vehicle
     {
         $this->transmission = $transmission;
 
@@ -394,7 +392,7 @@ class Vehicle
     /**
      * Set climateControl
      */
-    public function setClimateControl(string $climateControl): Vehicle
+    public function setClimateControl(string $climateControl = null): Vehicle
     {
         $this->climateControl = $climateControl;
 
@@ -412,7 +410,7 @@ class Vehicle
     /**
      * Set defects
      */
-    public function setDefects(string $defects): Vehicle
+    public function setDefects(string $defects = null): Vehicle
     {
         $this->defects = $defects;
 
@@ -430,7 +428,7 @@ class Vehicle
     /**
      * Set steeringWheel
      */
-    public function setSteeringWheel(int $steeringWheel): Vehicle
+    public function setSteeringWheel(string $steeringWheel = null): Vehicle
     {
         $this->steeringWheel = $steeringWheel;
 
@@ -448,7 +446,7 @@ class Vehicle
     /**
      * Set wheelsDiameter
      */
-    public function setWheelsDiameter(int $wheelsDiameter): Vehicle
+    public function setWheelsDiameter(string $wheelsDiameter = null): Vehicle
     {
         $this->wheelsDiameter = $wheelsDiameter;
 
@@ -466,7 +464,7 @@ class Vehicle
     /**
      * Set weight
      */
-    public function setWeight(int $weight): Vehicle
+    public function setWeight(int $weight = null): Vehicle
     {
         $this->weight = $weight;
 
@@ -484,7 +482,7 @@ class Vehicle
     /**
      * Set mileage
      */
-    public function setMileage(int $mileage): Vehicle
+    public function setMileage(string $mileage = null): Vehicle
     {
         $this->mileage = $mileage;
 
@@ -629,7 +627,7 @@ class Vehicle
     /**
      * Set link
      */
-    public function setLink(string $link): Vehicle
+    public function setLink(string $link = null): Vehicle
     {
         $this->link = $link;
 
