@@ -5,6 +5,24 @@
     {{ 'title.index'|trans }}
 {% endblock %}
 
+
+{% block jumbotron %}
+    <div class="index-jumbotron-container">
+        <div class="jumbotron index-jumbotron-content">
+            <div class="container text-center">
+                <span>
+                    <h1>
+                        Visi Lietuvos automobilių skelbimai vienoje vietoje
+                    </h1>
+                    <h2>
+                        Išbandyk, kaip tai patogu
+                    </h2>
+                </span>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
 {% block body %}
     {{ form_start(searchForm, { attr: {novalidate: 'novalidate'} }) }}
     <div class="row center">
