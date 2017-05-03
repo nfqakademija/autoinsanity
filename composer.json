@@ -25,6 +25,8 @@
         "doctrine/doctrine-cache-bundle": "^1.2",
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "doctrine/orm": "^2.5",
+        "friendsofsymfony/jsrouting-bundle": "^1.6",
+        "friendsofsymfony/user-bundle": "~2.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
@@ -39,7 +41,7 @@
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "sensio/generator-bundle": "^3.0",
         "squizlabs/php_codesniffer": "^2.8",
-        "symfony/phpunit-bridge": "3.3.*@dev",
+        "symfony/phpunit-bridge": "3.3.*@dev"
         "phpunit/phpunit": "6.*"
     },
     "scripts": {
@@ -67,7 +69,7 @@
         "symfony-var-dir": "var",
         "symfony-web-dir": "web",
         "symfony-tests-dir": "tests",
-        "symfony-assets-install": "relative",
+        "symfony-assets-install": "symlink",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
         },

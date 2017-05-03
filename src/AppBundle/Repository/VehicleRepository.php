@@ -13,11 +13,12 @@ use Doctrine\ORM\QueryBuilder;
  */
 class VehicleRepository extends EntityRepository
 {
-    const resultsPerPage = 20;
+    const RESULTS_PER_PAGE = 20;
 
     public function findAllJoinedTables(): array
     {
-        return $this->getJoinedTablesQuery()->orderBy('v.id')->getQuery()->getResult();
+        return $this->getJoinedTablesQuery()->orderBy('v.id')
+            ->getQuery()->getResult();
     }
 
     public function findAllByCriteria(array $criteria, int $page): array
@@ -107,8 +108,10 @@ class VehicleRepository extends EntityRepository
             $query = $query->andWhere('v.wheelsDiameter = :wheelsDiameter')
                 ->setParameter('wheelsDiameter', $criteria['wheelsDiameter']);
         }
-        if (!empty($criteria['steering_wheel']) ||
-            (isset($criteria['steering_wheel']) && $criteria['steering_wheel'] === '0')) {
+        if (!empty($criteria['steering_wheel'])
+            || (isset($criteria['steering_wheel'])
+            && $criteria['steering_wheel'] === '0')
+        ) {
             $query = $query->andWhere('v.steeringWheel = :steering_wheel')
                 ->setParameter('steering_wheel', $criteria['steering_wheel']);
         }
@@ -120,16 +123,38 @@ class VehicleRepository extends EntityRepository
             $query = $query->andWhere('v.mileage <= :mileage_to')
                 ->setParameter('mileage_to', $criteria['mileage_to']);
         }
+        // sorting of results
+        $sortValue = 'cost_min'; // default value
+        $sortField = 'price';
+        $sortDir = 'asc';
+        if (!empty($criteria['sort'])) {
+            $sortValue = $criteria['sort'];
+        }
+        // set sorting sql parameters
+        if ($sortValue === 'cost_max') {
+            $sortField = 'price';
+            $sortDir = 'desc';
+        } elseif ($sortValue === 'date_new') {
+            $sortField = 'date';
+            $sortDir = 'asc';
+        } elseif ($sortValue === 'date_old') {
+            $sortField = 'date';
+            $sortDir = 'desc';
+        }
+        $query = $query->orderBy("v.$sortField", $sortDir);
         $allResults = $query->getQuery()->getResult();
-        $totalPagesCount = intdiv(count($allResults), self::resultsPerPage);
-        if (count($allResults) % self::resultsPerPage != 0) {
+        $totalPagesCount = intdiv(count($allResults), self::RESULTS_PER_PAGE);
+        if (count($allResults) % self::RESULTS_PER_PAGE != 0) {
             $totalPagesCount++;
         }
         // filter results for pagination
-        $query->setFirstResult(self::resultsPerPage * ($page-1))
-            ->setMaxResults(self::resultsPerPage);
+        $query->setFirstResult(self::RESULTS_PER_PAGE * ($page-1))
+            ->setMaxResults(self::RESULTS_PER_PAGE);
 
-        return ['vehicles' => $query->getQuery()->getResult(), 'total_pages_count' => $totalPagesCount];
+        return [
+            'vehicles' => $query->getQuery()->getResult(),
+            'total_pages_count' => $totalPagesCount
+        ];
     }
 
     /**
@@ -137,7 +162,7 @@ class VehicleRepository extends EntityRepository
      */
     private function getJoinedTablesQuery(): QueryBuilder
     {
-        return $this->getEntityManager()->createQueryBuilder('v')
+        return $this->getEntityManager()->createQueryBuilder()
             ->select('v, bra, mod, bod, col, cou, cit, fue')
             ->from('AppBundle:Vehicle', 'v')
             ->join('v.brand', 'bra')

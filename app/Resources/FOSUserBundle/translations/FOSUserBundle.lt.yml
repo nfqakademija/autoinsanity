@@ -1,0 +1,8 @@
+resetting:
+    request:
+        email: 'Jūsų el. pašto adresas'
+
+security:
+    login:
+        email: 'El. paštas'
+        remember_me: 'Įsiminti mane'

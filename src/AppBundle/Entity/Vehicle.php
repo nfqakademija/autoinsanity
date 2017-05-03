@@ -197,6 +197,8 @@ class Vehicle
      */
     private $mileage = null;
 
+    //TODO: add date field
+
     public function __construct()
     {
     }
