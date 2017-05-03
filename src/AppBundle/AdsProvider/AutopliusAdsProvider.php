@@ -57,7 +57,9 @@ class AutopliusAdsProvider implements AdsProviderInterface
                 $city = trim($tempArr[0]);
                 $country = trim($tempArr[1]);
 
-                $imageUrl = ($innerCrawler->filter('.announcement-media-gallery .thumbnail')->count()) ? trim($innerCrawler->filter('.announcement-media-gallery .thumbnail')->eq(0)->attr('style')): 'No image';
+                $imageUrl = ($innerCrawler->filter('.announcement-media-gallery .thumbnail')->count()) ?
+                    trim($innerCrawler->filter('.announcement-media-gallery .thumbnail')->eq(0)->attr('style')):
+                    'No image';
                 preg_match("/\(([^\)]*)\)/", $imageUrl, $matches);
                 $imageUrl = $matches[1];
                 $imageUrl = trim($imageUrl, " ' ");
@@ -192,7 +194,12 @@ class AutopliusAdsProvider implements AdsProviderInterface
     public function getHtml($url)
     {
         $curl = curl_init($url);
-        curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36");
+        curl_setopt(
+            $curl,
+            CURLOPT_USERAGENT,
+            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) 
+            Chrome/57.0.2987.133 Safari/537.36"
+        );
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         $html = curl_exec($curl);
         curl_close($curl);
