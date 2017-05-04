@@ -50,7 +50,9 @@ class AutogidasAdsProvider implements AdsProviderInterface
                 $price = trim($innerCrawler->filter('.params-block .price')->text());
                 $price = (int)str_replace(' ', '', $price);
 
-                $location = ($innerCrawler->filter('.contacts-wrapper .seller-location')->count()) ? trim($innerCrawler->filter('.contacts-wrapper .seller-location')->text()): 'Not set, Not set';
+                $location = ($innerCrawler->filter('.contacts-wrapper .seller-location')->count()) ?
+                    trim($innerCrawler->filter('.contacts-wrapper .seller-location')->text()) :
+                    'Not set, Not set';
                 $tempArr = explode(",", $location);
                 $city = trim($tempArr[0]);
                 $country = trim($tempArr[1]);
@@ -59,8 +61,12 @@ class AutogidasAdsProvider implements AdsProviderInterface
 
                 foreach ($items as $innerDomRow) {
                     $row = new Crawler($innerDomRow);
-                    $key = ($row->filterXPath('//div[@class="left"]')->count()) ? trim($row->filterXPath('//div[@class="left"]')->text()) : 'Not set';
-                    $value = ($row->filterXPath('//div[@class="right"]')->count()) ? trim($row->filterXPath('//div[@class="right"]')->text()) : '';
+                    $key = ($row->filterXPath('//div[@class="left"]')->count()) ?
+                        trim($row->filterXPath('//div[@class="left"]')->text()) :
+                        'Not set';
+                    $value = ($row->filterXPath('//div[@class="right"]')->count()) ?
+                        trim($row->filterXPath('//div[@class="right"]')->text()) :
+                        '';
 
                     $details[$key] = $value;
                 }
@@ -101,7 +107,12 @@ class AutogidasAdsProvider implements AdsProviderInterface
     public function getHtml($url)
     {
         $curl = curl_init($url);
-        curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36");
+        curl_setopt(
+            $curl,
+            CURLOPT_USERAGENT,
+            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) 
+            Chrome/57.0.2987.133 Safari/537.36"
+        );
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         $html = curl_exec($curl);
         curl_close($curl);

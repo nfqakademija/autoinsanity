@@ -53,7 +53,6 @@ class StartCrawlerCommand extends Command
          * @var Vehicle[] $ads
          */
         foreach ($ads as $ad) {
-
             $repository = $em->getRepository("AppBundle:Brand");
             $brand = $repository->findOneBy(array(
                 'name' => $ad->getBrand(),
