@@ -3,12 +3,12 @@
     <head>
         <meta charset="UTF-8" />
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
-        <link href="styles/style.css" rel="stylesheet" />
+        <link href="{{ asset('styles/style.css') }}" rel="stylesheet" />
         <title>{% block title %}{% endblock %} - {{ 'title.website_name'|trans }}</title>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-        <nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar navbar-default navbar-static-top navbar-inverse">
             <div class="container">
                 <div class=container-fluid">
                     <a class="navbar-brand" href="{{ path('homepage') }}">
@@ -31,10 +31,20 @@
                             </li>
                         {% else %}
                             <li>
-                                <a href="{{ path('fos_user_registration_register') }}">{{ 'header.link.register'|trans }}</a>
+                                <p class="navbar-btn">
+                                    <a href="{{ path('fos_user_registration_register') }}" class="btn btn-default">
+                                        {{ 'header.link.register'|trans }}
+                                    </a>
+                                </p>
+
                             </li>
                             <li>
-                                <a href="{{ path('fos_user_security_login') }}">{{ 'header.link.login'|trans }}</a>
+                                <p class="navbar-btn">
+                                    <a href="{{ path('fos_user_security_login') }}" class="btn btn-primary">
+                                        {{ 'header.link.login'|trans }}
+                                    </a>
+                                </p>
+
                             </li>
                         {% endif %}
                     </ul>

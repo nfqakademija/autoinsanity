@@ -48,23 +48,26 @@
     </div>
 {% endblock %}
 
+{% set header_title = 'title.results'|trans({'%page%': page, '%pages%': total_pages_count}) %}
+
 {% block body %}
-    <h4>{{ 'title.results'|trans({'%page%': page, '%pages%': total_pages_count}) }}</h4>
     <div class="row">
         <div class="col-md-8">
         {% if items|length == 0 %}
+            <h3>{{ header_title }}</h3>
             <div class="alert alert-danger">{{ 'results.error.no_results'|trans() }}</div>
         {% else %}
             <div class="row">
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-8">
-                            {{ block('pagination') }}
+                            <h3>{{ header_title }}</h3>
                         </div>
                         <div class="col-md-4">
                             {{ form_row(searchForm.sort, {'attr': {'form': search_form_id}}) }}
                         </div>
                     </div>
+                    {{ block('pagination') }}
                     <div class="row">
                         <div class="col-md-12">
                             {% for item in items %}
@@ -78,7 +81,7 @@
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <a href="{{ item.link }}">
-                                                        <h3>{{ item.brand.name }} {{ item.model.name }}</h3>
+                                                        <h3><b>{{ item.brand.name }} {{ item.model.name }}</b></h3>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-4">

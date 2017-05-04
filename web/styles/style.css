@@ -1,6 +1,8 @@
 
 .navbar-default { margin : 0 !important; }
 
+
+
 @font-face {
     font-family: 'nerisblack';
     src: url('../fonts/neris_black/Neris-Black-webfont.eot');
@@ -39,7 +41,7 @@
 /*}*/
 
 .auto-price {
-    font-family: 'nerisblack';
+    font-family: 'nerisblack', Helvetica;
 }
 
 .index-jumbotron-container {
@@ -54,17 +56,19 @@
     display: table;
     height: 100%;
     width: 100%;
-    margin-bottom: 20px;
 }
 
 .index-jumbotron-content {
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
+    background: rgba(0, 16, 63, 0.5);
     display: table-cell;
-    font-family: 'nerisblack';
+    font-family: 'nerisblack', Helvetica;
     min-height: 50vh;
     height: 50vh;
     vertical-align: middle;
+}
+
+.index-jumbotron-content .container h1,h2 {
+    color: white;
 }
 
 .index-jumbotron-content .container {
@@ -77,5 +81,18 @@
 }
 
 .navbar-brand {
-    font-family: 'nerisblack';
+    font-family: 'nerisblack', Helvetica;
+}
+
+.navbar-nav li {
+    margin-right: 12px;
+}
+
+#index-form-container {
+    background-color: #001F3F;
+    padding-top: 20px;
+}
+
+#index-form-container label {
+    color: white;
 }
