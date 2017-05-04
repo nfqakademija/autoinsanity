@@ -194,7 +194,7 @@ class Vehicle
     /**
      * @var int
      *
-     * @ORM\Column(name="mileage", type="string", nullable=true)
+     * @ORM\Column(name="mileage", type="integer", nullable=true)
      */
     private $mileage = null;
 
@@ -483,7 +483,7 @@ class Vehicle
     /**
      * Set mileage
      */
-    public function setMileage(string $mileage = null): Vehicle
+    public function setMileage(int $mileage = null): Vehicle
     {
         $this->mileage = $mileage;
 

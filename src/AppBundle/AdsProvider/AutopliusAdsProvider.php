@@ -24,7 +24,6 @@ class AutopliusAdsProvider implements AdsProviderInterface
     {
         $hasItems = true;
         $cars = [];
-        $details = [];
 
         $pageNumber = 1;
         $accessor = PropertyAccess::createPropertyAccessor();
@@ -37,6 +36,7 @@ class AutopliusAdsProvider implements AdsProviderInterface
             $crawler = $crawler->filter('.item-section');
 
             foreach ($crawler as $domRow) {
+                $details = [];
                 $hasItems = true;
                 $row = new Crawler($domRow);
 
@@ -75,7 +75,9 @@ class AutopliusAdsProvider implements AdsProviderInterface
                     $row = new Crawler($innerDomRow);
                     $key = $row->filterXPath("//th")->text();
                     $value = $row->filterXPath("//td")->text();
-
+                    if ($key == 'Rida') {
+                        $value = intval(preg_replace("/[^0-9,.]/", "", $value));
+                    }
                     $details[$key] = $value;
                 }
 
@@ -90,7 +92,6 @@ class AutopliusAdsProvider implements AdsProviderInterface
                     'providerId' => $providerId,
                     'details' => $details,
                 ];
-
                 $vehicle = $this->saveToModel($accessor, $car);
 
                 $cars[] = $vehicle;

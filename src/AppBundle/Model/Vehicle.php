@@ -123,7 +123,7 @@ class Vehicle
     private $weight = null;
 
     /**
-     * @var string
+     * @var int
      */
     private $mileage = null;
 
@@ -413,7 +413,7 @@ class Vehicle
     }
 
     /**
-     * @param string $mileage
+     * @param int $mileage
      * @return Vehicle
      */
     public function setMileage($mileage)
