@@ -18,16 +18,39 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="{{ path('detailed_search') }}">{{ 'header.link.detailed_search'|trans }}</a>
+                            <a href="{{ path('detailed_search') }}">
+                                <span class="glyphicon glyphicon-search"></span>
+                                {{ 'header.link.detailed_search'|trans }}
+                            </a>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                             <li>
-                                <a href="{{ path('fos_user_profile_show') }}">{{ 'header.link.profile'|trans }}</a>
+                                <a href="{{ path('searches') }}">
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    {{ 'header.link.searches'|trans }}
+                                </a>
                             </li>
                             <li>
-                                <a href="{{ path('fos_user_security_logout') }}">{{ 'header.link.logout'|trans }}</a>
+                                <a href="{{ path('pinned') }}">
+                                    <span class="glyphicon glyphicon-heart"></span>
+                                    {{ 'header.link.pinned'|trans }}
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('fos_user_profile_show') }}">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    {{ 'header.link.profile'|trans }}
+                                </a>
+                            </li>
+                            <li>
+                                <p class="navbar-btn">
+                                    <a href="{{ path('fos_user_security_logout') }}" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-off"></span>
+                                        {{ 'header.link.logout'|trans }}
+                                    </a>
+                                </p>
                             </li>
                         {% else %}
                             <li>

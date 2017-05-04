@@ -104,6 +104,20 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/searches", name="searches")
+     */
+    public function savedSearchesAction() {
+        return new JsonResponse();
+    }
+
+    /**
+     * @Route("/pinned", name="pinned")
+     */
+    public function pinnedVehiclesAction() {
+        return new JsonResponse();
+    }
+
+    /**
      * @Route("/generate", name="generate_fakes")
      */
     public function generateFakesAction()

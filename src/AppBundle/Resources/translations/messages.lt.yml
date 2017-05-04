@@ -1,6 +1,8 @@
 header:
     link:
-        detailed_search: 'Paieška'
+        detailed_search: 'Detalioji paieška'
+        searches: 'Mano paieškos'
+        pinned: 'Išsaugoti skelbimai'
         profile: 'Mano profilis'
         logout: 'Atsijungti'
         register: 'Užsiregistruoti'

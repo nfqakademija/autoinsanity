@@ -25,25 +25,25 @@
         {{ form_start(searchForm, { attr: {novalidate: 'novalidate'} }) }}
         <div class="row center">
             <div class="col-md-6 col-lg-offset-3">
-                {{ form_row(searchForm.brand) }}
-                {{ form_row(searchForm.model) }}
+                {{ form_row(searchForm.brand, {'attr': {'class': 'input-lg'}}) }}
+                {{ form_row(searchForm.model, {'attr': {'class': 'input-lg'}}) }}
                 <div class="row">
                     <div class="col-md-6">
-                        {{ form_row(searchForm.price_from) }}
+                        {{ form_row(searchForm.price_from, {'attr': {'class': 'input-lg'}}) }}
                     </div>
                     <div class="col-md-6">
-                        {{ form_row(searchForm.price_to) }}
+                        {{ form_row(searchForm.price_to, {'attr': {'class': 'input-lg'}}) }}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        {{ form_row(searchForm.year_from) }}
+                        {{ form_row(searchForm.year_from, {'attr': {'class': 'input-lg'}}) }}
                     </div>
                     <div class="col-md-6">
-                        {{ form_row(searchForm.year_to) }}
+                        {{ form_row(searchForm.year_to, {'attr': {'class': 'input-lg'}}) }}
                     </div>
                 </div>
-                {{ form_row(searchForm.fuel_type) }}
+                {{ form_row(searchForm.fuel_type, {'attr': {'class': 'input-lg'}}) }}
             </div>
         </div>
         <div class="row text-center">

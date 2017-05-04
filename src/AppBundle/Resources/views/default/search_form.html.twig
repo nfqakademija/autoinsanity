@@ -4,15 +4,16 @@
     $brand.change(function () {
         var $form = $(this).closest('form');
         var data = { };
+        var classes = $('#model').attr('class');
+
         data[$brand.attr('name')] = $brand.val();
         $.ajax({
             url : "{{ url('detailed_search') }}",
             type: $form.attr('method'),
             data : data,
             success: function(html) {
-                $('#model').replaceWith(
-                    $(html).find('#model')
-                );
+                $('#model').replaceWith($(html).find('#model'));
+                $('#model').attr('class', classes)
             }
         });
     });
@@ -22,15 +23,15 @@
     $country.change(function () {
         var $form = $(this).closest('form');
         var data = { };
+        var classes = $('#city').attr('class');
         data[$country.attr('name')] = $country.val();
         $.ajax({
             url : "{{ url('detailed_search') }}",
             type: $form.attr('method'),
             data : data,
             success: function(html) {
-                $('#city').replaceWith(
-                    $(html).find('#city')
-                );
+                $('#city').replaceWith($(html).find('#city'))
+                $('#city').attr('class', classes)
             }
         });
     });

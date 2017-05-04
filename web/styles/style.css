@@ -96,3 +96,7 @@
 #index-form-container label {
     color: white;
 }
+
+.inline-block {
+    display: inline-block;
+}
