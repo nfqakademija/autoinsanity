@@ -25,16 +25,16 @@ class Vehicle
     /**
      * @var int
      *
-     * @ORM\Column(name="provider_id", type="integer", nullable=true)
+     * @ORM\Column(name="provider_id", type="integer")
      */
-    private $providerId = null;
+    private $providerId;
 
     /**
-     * @var string
+     * @var Provider
      *
-     * @ORM\Column(name="provider", type="string", nullable=true)
+     * @ORM\Column(name="provider", type="string")
      */
-    private $provider = null;
+    private $provider;
 
     /**
      * @var string
