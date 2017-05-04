@@ -32,7 +32,8 @@ class Vehicle
     /**
      * @var Provider
      *
-     * @ORM\Column(name="provider", type="string")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Provider")
+     * @ORM\JoinColumn(name="provider", referencedColumnName="id")
      */
     private $provider;
 
@@ -230,7 +231,7 @@ class Vehicle
     /**
      * Set provider
      */
-    public function setProvider(string $provider = null): Vehicle
+    public function setProvider(Provider $provider = null): Vehicle
     {
         $this->provider = $provider;
 
@@ -240,7 +241,7 @@ class Vehicle
     /**
      * Get provider
      */
-    public function getProvider(): string
+    public function getProvider(): Provider
     {
         return $this->provider;
     }

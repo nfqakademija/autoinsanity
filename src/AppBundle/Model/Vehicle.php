@@ -2,6 +2,8 @@
 
 namespace AppBundle\Model;
 
+use AppBundle\Entity\Provider;
+
 class Vehicle
 {
 
@@ -11,14 +13,14 @@ class Vehicle
     private $providerId = null;
 
     /**
-     * @var string
+     * @var Provider
      */
-    private $provider = null;
+    private $provider;
 
     /**
      * @var string
      */
-    private $link = null;
+    private $link;
 
     /**
      * @var string
@@ -145,7 +147,7 @@ class Vehicle
     }
 
     /**
-     * @param string $provider
+     * @param Provider $provider
      * @return Vehicle
      */
     public function setProvider($provider)
@@ -156,7 +158,7 @@ class Vehicle
     }
 
     /**
-     * @return string
+     * @return Provider
      */
     public function getProvider()
     {

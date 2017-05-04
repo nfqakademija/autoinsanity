@@ -10,10 +10,14 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 class AutopliusAdsProvider implements AdsProviderInterface
 {
     protected $em;
+    private $provider;
 
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
+        $this->provider = $this->em->getRepository("AppBundle:Provider")->findOneBy(
+            ['name' => 'Autoplius.lt']
+        );
     }
 
     public function getNewAds()
@@ -141,7 +145,7 @@ class AutopliusAdsProvider implements AdsProviderInterface
             ->setProviderId(
                 $accessor->getValue($car, '[providerId]')
             )
-            ->setProvider('Autoplius')
+            ->setProvider($this->provider)
             ->setLink(
                 $accessor->getValue($car, '[url]')
             )
