@@ -80,6 +80,10 @@ class VehicleRepository extends EntityRepository
             $query = $query->andWhere('v.fuelType = :fuel_type')
                 ->setParameter('fuel_type', $criteria['fuel_type']);
         }
+        if (!empty($criteria['body_type'])) {
+            $query = $query->andWhere('v.bodyType = :body_type')
+                ->setParameter('body_type', $criteria['body_type']);
+        }
         if (!empty($criteria['doors_number'])) {
             $query = $query->andWhere('v.doorsNumber = :doors_number')
                 ->setParameter('doors_number', $criteria['doors_number']);

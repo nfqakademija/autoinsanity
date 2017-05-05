@@ -135,23 +135,25 @@ class Vehicle
     private $seatsNumber = null;
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="drive_type", type="string", nullable=true)
+     * @ORM\Column(name="drive_type", type="integer", nullable=true)
      */
     private $driveType = null;
 
     /**
-     * @var string
+     * @var Transmission
      *
-     * @ORM\Column(name="transmission", type="string", nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Transmission")
+     * @ORM\JoinColumn(name="transmission", referencedColumnName="id")
      */
     private $transmission = null;
 
     /**
-     * @var string
+     * @var ClimateControl
      *
-     * @ORM\Column(name="climate_control", type="string", nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ClimateControl")
+     * @ORM\JoinColumn(name="climate_control", referencedColumnName="id")
      */
     private $climateControl = null;
 
@@ -164,11 +166,12 @@ class Vehicle
     private $color;
 
     /**
-     * @var string
+     * @var Defects
      *
-     * @ORM\Column(name="defects", type="string", nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Defects")
+     * @ORM\JoinColumn(name="defects", referencedColumnName="id")
      */
-    private $defects = null;
+    private $defects;
 
     /**
      * @var int
@@ -205,6 +208,45 @@ class Vehicle
      */
     private $image = null;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="next_check_year", type="integer", nullable=true)
+     */
+    private $nextCheckYear = null;
+
+    /**
+     * @var Country
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country")
+     * @ORM\JoinColumn(name="first_country", referencedColumnName="id")
+     */
+    private $firstCountry;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="gears_number", type="integer", nullable=true)
+     */
+    private $gearsNumber = null;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="last_ad_update", type="datetime", nullable=true)
+     */
+    private $lastAdUpdate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="last_check", type="datetime", nullable=true)
+     */
+    private $lastCheck;
+
+    /**
+     * Vehicle constructor.
+     */
     public function __construct()
     {
     }
@@ -364,7 +406,7 @@ class Vehicle
     /**
      * Set driveType
      */
-    public function setDriveType(string $driveType = null): Vehicle
+    public function setDriveType(int $driveType = null): Vehicle
     {
         $this->driveType = $driveType;
 
@@ -374,63 +416,9 @@ class Vehicle
     /**
      * Get driveType
      */
-    public function getDriveType(): ?string
+    public function getDriveType(): ?int
     {
         return $this->driveType;
-    }
-
-    /**
-     * Set transmission
-     */
-    public function setTransmission(string $transmission = null): Vehicle
-    {
-        $this->transmission = $transmission;
-
-        return $this;
-    }
-
-    /**
-     * Get transmission
-     */
-    public function getTransmission(): ?string
-    {
-        return $this->transmission;
-    }
-
-    /**
-     * Set climateControl
-     */
-    public function setClimateControl(string $climateControl = null): Vehicle
-    {
-        $this->climateControl = $climateControl;
-
-        return $this;
-    }
-
-    /**
-     * Get climateControl
-     */
-    public function getClimateControl(): ?string
-    {
-        return $this->climateControl;
-    }
-
-    /**
-     * Set defects
-     */
-    public function setDefects(string $defects = null): Vehicle
-    {
-        $this->defects = $defects;
-
-        return $this;
-    }
-
-    /**
-     * Get defects
-     */
-    public function getDefects(): ?string
-    {
-        return $this->defects;
     }
 
     /**
@@ -591,7 +579,7 @@ class Vehicle
     /**
      * Get bodyType
      */
-    public function getBodyType(): BodyType
+    public function getBodyType(): ?BodyType
     {
         return $this->bodyType;
     }
@@ -609,7 +597,7 @@ class Vehicle
     /**
      * Get fuelType
      */
-    public function getFuelType(): FuelType
+    public function getFuelType(): ?FuelType
     {
         return $this->fuelType;
     }
@@ -627,7 +615,7 @@ class Vehicle
     /**
      * Get color
      */
-    public function getColor(): Color
+    public function getColor(): ?Color
     {
         return $this->color;
     }
@@ -666,5 +654,152 @@ class Vehicle
     public function getImage(): ?string
     {
         return $this->image;
+    }
+
+
+    /**
+     * Set transmission
+     */
+    public function setTransmission(Transmission $transmission = null): Vehicle
+    {
+        $this->transmission = $transmission;
+
+        return $this;
+    }
+
+    /**
+     * Get transmission
+     */
+    public function getTransmission(): ?Transmission
+    {
+        return $this->transmission;
+    }
+
+    /**
+     * Set climateControl
+     *
+     * @return Vehicle
+     */
+    public function setClimateControl(ClimateControl $climateControl = null): Vehicle
+    {
+        $this->climateControl = $climateControl;
+
+        return $this;
+    }
+
+    /**
+     * Get climateControl
+     */
+    public function getClimateControl(): ?ClimateControl
+    {
+        return $this->climateControl;
+    }
+
+    /**
+     * Set defects
+     */
+    public function setDefects(Defects $defects = null): Vehicle
+    {
+        $this->defects = $defects;
+
+        return $this;
+    }
+
+    /**
+     * Get defects
+     */
+    public function getDefects(): ?Defects
+    {
+        return $this->defects;
+    }
+
+    /**
+     * Set nextCheckYear
+     */
+    public function setNextCheckYear(int $nextCheckYear = null): Vehicle
+    {
+        $this->nextCheckYear = $nextCheckYear;
+
+        return $this;
+    }
+
+    /**
+     * Get nextCheckYear
+     */
+    public function getNextCheckYear(): ?int
+    {
+        return $this->nextCheckYear;
+    }
+
+    /**
+     * Set gearsNumber
+     */
+    public function setGearsNumber(int $gearsNumber = null): Vehicle
+    {
+        $this->gearsNumber = $gearsNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get gearsNumber
+     */
+    public function getGearsNumber(): ?int
+    {
+        return $this->gearsNumber;
+    }
+
+    /**
+     * Set lastAdUpdate
+     */
+    public function setLastAdUpdate(\DateTime $lastAdUpdate): Vehicle
+    {
+        $this->lastAdUpdate = $lastAdUpdate;
+
+        return $this;
+    }
+
+    /**
+     * Get lastAdUpdate
+     */
+    public function getLastAdUpdate(): \DateTime
+    {
+        return $this->lastAdUpdate;
+    }
+
+    /**
+     * Set lastCheck
+     */
+    public function setLastCheck(\DateTime $lastCheck): Vehicle
+    {
+        $this->lastCheck = $lastCheck;
+
+        return $this;
+    }
+
+    /**
+     * Get lastCheck
+     */
+    public function getLastCheck(): \DateTime
+    {
+        return $this->lastCheck;
+    }
+
+    /**
+     * Set firstCountry
+     */
+    public function setFirstCountry(Country $firstCountry = null): Vehicle
+    {
+        $this->firstCountry = $firstCountry;
+
+        return $this;
+    }
+
+    /**
+     * Get firstCountry
+     */
+    public function getFirstCountry(): Country
+    {
+        return $this->firstCountry;
     }
 }

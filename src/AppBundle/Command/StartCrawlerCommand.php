@@ -2,6 +2,7 @@
 namespace AppBundle\Command;
 
 use AppBundle\Model\Vehicle;
+use AppBundle\Entity\Vehicle as VehicleEntity;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -40,14 +41,9 @@ class StartCrawlerCommand extends Command
         foreach ($this->adsProviders as $adsProvider) {
             $crawlerManager = new $adsProvider($this->em, $this->imgDirectory);
             $ads = $crawlerManager->getNewAds();
-
-//            $ads = array_merge($ads, $providerAds);
-//            dump($ads);
+            dump($ads);
             $this->save($ads);
         }
-
-
-//
     }
 
     private function save(array $ads)
@@ -65,6 +61,7 @@ class StartCrawlerCommand extends Command
             $repository = $em->getRepository("AppBundle:Model");
             $model = $repository->findOneBy(array(
                 'name' => $ad->getModel(),
+                'brand' => $brand,
             ));
 
             $repository = $em->getRepository("AppBundle:Country");
@@ -75,6 +72,7 @@ class StartCrawlerCommand extends Command
             $repository = $em->getRepository("AppBundle:City");
             $city = $repository->findOneBy(array(
                 'name' => $ad->getCity(),
+                'country' => $country,
             ));
 
             $repository = $em->getRepository("AppBundle:BodyType");
@@ -92,7 +90,37 @@ class StartCrawlerCommand extends Command
                 'name' => $ad->getColor(),
             ));
 
-            $vehicle = new Entity\Vehicle();
+            $repository = $em->getRepository("AppBundle:Defects");
+            $defects = $repository->findOneBy(array(
+                'name' => $ad->getDefects(),
+            ));
+
+            $repository = $em->getRepository("AppBundle:Transmission");
+            $transmission = $repository->findOneBy(array(
+                'name' => $ad->getTransmission(),
+            ));
+
+            $repository = $em->getRepository("AppBundle:ClimateControl");
+            $climateControl = $repository->findOneBy(array(
+                'name' => $ad->getClimateControl(),
+            ));
+
+            $repository = $em->getRepository("AppBundle:Country");
+            $firstCountry = $repository->findOneBy(array(
+                'name' => $ad->getFirstCountry(),
+            ));
+
+            // update vehicle if it already exists
+            $repository = $em->getRepository("AppBundle:Vehicle");
+            $vehicle = $repository->findOneBy([
+                'provider' => $ad->getProvider(),
+                'providerId' => $ad->getProviderId(),
+            ]);
+            // if not found, create new
+            if ($vehicle == null) {
+                $vehicle = new VehicleEntity();
+            }
+
             $vehicle->setBrand($brand);
             $vehicle->setModel($model);
             $vehicle->setCountry($country);
@@ -108,15 +136,21 @@ class StartCrawlerCommand extends Command
             $vehicle->setEngineSize($ad->getEngineSize());
             $vehicle->setPower($ad->getPower());
             $vehicle->setDoorsNumber($ad->getDoorsNumber());
+            $vehicle->setSeatsNumber($ad->getSeatsNumber());
             $vehicle->setDriveType($ad->getDriveType());
-            $vehicle->setTransmission($ad->getTransmission());
-            $vehicle->setClimateControl($ad->getClimateControl());
-            $vehicle->setDefects($ad->getDefects());
+            $vehicle->setTransmission($transmission);
+            $vehicle->setClimateControl($climateControl);
+            $vehicle->setDefects($defects);
             $vehicle->setSteeringWheel($ad->getSteeringWheel());
             $vehicle->setWheelsDiameter($ad->getWheelsDiameter());
             $vehicle->setWeight($ad->getWeight());
             $vehicle->setMileage($ad->getMileage());
             $vehicle->setImage($ad->getImage());
+            $vehicle->setNextCheckYear($ad->getNextCheckYear());
+            $vehicle->setFirstCountry($firstCountry);
+            $vehicle->setGearsNumber($ad->getGearsNumber());
+            $vehicle->setLastAdUpdate($ad->getLastAdUpdate());
+            $vehicle->setLastCheck(new \DateTime());
             $em->persist($vehicle);
         }
 

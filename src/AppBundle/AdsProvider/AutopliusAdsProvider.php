@@ -17,13 +17,13 @@ class AutopliusAdsProvider implements AdsProviderInterface
     {
         $this->em = $em;
         $this->imgDirectory = $imgDirectory;
-        $this->provider = $this->em->getRepository("AppBundle:Provider")->findOneBy(
-            ['name' => 'Autoplius.lt']
-        );
     }
 
     public function getNewAds()
     {
+        $this->provider = $this->em->getRepository("AppBundle:Provider")->findOneBy(
+            ['name' => 'Autoplius.lt']
+        );
         $cars = [];
         $hasItems = true;
         $pageNumber = 1;
@@ -31,8 +31,9 @@ class AutopliusAdsProvider implements AdsProviderInterface
             $hasItems = false;
             $url = "https://autoplius.lt/skelbimai/naudoti-automobiliai?older_not=30&page_nr=" . $pageNumber;
             $html = $this->getHtml($url);
-            $cars = $this->parseAdsPage($html);
-            if ($cars !== null) {
+            $pageCars = $this->parseAdsPage($html);
+            $cars = array_merge($cars, $pageCars);
+            if ($pageCars !== null) {
                 $hasItems = true;
                 $pageNumber++;
                 sleep(1);
@@ -45,25 +46,34 @@ class AutopliusAdsProvider implements AdsProviderInterface
         return $cars;
     }
 
-    private function parseAdsPage($html) {
+    private function parseAdsPage($html)
+    {
         $cars = [];
 
         $crawler = new Crawler($html);
-        $crawler = $crawler->filter('.item-section');
+        $crawler = $crawler->filter('.item');
 
         foreach ($crawler as $domRow) {
             $row = new Crawler($domRow);
+
+            $lastUpdate = $row->filter('.details-list  .tools-right');
+            if ($lastUpdate->count() > 0) {
+                $lastUpdate = preg_replace('/\W\w+\s*(\W*)$/', '$1', $lastUpdate->text());
+                $lastUpdateDate = $this->parseDate($lastUpdate);
+            }
             $innerUrl = $row->filter('.title-list a')->attr('href');
             $car = $this->parseAd($innerUrl);
+
+            $car['last_update'] = $lastUpdateDate;
             $accessor = PropertyAccess::createPropertyAccessor();
             $vehicle = $this->saveToModel($accessor, $car);
-
             $cars[] = $vehicle;
         }
         return $cars;
     }
 
-    private function parseAd($innerUrl) {
+    private function parseAd($innerUrl)
+    {
         $dummy = null;
         $details = [];
         $innerHtml = $this->getHtml($innerUrl);
@@ -73,15 +83,12 @@ class AutopliusAdsProvider implements AdsProviderInterface
         $model = trim($innerCrawler->filter('.content-container .breadcrumbs li')->eq(3)->text());
         $price = trim($innerCrawler->filter('.classifieds-info .view-price')->text());
         $price = (int)str_replace(' ', '', $price);
-
         $providerId = $innerCrawler->filter('.announcement-id strong')->text();
         $providerId = preg_replace("/[^0-9,.]/", "", $providerId);
-
         $location = trim($innerCrawler->filter('.owner-contacts .owner-location')->text());
         $tempArr = explode(",", $location);
         $city = trim($tempArr[0]);
         $country = trim($tempArr[1]);
-
         $imageUrl = ($innerCrawler->filter('.announcement-media-gallery .thumbnail')->count()) ?
             trim($innerCrawler->filter('.announcement-media-gallery .thumbnail')->eq(0)->attr('style')):
             'No image';
@@ -92,7 +99,6 @@ class AutopliusAdsProvider implements AdsProviderInterface
         $details['image'] = $this->saveImages($imageUrl, $this->provider->getName(), $providerId);
 
         $items = $innerCrawler->filterXPath('//table[@class="announcement-parameters"][1]//tr');
-
         foreach ($items as $innerDomRow) {
             $row = new Crawler($innerDomRow);
             $key = $row->filterXPath("//th")->text();
@@ -103,6 +109,11 @@ class AutopliusAdsProvider implements AdsProviderInterface
                 $firstNum = $secondNum = null;
                 sscanf($value, "%d/%d", $firstNum, $secondNum);
                 $value = $firstNum;
+            } elseif ($key == 'Sėdimų vietų skaičius') {
+                $value = intval($value);
+            } elseif ($key == 'Pagaminimo data') {
+                $dummy = explode("-", $value);
+                $value = intval($dummy[0]);
             } elseif ($key == 'Variklis') {
                 $tempValues = explode(",", $value);
                 $value = [];
@@ -124,12 +135,20 @@ class AutopliusAdsProvider implements AdsProviderInterface
                 } else if ($value == 'Dešinėje') {
                     $value = 1;
                 }
+            } elseif ($key == 'Pavarų dėžė') {
+                if ($value == 'Mechaninė') {
+                    $value = 0;
+                } else if ($value == 'Automatinė') {
+                    $value = 1;
+                }
             } elseif ($key == 'Ratlankių skersmuo') {
                 $value = intval(preg_replace("/[^0-9,.]/", "", $value));
+            } elseif ($key == 'Tech. apžiūra iki') {
+                $dummy = explode('-', $value);
+                $value = intval($dummy[0]);
             }
             $details[$key] = $value;
         }
-
         $car = [
             'brand' => $brand,
             'model' => $model,
@@ -145,15 +164,6 @@ class AutopliusAdsProvider implements AdsProviderInterface
 
     public function saveToModel($accessor, $car)
     {
-        $tempArr = explode("-", $car['details']['Pagaminimo data']);
-        $year = $tempArr[0];
-
-//        preg_match("/\(([^\)]*)\)/", $car['details']['Variklis'], $matches);
-//        $enginePower = (int)$matches[1];
-//        var_dump($enginePower);
-//        die();
-        $enginePower = 60;
-
         $vehicle = new \AppBundle\Model\Vehicle();
         $vehicle
             ->setBrand(
@@ -187,7 +197,9 @@ class AutopliusAdsProvider implements AdsProviderInterface
             ->setPrice(
                 $accessor->getValue($car, '[price]')
             )
-            ->setYear($year)
+            ->setYear(
+                $accessor->getValue($car, '[details][Pagaminimo data]')
+            )
             ->setEngineSize(
                 $accessor->getValue($car, '[details][Variklis][engine_size]')
             )
@@ -226,6 +238,15 @@ class AutopliusAdsProvider implements AdsProviderInterface
             )
             ->setImage(
                 $accessor->getValue($car, '[details][image]')
+            )
+            ->setNextCheckYear(
+                $accessor->getValue($car, '[details][Tech. apžiūra iki]')
+            )
+            ->setFirstCountry(
+                $accessor->getValue($car, '[details][Pirmosios registracijos šalis]')
+            )
+            ->setLastAdUpdate(
+                $accessor->getValue($car, '[last_update]')
             );
 
         return $vehicle;
@@ -233,7 +254,7 @@ class AutopliusAdsProvider implements AdsProviderInterface
 
     public function saveImages($imageUrl, $providerName, $id)
     {
-        $fileName = $providerName . '-' . $id;
+        $fileName = $providerName . '-' . $id . '.jpg';
         $path = $this->imgDirectory . '/' . $fileName;
         $image = file_get_contents($imageUrl);
         $insert = file_put_contents($path, $image);
@@ -256,5 +277,40 @@ class AutopliusAdsProvider implements AdsProviderInterface
         $html = curl_exec($curl);
         curl_close($curl);
         return $html;
+    }
+
+    public function parseDate(string $dateString): \DateTime
+    {
+        $date = new \DateTime();
+        $dateString = substr($dateString, 0, -1);
+        $dateString = str_replace("prieš ", "-", $dateString);
+        $dateString = str_replace('val. ', 'hours -', $dateString);
+        $dateString = str_replace('val.', 'hours', $dateString);
+        $dateString = str_replace('min.', 'minutes', $dateString);
+        $dateString = str_replace('d.', 'day', $dateString);
+
+        $months = [
+            ["Sausio", "January"],
+            ["Vasario", "February"],
+            ["Kovo", "March"],
+            ["Balandžio", "April"],
+            ["Gegužės", "May"],
+            ["Birželio", "June"],
+            ["Liepos", "July"],
+            ["Rugpjūčio", "August"],
+            ["Rugsėjo", "September"],
+            ["Spalio", "October"],
+            ["Lapkričio", "November"],
+            ["Gruodžio", "December"],
+        ];
+        foreach ($months as $month) {
+            $count = 0;
+            $dateString = str_replace($month[0], $month[1], $dateString, $count);
+            if ($count > 0) {
+                $dateString = str_replace(' day', '', $dateString);
+            }
+        }
+        $date->setTimestamp(strtotime($dateString));
+        return $date;
     }
 }

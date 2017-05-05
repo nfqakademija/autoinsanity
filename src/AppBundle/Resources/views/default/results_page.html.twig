@@ -115,7 +115,11 @@
                                                         Spalva: {{ item.color.name }}
                                                     </p>
                                                     <p>
-                                                        Pavarų dėžė: {{ item.driveType }}
+                                                        Pavarų dėžė: {% if item.driveType == 0 %}
+                                                            {{ 'form.choice.drive_type.manual'|trans()|lower }}
+                                                        {% else %}
+                                                            {{ 'form.choice.drive_type.auto'|trans()|lower }}
+                                                        {% endif %}
                                                     </p>
                                                     <p>
                                                         Vairo padėtis: {% if item.steeringWheel == 0 %}kairėje{% else %}dešinėje{% endif %}
@@ -128,9 +132,15 @@
                                                 <p><b>Kita informacija:</b></p>
                                                 <p>Durų skaičius: {{ item.doorsNumber }}</p>
                                                 <p>Sėdimų vietų skaičius: {{ item.seatsNumber }}</p>
-                                                <p>Transmisija: {{ item.transmission }}</p>
-                                                <p>Klimato kontrolė: {{ item.climateControl }}</p>
-                                                <p>Defektai: {{ item.defects }}</p>
+                                                {% if item.transmission %}
+                                                    <p>Transmisija: {{ item.transmission.name }}</p>
+                                                {% endif %}
+                                                {% if item.climateControl %}
+                                                    <p>Klimato kontrolė: {{ item.climateControl.name }}</p>
+                                                {% endif %}
+                                                {% if item.defects %}
+                                                    <p>Defektai: {{ item.defects.name }}</p>
+                                                {% endif %}
                                                 <p>Padangų diametras: {{ item.wheelsDiameter }}</p>
                                                 <p>Masė: {{ item.weight }}</p>
                                             </div>

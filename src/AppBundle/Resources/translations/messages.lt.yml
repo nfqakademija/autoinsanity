@@ -20,6 +20,9 @@ form:
         steering_wheel:
             left: 'Kairė'
             right: 'Dešinė'
+        drive_type:
+            manual: 'Mechaninė'
+            auto: 'Automatinė'
     header:
         update_form: 'Pakeiskite paieškos nustatymus'
     field:
@@ -32,6 +35,7 @@ form:
         year_from: 'Metai nuo'
         year_to: 'Metai iki'
         fuel_type: 'Kuro tipas'
+        body_type: 'Kėbulo tipas'
         provider: 'Šaltinis'
         engine_size_from: 'Variklio tūris nuo'
         engine_size_to: 'Variklio tūris iki'
@@ -40,13 +44,14 @@ form:
         doors_number: 'Durų skaičius'
         seats_number: 'Sėdimų vietų skaičius'
         defects: 'Defektai'
-        drive_type: 'Varantieji ratai'
+        drive_type: 'Pavarų dėžė'
         climate_control: 'Klimato kontrolė'
         color: 'Spalva'
         steering_wheel: 'Vairo padėtis'
         wheels_diameter: 'Padangų diametras'
         mileage_from: 'Rida nuo'
         mileage_to: 'Rida iki'
+        transmission: 'Varantieji ratai'
         sort: 'Skelbimų eiliškumas'
 
     placeholder:
@@ -56,8 +61,13 @@ form:
             country: 'Visos valstybės'
             city: 'Visi miestai'
             fuel_type: 'Visi kuro tipai'
+            body_type: 'Visi kėbulo tipai'
             color: 'Visos spalvos'
             steering_wheel: 'Bet kokia padėtis'
+            defects: 'Nesvarbu'
+            drive_type: 'Bet kokia pavarų dėžė'
+            transmission: 'Bet kokie varantieji ratai'
+            climate_control: 'Bet kokia klimato kontrolė'
 
 pagination:
     previous: 'Ankstesnis'
