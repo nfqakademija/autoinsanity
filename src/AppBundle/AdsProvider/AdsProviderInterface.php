@@ -8,7 +8,7 @@ interface AdsProviderInterface
 
     public function getHtml($url);
 
-    public function saveImages($imageUrl);
+    public function saveImages($imageUrl, $providerName, $id);
 
     public function saveToModel($accessor, $car);
 }

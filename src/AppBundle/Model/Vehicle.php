@@ -128,6 +128,11 @@ class Vehicle
     private $mileage = null;
 
     /**
+     * @var string
+     */
+    private $image = null;
+
+    /**
      * @param int $providerId
      * @return Vehicle
      */
@@ -582,5 +587,23 @@ class Vehicle
     public function getLink()
     {
         return $this->link;
+    }
+
+    /**
+     * Set image
+     */
+    public function setImage(string $image): Vehicle
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     */
+    public function getImage(): ?string
+    {
+        return $this->image;
     }
 }

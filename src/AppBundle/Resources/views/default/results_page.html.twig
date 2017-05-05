@@ -71,7 +71,7 @@
                                 <div class="panel panel-default">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <img src="#" />
+                                            <img src="{{ asset(img_dir ~ '/' ~ item.image) | imagine_filter('ad_thumb') }}" />
                                             <p>{{ item.provider }}</p>
                                         </div>
                                         <div class="col-md-8">
@@ -107,7 +107,7 @@
                                                         Kuro tipas: {{ item.fuelType.name }}
                                                     </p>
                                                     <p>
-                                                        Rida: {{ item.mileage }}
+                                                        Rida: {% if item.mileage == null %}-{% else %}{{ item.mileage }}{% endif %}
                                                     </p>
                                                 </div>
                                                 <div class="col-md-4">

@@ -40,9 +40,9 @@ class Vehicle
     /**
      * @var string
      *
-     * @ORM\Column(name="link", type="string", nullable=true)
+     * @ORM\Column(name="link", type="string")
      */
-    private $link = null;
+    private $link;
 
     /**
      * @var Brand
@@ -63,16 +63,16 @@ class Vehicle
     /**
      * @var int
      *
-     * @ORM\Column(name="price", type="integer", nullable=true)
+     * @ORM\Column(name="price", type="integer")
      */
-    private $price = null;
+    private $price;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="year", type="integer", nullable=true)
+     * @ORM\Column(name="year", type="integer")
      */
-    private $year = null;
+    private $year;
 
     /**
      * @var Country
@@ -91,9 +91,9 @@ class Vehicle
     private $city;
 
     /**
-     * @var float
+     * @var int
      *
-     * @ORM\Column(name="engine_size", type="float", nullable=true)
+     * @ORM\Column(name="engine_size", type="integer", nullable=true)
      */
     private $engineSize = null;
 
@@ -128,9 +128,9 @@ class Vehicle
     private $doorsNumber = null;
 
     /**
-     * @var float
+     * @var int
      *
-     * @ORM\Column(name="seats_number", type="float", nullable=true)
+     * @ORM\Column(name="seats_number", type="integer", nullable=true)
      */
     private $seatsNumber = null;
 
@@ -173,14 +173,14 @@ class Vehicle
     /**
      * @var int
      *
-     * @ORM\Column(name="steering_wheel", type="string", nullable=true)
+     * @ORM\Column(name="steering_wheel", type="integer", nullable=true)
      */
     private $steeringWheel = null;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="wheels_diameter", type="string", nullable=true)
+     * @ORM\Column(name="wheels_diameter", type="integer", nullable=true)
      */
     private $wheelsDiameter = null;
 
@@ -197,6 +197,13 @@ class Vehicle
      * @ORM\Column(name="mileage", type="integer", nullable=true)
      */
     private $mileage = null;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", nullable=true)
+     */
+    private $image = null;
 
     public function __construct()
     {
@@ -295,7 +302,7 @@ class Vehicle
     /**
      * Get engineSize
      */
-    public function getEngineSize():int
+    public function getEngineSize(): int
     {
         return $this->engineSize;
     }
@@ -313,7 +320,7 @@ class Vehicle
     /**
      * Get power
      */
-    public function getPower(): int
+    public function getPower(): ?int
     {
         return $this->power;
     }
@@ -331,7 +338,7 @@ class Vehicle
     /**
      * Get doorsNumber
      */
-    public function getDoorsNumber():int
+    public function getDoorsNumber(): ?int
     {
         return $this->doorsNumber;
     }
@@ -339,7 +346,7 @@ class Vehicle
     /**
      * Set seatsNumber
      */
-    public function setSeatsNumber(float $seatsNumber = null): Vehicle
+    public function setSeatsNumber(int $seatsNumber = null): Vehicle
     {
         $this->seatsNumber = $seatsNumber;
 
@@ -349,7 +356,7 @@ class Vehicle
     /**
      * Get seatsNumber
      */
-    public function getSeatsNumber(): float
+    public function getSeatsNumber(): ?int
     {
         return $this->seatsNumber;
     }
@@ -367,7 +374,7 @@ class Vehicle
     /**
      * Get driveType
      */
-    public function getDriveType(): string
+    public function getDriveType(): ?string
     {
         return $this->driveType;
     }
@@ -385,7 +392,7 @@ class Vehicle
     /**
      * Get transmission
      */
-    public function getTransmission(): string
+    public function getTransmission(): ?string
     {
         return $this->transmission;
     }
@@ -403,7 +410,7 @@ class Vehicle
     /**
      * Get climateControl
      */
-    public function getClimateControl(): string
+    public function getClimateControl(): ?string
     {
         return $this->climateControl;
     }
@@ -421,7 +428,7 @@ class Vehicle
     /**
      * Get defects
      */
-    public function getDefects(): string
+    public function getDefects(): ?string
     {
         return $this->defects;
     }
@@ -429,7 +436,7 @@ class Vehicle
     /**
      * Set steeringWheel
      */
-    public function setSteeringWheel(string $steeringWheel = null): Vehicle
+    public function setSteeringWheel(int $steeringWheel = null): Vehicle
     {
         $this->steeringWheel = $steeringWheel;
 
@@ -439,7 +446,7 @@ class Vehicle
     /**
      * Get steeringWheel
      */
-    public function getSteeringWheel(): int
+    public function getSteeringWheel(): ?int
     {
         return $this->steeringWheel;
     }
@@ -447,7 +454,7 @@ class Vehicle
     /**
      * Set wheelsDiameter
      */
-    public function setWheelsDiameter(string $wheelsDiameter = null): Vehicle
+    public function setWheelsDiameter(int $wheelsDiameter = null): Vehicle
     {
         $this->wheelsDiameter = $wheelsDiameter;
 
@@ -457,7 +464,7 @@ class Vehicle
     /**
      * Get wheelsDiameter
      */
-    public function getWheelsDiameter(): int
+    public function getWheelsDiameter(): ?int
     {
         return $this->wheelsDiameter;
     }
@@ -475,7 +482,7 @@ class Vehicle
     /**
      * Get weight
      */
-    public function getWeight(): int
+    public function getWeight(): ?int
     {
         return $this->weight;
     }
@@ -493,7 +500,7 @@ class Vehicle
     /**
      * Get mileage
      */
-    public function getMileage(): int
+    public function getMileage(): ?int
     {
         return $this->mileage;
     }
@@ -641,5 +648,23 @@ class Vehicle
     public function getLink():string
     {
         return $this->link;
+    }
+
+    /**
+     * Set image
+     */
+    public function setImage(string $image): Vehicle
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     */
+    public function getImage(): ?string
+    {
+        return $this->image;
     }
 }

@@ -12,13 +12,15 @@ class StartCrawlerCommand extends Command
 {
     private $adsProviders;
     private $em;
+    private $imgDirectory;
 
-    public function __construct(array $adsProviders, EntityManager $em)
+    public function __construct(array $adsProviders, EntityManager $em, string $imgDirectory)
     {
         parent::__construct();
 
         $this->adsProviders = $adsProviders;
         $this->em = $em;
+        $this->imgDirectory = $imgDirectory;
     }
 
     protected function configure()
@@ -31,10 +33,12 @@ class StartCrawlerCommand extends Command
     {
         $ads = [];
 
-        
+        if (!is_dir($this->imgDirectory)) {
+            mkdir($this->imgDirectory);
+        }
 
         foreach ($this->adsProviders as $adsProvider) {
-            $crawlerManager = new $adsProvider($this->em);
+            $crawlerManager = new $adsProvider($this->em, $this->imgDirectory);
             $ads = $crawlerManager->getNewAds();
 
 //            $ads = array_merge($ads, $providerAds);
@@ -112,6 +116,7 @@ class StartCrawlerCommand extends Command
             $vehicle->setWheelsDiameter($ad->getWheelsDiameter());
             $vehicle->setWeight($ad->getWeight());
             $vehicle->setMileage($ad->getMileage());
+            $vehicle->setImage($ad->getImage());
             $em->persist($vehicle);
         }
 

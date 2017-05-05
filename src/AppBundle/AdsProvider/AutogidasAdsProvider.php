@@ -9,10 +9,12 @@ use Symfony\Component\DomCrawler\Crawler;
 class AutogidasAdsProvider implements AdsProviderInterface
 {
     protected $em;
+    protected $imgDirectory;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, string $imgDirectory)
     {
         $this->em = $em;
+        $this->imgDirectory = $imgDirectory;
     }
 
     public function getNewAds()
