@@ -6,21 +6,22 @@ parameters:
 services:
     app.ads_provider.autoplius:
         class: AppBundle\AdsProvider\AutopliusAdsProvider
-        arguments: ['@doctrine.orm.entity_manager']
+        arguments: ['@doctrine.orm.entity_manager', '%images_directory%']
 
     app.ads_provider.autogidas:
         class: AppBundle\AdsProvider\AutogidasAdsProvider
-        arguments: ['@doctrine.orm.entity_manager']
+        arguments: ['@doctrine.orm.entity_manager', '%images_directory%']
 
     app.command.start_crawler:
         class: AppBundle\Command\StartCrawlerCommand
         tags:
-          - { name: console.command }
+            - { name: console.command }
         arguments:
-          -
-            - '@app.ads_provider.autoplius'
-#            - '@app.ads_provider.autogidas'
-          - '@doctrine.orm.entity_manager'
+        -
+            #- '@app.ads_provider.autoplius'
+            - '@app.ads_provider.autogidas'
+        - '@doctrine.orm.entity_manager'
+        - '%images_directory%'
 
     app.type.profile:
         class: AppBundle\Type\ProfileFormType

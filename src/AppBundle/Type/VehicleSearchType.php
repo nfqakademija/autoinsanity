@@ -2,12 +2,17 @@
 
 namespace AppBundle\Type;
 
+use AppBundle\Entity\BodyType;
 use AppBundle\Entity\Brand;
 use AppBundle\Entity\City;
+use AppBundle\Entity\ClimateControl;
 use AppBundle\Entity\Color;
 use AppBundle\Entity\Country;
+use AppBundle\Entity\Defects;
 use AppBundle\Entity\FuelType;
 use AppBundle\Entity\Model;
+use AppBundle\Entity\Provider;
+use AppBundle\Entity\Transmission;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -26,6 +31,7 @@ class VehicleSearchType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $currentYear = intval(date('Y'));
         $modelModifier = function (FormInterface $form, Brand $brand = null) {
             $form->add('model', EntityType::class, [
                 'class' => Model::class,
@@ -79,7 +85,24 @@ class VehicleSearchType extends AbstractType
                 },
                 'required' => false,
             ])
-            ->add('provider', TextType::class, ['label' => 'form.field.provider', ])
+            ->add('body_type', EntityType::class, [
+                'class' => BodyType::class,
+                'label' => 'form.field.body_type',
+                'placeholder' => 'form.placeholder.all.body_type',
+                'query_builder' => function (EntityRepository $repo) {
+                    return $repo->createQueryBuilder('body_type')->orderBy('body_type.name', 'ASC');
+                },
+                'required' => false,
+            ])
+            ->add('provider', EntityType::class, [
+                'class' => Provider::class,
+                'label' => 'form.field.provider',
+                'placeholder' => 'form.placeholder.all.provider',
+                'query_builder' => function (EntityRepository $repo) {
+                    return $repo->createQueryBuilder('provider')->orderBy('provider.name', 'ASC');
+                },
+                'required' => false,
+            ])
             ->add('country', EntityType::class, [
                 'class' => Country::class,
                 'label' => 'form.field.country',
@@ -95,8 +118,24 @@ class VehicleSearchType extends AbstractType
             ->add('power_to', IntegerType::class, ['label' => 'form.field.power_to'])
             ->add('doors_number', IntegerType::class, ['label' => 'form.field.doors_number'])
             ->add('seats_number', IntegerType::class, ['label' => 'form.field.seats_number'])
-            ->add('drive_type', TextType::class, ['label' => 'form.field.drive_type'])
-            ->add('climate_control', TextType::class, ['label' => 'form.field.climate_control'])
+            ->add('drive_type', ChoiceType::class, [
+                'choices' => [
+                    'form.choice.drive_type.manual' => 0,
+                    'form.choice.drive_type.auto' => 1,
+                ],
+                'label' => 'form.field.drive_type',
+                'placeholder' => 'form.placeholder.all.drive_type',
+                'required' => false,
+            ])
+            ->add('climate_control', EntityType::class, [
+                'class' => ClimateControl::class,
+                'label' => 'form.field.climate_control',
+                'placeholder' => 'form.placeholder.all.climate_control',
+                'query_builder' => function (EntityRepository $repo) {
+                    return $repo->createQueryBuilder('climate_control')->orderBy('climate_control.id', 'ASC');
+                },
+                'required' => false,
+            ])
             ->add('color', EntityType::class, [
                 'class' => Color::class,
                 'label' => 'form.field.color',
@@ -106,7 +145,24 @@ class VehicleSearchType extends AbstractType
                 },
                 'required' => false,
             ])
-            ->add('defects', TextType::class, ['label' => 'form.field.defects'])
+            ->add('defects', EntityType::class, [
+                'class' => Defects::class,
+                'label' => 'form.field.defects',
+                'placeholder' => 'form.placeholder.all.defects',
+                'query_builder' => function (EntityRepository $repo) {
+                    return $repo->createQueryBuilder('defects')->orderBy('defects.name', 'ASC');
+                },
+                'required' => false,
+            ])
+            ->add('transmission', EntityType::class, [
+                'class' => Transmission::class,
+                'label' => 'form.field.transmission',
+                'placeholder' => 'form.placeholder.all.transmission',
+                'query_builder' => function (EntityRepository $repo) {
+                    return $repo->createQueryBuilder('transmission')->orderBy('transmission.id', 'ASC');
+                },
+                'required' => false,
+            ])
             ->add('steering_wheel', ChoiceType::class, [
                 'choices' => [
                     'form.choice.steering_wheel.left' => 0,
@@ -130,6 +186,43 @@ class VehicleSearchType extends AbstractType
                 'data' => 'cost_min',
                 'label' => 'form.field.sort',
                 'placeholder' => false,
+                'required' => false,
+            ])
+            ->add('next_check', ChoiceType::class, [
+                'choice_translation_domain' => false,
+                'choices' => [
+                    $currentYear => $currentYear,
+                    $currentYear+1 => $currentYear+1,
+                    $currentYear+2 => $currentYear+2,
+                    $currentYear+3 => $currentYear+3,
+                    $currentYear+4 => $currentYear+4,
+                    $currentYear+5 => $currentYear+5,
+                ],
+                'label' => 'form.field.next_check',
+                'placeholder' => 'form.placeholder.all.next_check',
+                'required' => false,
+            ])
+            ->add('first_country', EntityType::class, [
+                'class' => Country::class,
+                'label' => 'form.field.first_country',
+                'placeholder' => 'form.placeholder.all.first_country',
+                'query_builder' => function (EntityRepository $repo) {
+                    return $repo->createQueryBuilder('first_country')->orderBy('first_country.name', 'ASC');
+                },
+                'required' => false,
+            ])
+            ->add('gears_number', IntegerType::class, ['label' => 'form.field.gears_number'])
+            ->add('not_older_than', ChoiceType::class, [
+                'choices' => [
+                    'form.choice.not_older_than.1_day' => 1,
+                    'form.choice.not_older_than.3_days' => 3,
+                    'form.choice.not_older_than.1_week' => 7,
+                    'form.choice.not_older_than.2_weeks' => 14,
+                    'form.choice.not_older_than.1_month' => 30,
+                    'form.choice.not_older_than.3_months' => 90,
+                ],
+                'label' => 'form.field.not_older_than',
+                'placeholder' => 'form.placeholder.all.not_older_than',
                 'required' => false,
             ]);
 

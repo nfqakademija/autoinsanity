@@ -13,12 +13,12 @@ class Vehicle
     /**
      * @var string
      */
-    private $provider = null;
+    private $provider;
 
     /**
      * @var string
      */
-    private $link = null;
+    private $link;
 
     /**
      * @var string
@@ -81,7 +81,7 @@ class Vehicle
     private $seatsNumber = null;
 
     /**
-     * @var string
+     * @var int
      */
     private $driveType = null;
 
@@ -121,9 +121,39 @@ class Vehicle
     private $weight = null;
 
     /**
-     * @var string
+     * @var int
      */
     private $mileage = null;
+
+    /**
+     * @var string
+     */
+    private $image = null;
+
+    /**
+     * @var int
+     */
+    private $nextCheckYear = null;
+
+    /**
+     * @var string
+     */
+    private $firstCountry = null;
+
+    /**
+     * @var int
+     */
+    private $gearsNumber = null;
+
+    /**
+     * @var \DateTime
+     */
+    private $lastAdUpdate;
+
+    /**
+     * @var \DateTime
+     */
+    private $lastCheck;
 
     /**
      * @param int $providerId
@@ -278,7 +308,7 @@ class Vehicle
     }
 
     /**
-     * @param string $driveType
+     * @param int $driveType
      * @return Vehicle
      */
     public function setDriveType($driveType)
@@ -289,7 +319,7 @@ class Vehicle
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getDriveType()
     {
@@ -411,7 +441,7 @@ class Vehicle
     }
 
     /**
-     * @param string $mileage
+     * @param int $mileage
      * @return Vehicle
      */
     public function setMileage($mileage)
@@ -580,5 +610,113 @@ class Vehicle
     public function getLink()
     {
         return $this->link;
+    }
+
+    /**
+     * Set image
+     */
+    public function setImage(string $image = null): Vehicle
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     */
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set nextCheckYear
+     */
+    public function setNextCheckYear(int $nextCheckYear = null): Vehicle
+    {
+        $this->nextCheckYear = $nextCheckYear;
+
+        return $this;
+    }
+
+    /**
+     * Get nextCheckYear
+     */
+    public function getNextCheckYear(): ?int
+    {
+        return $this->nextCheckYear;
+    }
+
+    /**
+     * Set gearsNumber
+     */
+    public function setGearsNumber(int $gearsNumber = null): Vehicle
+    {
+        $this->gearsNumber = $gearsNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get gearsNumber
+     */
+    public function getGearsNumber(): ?int
+    {
+        return $this->gearsNumber;
+    }
+
+    /**
+     * Set lastAdUpdate
+     */
+    public function setLastAdUpdate(\DateTime $lastAdUpdate): Vehicle
+    {
+        $this->lastAdUpdate = $lastAdUpdate;
+
+        return $this;
+    }
+
+    /**
+     * Get lastAdUpdate
+     */
+    public function getLastAdUpdate(): \DateTime
+    {
+        return $this->lastAdUpdate;
+    }
+
+    /**
+     * Set lastCheck
+     */
+    public function setLastCheck(\DateTime $lastCheck): Vehicle
+    {
+        $this->lastCheck = $lastCheck;
+
+        return $this;
+    }
+
+    /**
+     * Get lastCheck
+     */
+    public function getLastCheck(): \DateTime
+    {
+        return $this->lastCheck;
+    }
+
+    /**
+     * Set firstCountry
+     */
+    public function setFirstCountry(string $firstCountry = null): Vehicle
+    {
+        $this->firstCountry = $firstCountry;
+
+        return $this;
+    }
+
+    /**
+     * Get firstCountry
+     */
+    public function getFirstCountry(): ?string
+    {
+        return $this->firstCountry;
     }
 }
