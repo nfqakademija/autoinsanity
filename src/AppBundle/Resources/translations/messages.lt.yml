@@ -1,3 +1,39 @@
+advert:
+    button:
+        view_ad: 'Eiti į skelbimą'
+        show_more: 'Išskleisti daugiau ypatumų'
+        show_less: 'Suskleisti ypatumus'
+    field:
+        name:
+            year: 'Pagaminimo data'
+            engine_size: 'Darbinis tūris'
+            power: 'Galia'
+            mileage: 'Rida'
+            body_type: 'Kėbulo tipas'
+            fuel_type: 'Kuro tipas'
+            drive_type: 'Pavarų dėžė'
+            steering_wheel: 'Vairo padėtis'
+            color: 'Spalva'
+            doors_number: 'Durų skaičius'
+            seats_number: 'Sėdimų vietų skaičius'
+            defects: 'Defektai'
+            transmission: 'Varantieji ratai'
+            wheels_diameter: 'Padangų diametras'
+            climate_control: 'Klimato valdymas'
+            weight: 'Automobilio masė'
+            next_check: 'Tech. apžiūra galioja iki'
+            first_country: 'Pirmos reg. valstybė'
+            gears_number: 'Pavarų skaičius'
+            provider: 'Skelbimo tiekėjas'
+            last_update: 'Atnaujintas'
+        value:
+            steering_wheel:
+                left: 'kairėje'
+                right: 'dešinėje'
+            drive_type:
+                manual: 'mechaninė'
+                auto: 'automatinė'
+
 header:
     link:
         detailed_search: 'Detalioji paieška'
@@ -64,7 +100,7 @@ form:
         sort: 'Skelbimų eiliškumas'
         next_check: 'Tech. apžiūra galioja iki'
         gears_number: 'Pavarų skaičius'
-        first_country: 'Pirmos registracijos valstybė'
+        first_country: 'Pirmosios registracijos valstybė'
         not_older_than: 'Skelbimai ne senesnis kaip:'
 
     placeholder:

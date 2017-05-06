@@ -36,15 +36,8 @@
     font-style: normal;
 }
 
-/*body {*/
-    /*font-family: "nerissemibold" !important;*/
-/*}*/
-
-.auto-price {
-    font-family: 'nerisblack', Helvetica;
-}
-
-.index-jumbotron-container {
+#index-container {
+    background-attachment: fixed;
     background-image: url('../img/index-background-min.jpg');
     background-position: center;
     background-repeat: no-repeat;
@@ -53,6 +46,9 @@
     -moz-background-size: cover;
     -webkit-background-size: cover;
     background-size: cover;
+    background-color: #001f3f;
+}
+.index-jumbotron-container {
     display: table;
     height: 100%;
     width: 100%;
@@ -62,8 +58,8 @@
     background: rgba(0, 16, 63, 0.5);
     display: table-cell;
     font-family: 'nerisblack', Helvetica;
-    min-height: 50vh;
-    height: 50vh;
+    min-height: 30vh;
+    height: 30vh;
     vertical-align: middle;
 }
 
@@ -89,7 +85,7 @@
 }
 
 #index-form-container {
-    background-color: #001F3F;
+    background-color: rgba(0, 16, 63, 0.5);
     padding-top: 20px;
 }
 
@@ -100,3 +96,31 @@
 .inline-block {
     display: inline-block;
 }
+
+.ad-container {
+    margin: 15px 0px 15px 0px;
+}
+
+.ad-title {
+    color: inherit;
+    margin-top: 0px;
+    text-decoration: underline;
+}
+.ad-fields-list b {
+    letter-spacing: 0.5px;
+}
+
+.ad-image {
+    border-radius: 4px;
+}
+
+.ad-price {
+    margin-top: 5px;
+    font-family: 'nerisblack', Helvetica;
+}
+
+.ad-price, .ad-location {
+    margin-bottom: 0px;
+}
+
+

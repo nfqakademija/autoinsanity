@@ -633,7 +633,7 @@ class Vehicle
     /**
      * Get link
      */
-    public function getLink():string
+    public function getLink(): string
     {
         return $this->link;
     }
@@ -762,7 +762,7 @@ class Vehicle
     /**
      * Get lastAdUpdate
      */
-    public function getLastAdUpdate(): \DateTime
+    public function getLastAdUpdate(): ?\DateTime
     {
         return $this->lastAdUpdate;
     }
@@ -798,7 +798,7 @@ class Vehicle
     /**
      * Get firstCountry
      */
-    public function getFirstCountry(): Country
+    public function getFirstCountry(): ?Country
     {
         return $this->firstCountry;
     }
