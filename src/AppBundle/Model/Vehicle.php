@@ -2,7 +2,6 @@
 
 namespace AppBundle\Model;
 
-
 class Vehicle
 {
 

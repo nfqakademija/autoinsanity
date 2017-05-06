@@ -105,7 +105,8 @@ liip_imagine :
     filter_sets :
         cache : ~
         ad_thumb :
-            quality : 75
+            quality : 100
             filters :
-                thumbnail  : { size : [384, 216], mode : outbound }
+                upscale: { min: [384, 216] }
+                thumbnail  : { size : [384, 216], mode : outbound, allow_upscale: true}
 

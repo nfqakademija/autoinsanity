@@ -1,12 +1,17 @@
 colors:
     - { name: "Balta" }
-    - { name: "Geltona / aukso" }
+    - { name: "Geltona" }
+    - { name: "Auksinė" }
     - { name: "Juoda" }
     - { name: "Marga" }
-    - { name: "Mėlyna / žydra" }
+    - { name: "Mėlyna" }
+    - { name: "Žydra" }
     - { name: "Oranžinė" }
-    - { name: "Pilka / sidabrinė" }
+    - { name: "Pilka" }
+    - { name: "Sidabrinė" }
     - { name: "Raudona / vyšninė" }
-    - { name: "Ruda / smėlio" }
+    - { name: "Ruda" }
+    - { name: "Smėlio" }
     - { name: "Violetinė" }
     - { name: "Žalia / chaki" }
+

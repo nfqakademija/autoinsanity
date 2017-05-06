@@ -22,7 +22,8 @@ class LoadBrandModelData extends AbstractLoadData implements FixtureInterface
         return $this->loadRelatedFixtures($manager);
     }
 
-    public function setParent(Model $child, Brand $parent) {
+    public function setParent(Model $child, Brand $parent)
+    {
         $child->setBrand($parent);
     }
 }

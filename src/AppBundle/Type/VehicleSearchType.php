@@ -11,6 +11,7 @@ use AppBundle\Entity\Country;
 use AppBundle\Entity\Defects;
 use AppBundle\Entity\FuelType;
 use AppBundle\Entity\Model;
+use AppBundle\Entity\Provider;
 use AppBundle\Entity\Transmission;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -30,6 +31,7 @@ class VehicleSearchType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $currentYear = intval(date('Y'));
         $modelModifier = function (FormInterface $form, Brand $brand = null) {
             $form->add('model', EntityType::class, [
                 'class' => Model::class,
@@ -92,7 +94,15 @@ class VehicleSearchType extends AbstractType
                 },
                 'required' => false,
             ])
-            ->add('provider', TextType::class, ['label' => 'form.field.provider', ])
+            ->add('provider', EntityType::class, [
+                'class' => Provider::class,
+                'label' => 'form.field.provider',
+                'placeholder' => 'form.placeholder.all.provider',
+                'query_builder' => function (EntityRepository $repo) {
+                    return $repo->createQueryBuilder('provider')->orderBy('provider.name', 'ASC');
+                },
+                'required' => false,
+            ])
             ->add('country', EntityType::class, [
                 'class' => Country::class,
                 'label' => 'form.field.country',
@@ -176,6 +186,43 @@ class VehicleSearchType extends AbstractType
                 'data' => 'cost_min',
                 'label' => 'form.field.sort',
                 'placeholder' => false,
+                'required' => false,
+            ])
+            ->add('next_check', ChoiceType::class, [
+                'choice_translation_domain' => false,
+                'choices' => [
+                    $currentYear => $currentYear,
+                    $currentYear+1 => $currentYear+1,
+                    $currentYear+2 => $currentYear+2,
+                    $currentYear+3 => $currentYear+3,
+                    $currentYear+4 => $currentYear+4,
+                    $currentYear+5 => $currentYear+5,
+                ],
+                'label' => 'form.field.next_check',
+                'placeholder' => 'form.placeholder.all.next_check',
+                'required' => false,
+            ])
+            ->add('first_country', EntityType::class, [
+                'class' => Country::class,
+                'label' => 'form.field.first_country',
+                'placeholder' => 'form.placeholder.all.first_country',
+                'query_builder' => function (EntityRepository $repo) {
+                    return $repo->createQueryBuilder('first_country')->orderBy('first_country.name', 'ASC');
+                },
+                'required' => false,
+            ])
+            ->add('gears_number', IntegerType::class, ['label' => 'form.field.gears_number'])
+            ->add('not_older_than', ChoiceType::class, [
+                'choices' => [
+                    'form.choice.not_older_than.1_day' => 1,
+                    'form.choice.not_older_than.3_days' => 3,
+                    'form.choice.not_older_than.1_week' => 7,
+                    'form.choice.not_older_than.2_weeks' => 14,
+                    'form.choice.not_older_than.1_month' => 30,
+                    'form.choice.not_older_than.3_months' => 90,
+                ],
+                'label' => 'form.field.not_older_than',
+                'placeholder' => 'form.placeholder.all.not_older_than',
                 'required' => false,
             ]);
 

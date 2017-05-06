@@ -9,3 +9,10 @@ body_types:
     - { name: "Kabrioletas / Roadster" }
     - { name: "Limuzinas" }
     - { name: "Pikapas" }
+    - { name: "Keleivinis mikroautobusas" }
+    - { name: "Kombi mikroautobusas" }
+    - { name: "Krovininis mikroautobusas" }
+    - { name: "Savadarbis auto" }
+
+
+
