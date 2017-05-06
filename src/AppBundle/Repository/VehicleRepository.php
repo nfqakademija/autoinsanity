@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
@@ -165,6 +166,28 @@ class VehicleRepository extends EntityRepository
             $sortDir = 'desc';
         }
         $query = $query->orderBy("v.$sortField", $sortDir);
+        $totalPagesCount = $this->createQueryPagination($query, $page);
+        return [
+            'vehicles' => $query->getQuery()->getResult(),
+            'total_pages_count' => $totalPagesCount
+        ];
+    }
+
+    public function getPinnedVehicles(User $user, int $page): array
+    {
+        $query = $this->getJoinedTablesQuery();
+        $query->innerJoin('v.users', 'u')
+            ->where('u.id = :user_id')
+            ->setParameter('user_id', $user->getId());
+        $totalPagesCount = $this->createQueryPagination($query, $page);
+        return [
+            'vehicles' => $query->getQuery()->getResult(),
+            'total_pages_count' => $totalPagesCount
+        ];
+    }
+
+    private function createQueryPagination(QueryBuilder $query, int $page): int
+    {
         $allResults = $query->getQuery()->getResult();
         $totalPagesCount = intdiv(count($allResults), self::RESULTS_PER_PAGE);
         if (count($allResults) % self::RESULTS_PER_PAGE != 0) {
@@ -173,11 +196,7 @@ class VehicleRepository extends EntityRepository
         // filter results for pagination
         $query->setFirstResult(self::RESULTS_PER_PAGE * ($page-1))
             ->setMaxResults(self::RESULTS_PER_PAGE);
-
-        return [
-            'vehicles' => $query->getQuery()->getResult(),
-            'total_pages_count' => $totalPagesCount
-        ];
+        return $totalPagesCount;
     }
 
     /**

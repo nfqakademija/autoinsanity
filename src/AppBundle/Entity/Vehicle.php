@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -245,10 +246,16 @@ class Vehicle
     private $lastCheck;
 
     /**
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="pinnedVehicles")
+     */
+    private $users;
+
+    /**
      * Vehicle constructor.
      */
     public function __construct()
     {
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -801,5 +808,31 @@ class Vehicle
     public function getFirstCountry(): ?Country
     {
         return $this->firstCountry;
+    }
+
+    /**
+     * Add user
+     */
+    public function addUser(User $user): Vehicle
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     */
+    public function removeUser(User $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users
+     */
+    public function getUsers(): ArrayCollection
+    {
+        return $this->users;
     }
 }

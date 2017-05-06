@@ -21,11 +21,8 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Vehicle", inversedBy="", fetch="EXTRA_LAZY")
-     * @ORM\JoinTable(name="users_vehicles",
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="vehicle_id", referencedColumnName="id")}
-     *      )
+     * @ORM\ManyToMany(targetEntity="Vehicle", inversedBy="users", fetch="EXTRA_LAZY")
+     * @ORM\JoinTable(name="users_vehicles")
      */
     private $pinnedVehicles;
 

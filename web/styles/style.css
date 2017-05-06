@@ -123,4 +123,9 @@
     margin-bottom: 0px;
 }
 
+.column-center {
+    float: none;
+    margin: auto;
+}
+
 

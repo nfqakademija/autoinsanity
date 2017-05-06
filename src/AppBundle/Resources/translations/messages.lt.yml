@@ -128,6 +128,7 @@ pagination:
 
 results:
     error:
+        no_pinned: 'Jūs neturite jokių išsaugotų skelbimų'
         no_results: 'Skelbimų pagal nurodytus paieškos kriterijus nebuvo rasta.'
     features:
     pin:
@@ -139,6 +140,8 @@ results:
 title:
     index: 'Pagrindinis'
     detailed_search: 'Detalioji paieška'
-    results: 'Paieškos rezultatai (%page% psl. iš %pages%)'
+    pinned: 'Mano išsaugoti skelbimai'
+    results: 'Paieškos rezultatai'
+    pagination: '(%page% psl. iš %pages%)'
     website_name: 'AutoInsanity'
 
