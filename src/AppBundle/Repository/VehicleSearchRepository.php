@@ -24,7 +24,7 @@ class VehicleSearchRepository extends EntityRepository
             ->where('s.user = :user')
             ->setParameter('user', $user)
             ->orderBy('s.id', 'DESC')
-            ->setFirstResult(self::MAX_SEARCHES_PER_USER)
+            ->setFirstResult(self::MAX_SEARCHES_PER_USER - 2) // +1 for new, +1 because it's an offset
             ->getQuery()
             ->getResult();
     }

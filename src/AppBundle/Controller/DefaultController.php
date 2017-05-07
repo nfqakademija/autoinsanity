@@ -133,15 +133,19 @@ class DefaultController extends Controller
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
         $results = $entityManager->getRepository('AppBundle:Vehicle')
             ->findAllByCriteria($vehicleSearch, $page);
-        // remove outdated searches and insert new one
-        $outdatedSearches = $entityManager->getRepository('AppBundle:VehicleSearch')
-            ->getOutdatedSearches($user);
-        foreach ($outdatedSearches as $outSearch) {
-            $user->removeSearch($outSearch);
+
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $vehicleSearch->setUser($user);
+            $user->addSearch($vehicleSearch);
+            // remove outdated searches and insert new one
+            $outdatedSearches = $entityManager->getRepository('AppBundle:VehicleSearch')
+                ->getOutdatedSearches($user);
+            foreach ($outdatedSearches as $outSearch) {
+                $entityManager->remove($outSearch);
+            }
+            $entityManager->persist($user);
+            $entityManager->flush();
         }
-        $user->addSearch($vehicleSearch);
-        $entityManager->persist($user);
-        $entityManager->flush();
         return $this->render(
             'AppBundle:default:results_page.html.twig', [
                 'items' => $results['vehicles'],

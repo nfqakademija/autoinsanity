@@ -59,28 +59,28 @@ class VehicleSearch
     /**
      * @var int
      *
-     * @ORM\Column(name="price_from", type="integer")
+     * @ORM\Column(name="price_from", type="integer", nullable=true)
      */
     private $priceFrom;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="price_to", type="integer")
+     * @ORM\Column(name="price_to", type="integer", nullable=true)
      */
     private $priceTo;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="year_from", type="integer")
+     * @ORM\Column(name="year_from", type="integer", nullable=true)
      */
     private $yearFrom;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="year_to", type="integer")
+     * @ORM\Column(name="year_to", type="integer", nullable=true)
      */
     private $yearTo;
 

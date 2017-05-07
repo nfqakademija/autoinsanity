@@ -21,13 +21,13 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Vehicle", inversedBy="users", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="Vehicle", inversedBy="users", fetch="EXTRA_LAZY", cascade="persist")
      * @ORM\JoinTable(name="users_vehicles")
      */
     private $pinnedVehicles;
 
     /**
-     * @ORM\OneToMany(targetEntity="VehicleSearch", mappedBy="user", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="VehicleSearch", mappedBy="user", fetch="EXTRA_LAZY", cascade="persist")
      */
     private $searches;
 
@@ -90,6 +90,7 @@ class User extends BaseUser
     public function removeSearch(VehicleSearch $search)
     {
         $this->searches->removeElement($search);
+        $search->setUser(null);
     }
 
     /**

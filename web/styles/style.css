@@ -1,7 +1,13 @@
 
 .navbar-default { margin : 0 !important; }
 
+select[multiple] {
+    height: 34px !important;
+}
 
+#index-container select[multiple] {
+    height: 46px !important;
+}
 
 @font-face {
     font-family: 'nerisblack';
@@ -38,7 +44,7 @@
 
 #index-container {
     background-attachment: fixed;
-    background-image: url('../img/index-background-min.jpg');
+    //background-image: url('../img/index-background-min.jpg');
     background-position: center;
     background-repeat: no-repeat;
     -ms-background-size: cover;
