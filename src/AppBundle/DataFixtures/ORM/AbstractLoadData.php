@@ -47,5 +47,7 @@ abstract class AbstractLoadData
         return $itemsData;
     }
 
-    protected function setParent($item, $parent) { }
+    protected function setParent($item, $parent)
+    {
+    }
 }
