@@ -93,6 +93,14 @@
     color: white;
 }
 
+#index-form-container .multiselect-native-select button {
+    background-color: white;
+}
+
+#index-form-container .multiselect-native-select label {
+    color: inherit;
+}
+
 .inline-block {
     display: inline-block;
 }
@@ -126,6 +134,26 @@
 .column-center {
     float: none;
     margin: auto;
+}
+
+.multiselect-native-select {
+    display: block;
+    color: inherit;
+}
+
+.multiselect-native-select .btn-group > button {
+    color: #0073ea;
+    font-weight: normal;
+}
+
+.multiselect-native-select .btn-group > button > span {
+    float: left;
+}
+
+.multiselect-native-select .btn-group > button > .caret {
+    position: absolute;
+    left: 95%;
+    top: 45%;
 }
 
 

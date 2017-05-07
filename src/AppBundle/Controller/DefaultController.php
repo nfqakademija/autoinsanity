@@ -129,9 +129,19 @@ class DefaultController extends Controller
     private function getResults(Form $searchForm, Request $request, $page = 1)
     {
         $vehicleSearch = $searchForm->getData();
+        $user = $this->getUser();
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
-        $repository = $entityManager->getRepository('AppBundle:Vehicle');
-        $results = $repository->findAllByCriteria($vehicleSearch, $page);
+        $results = $entityManager->getRepository('AppBundle:Vehicle')
+            ->findAllByCriteria($vehicleSearch, $page);
+        // remove outdated searches and insert new one
+        $outdatedSearches = $entityManager->getRepository('AppBundle:VehicleSearch')
+            ->getOutdatedSearches($user);
+        foreach ($outdatedSearches as $outSearch) {
+            $user->removeSearch($outSearch);
+        }
+        $user->addSearch($vehicleSearch);
+        $entityManager->persist($user);
+        $entityManager->flush();
         return $this->render(
             'AppBundle:default:results_page.html.twig', [
                 'items' => $results['vehicles'],

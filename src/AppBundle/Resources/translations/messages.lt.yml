@@ -50,6 +50,7 @@ form:
         update: 'Atnaujinti paiešką'
         search: 'Ieškoti'
     choice:
+        all: 'Pasirinkti viską'
         not_older_than:
             1_day: '1 dienos'
             3_days: '3 dienų'
@@ -121,6 +122,8 @@ form:
             next_check: 'Nesvarbu'
             first_country: 'Visos valstybės'
             not_older_than: 'Nesvarbu'
+        choices: 'pasirinkimai'
+        search: 'Ieškoti...'
 
 pagination:
     previous: 'Ankstesnis'

@@ -38,7 +38,7 @@ class VehicleSearchType extends AbstractType
                 'model', EntityType::class, [
                 'class' => Model::class,
                 'label' => 'form.field.model',
-                'placeholder' => 'form.placeholder.all.model',
+                'multiple' => true,
                 'query_builder' => function (EntityRepository $repo) use ($brand) {
                     return $repo->createQueryBuilder('model')
                         ->where('model.brand = :brand')
@@ -54,7 +54,7 @@ class VehicleSearchType extends AbstractType
                 'city', EntityType::class, [
                 'class' => City::class,
                 'label' => 'form.field.city',
-                'placeholder' => 'form.placeholder.all.city',
+                'multiple' => true,
                 'query_builder' => function (EntityRepository $repo) use ($country) {
                     return $repo->createQueryBuilder('city')
                         ->where('city.country = :country')
@@ -71,7 +71,6 @@ class VehicleSearchType extends AbstractType
                 'brand', EntityType::class, [
                     'class' => Brand::class,
                     'label' => 'form.field.brand',
-                    //'multiple' => true,
                     'placeholder' => 'form.placeholder.all.brand',
                     'query_builder' => function (EntityRepository $repo) {
                         return $repo->createQueryBuilder('brand')->orderBy('brand.name', 'ASC');
@@ -88,7 +87,7 @@ class VehicleSearchType extends AbstractType
                 'fuel_type', EntityType::class, [
                 'class' => FuelType::class,
                 'label' => 'form.field.fuel_type',
-                'placeholder' => 'form.placeholder.all.fuel_type',
+                'multiple' => true,
                 'query_builder' => function (EntityRepository $repo) {
                     return $repo->createQueryBuilder('fuel_type')->orderBy('fuel_type.name', 'ASC');
                 },
@@ -99,7 +98,7 @@ class VehicleSearchType extends AbstractType
                 'body_type', EntityType::class, [
                 'class' => BodyType::class,
                 'label' => 'form.field.body_type',
-                'placeholder' => 'form.placeholder.all.body_type',
+                'multiple' => true,
                 'query_builder' => function (EntityRepository $repo) {
                     return $repo->createQueryBuilder('body_type')->orderBy('body_type.name', 'ASC');
                 },
@@ -110,7 +109,7 @@ class VehicleSearchType extends AbstractType
                 'provider', EntityType::class, [
                 'class' => Provider::class,
                 'label' => 'form.field.provider',
-                'placeholder' => 'form.placeholder.all.provider',
+                'multiple' => true,
                 'query_builder' => function (EntityRepository $repo) {
                     return $repo->createQueryBuilder('provider')->orderBy('provider.name', 'ASC');
                 },
@@ -149,7 +148,7 @@ class VehicleSearchType extends AbstractType
                 'climate_control', EntityType::class, [
                 'class' => ClimateControl::class,
                 'label' => 'form.field.climate_control',
-                'placeholder' => 'form.placeholder.all.climate_control',
+                'multiple' => true,
                 'query_builder' => function (EntityRepository $repo) {
                     return $repo->createQueryBuilder('climate_control')->orderBy('climate_control.id', 'ASC');
                 },
@@ -160,7 +159,7 @@ class VehicleSearchType extends AbstractType
                 'color', EntityType::class, [
                     'class' => Color::class,
                     'label' => 'form.field.color',
-                    'placeholder' => 'form.placeholder.all.color',
+                    'multiple' => true,
                     'query_builder' => function (EntityRepository $repo) {
                         return $repo->createQueryBuilder('color')->orderBy('color.name', 'ASC');
                     },
@@ -172,7 +171,7 @@ class VehicleSearchType extends AbstractType
                 'defects', EntityType::class, [
                     'class' => Defects::class,
                     'label' => 'form.field.defects',
-                    'placeholder' => 'form.placeholder.all.defects',
+                    'multiple' => true,
                     'query_builder' => function (EntityRepository $repo) {
                         return $repo->createQueryBuilder('defects')->orderBy('defects.name', 'ASC');
                     },
@@ -183,7 +182,7 @@ class VehicleSearchType extends AbstractType
                 'transmission', EntityType::class, [
                     'class' => Transmission::class,
                     'label' => 'form.field.transmission',
-                    'placeholder' => 'form.placeholder.all.transmission',
+                    'multiple' => true,
                     'query_builder' => function (EntityRepository $repo) {
                         return $repo->createQueryBuilder('transmission')->orderBy('transmission.id', 'ASC');
                     },
@@ -239,7 +238,7 @@ class VehicleSearchType extends AbstractType
                 'first_country', EntityType::class, [
                 'class' => Country::class,
                 'label' => 'form.field.first_country',
-                'placeholder' => 'form.placeholder.all.first_country',
+                'multiple' => true,
                 'query_builder' => function (EntityRepository $repo) {
                     return $repo->createQueryBuilder('first_country')->orderBy('first_country.name', 'ASC');
                 },

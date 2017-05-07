@@ -4,6 +4,7 @@
         <meta charset="UTF-8" />
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
         <link href="{{ asset('styles/style.css') }}" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ asset('css/bootstrap-multiselect.css') }}" type="text/css"/>
         <title>{% block title %}{% endblock %} - {{ 'title.website_name'|trans }}</title>
         {% block stylesheets %}{% endblock %}
     </head>
@@ -83,6 +84,7 @@
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
         <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+        <script type="text/javascript" src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
         {% block javascripts %}
         {% endblock %}
         </body>

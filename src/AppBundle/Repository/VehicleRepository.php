@@ -29,21 +29,20 @@ class VehicleRepository extends EntityRepository
         $criteriaMap = [
             [
                 'field_name' => 'provider',
-                'criterium_value' => $search->getProvider(),
+                'criterium_value' => $search->getProvider()->toArray(),
+                'collection' => true,
             ],
             [
                 'field_name' => 'brand',
                 'criterium_value' =>
                     (null !== $search->getBrand())
                         ? $search->getBrand()->getId()
-                        : null
+                        : null,
             ],
             [
                 'field_name' => 'model',
-                'criterium_value' =>
-                    (null !== $search->getModel())
-                        ? $search->getModel()->getId()
-                        : null
+                'criterium_value' => $search->getModel()->toArray(),
+                'collection' => true,
             ],
             [
                 'field_name' => 'price',
@@ -70,14 +69,12 @@ class VehicleRepository extends EntityRepository
                 'criterium_value' =>
                     (null !== $search->getCountry())
                         ? $search->getCountry()->getId()
-                        : null
+                        : null,
             ],
             [
                 'field_name' => 'city',
-                'criterium_value' =>
-                    (null !== $search->getCity())
-                        ? $search->getCity()->getId()
-                        : null
+                'criterium_value' => $search->getCity()->toArray(),
+                'collection' => true,
             ],
             [
                 'field_name' => 'engineSize',
@@ -101,17 +98,18 @@ class VehicleRepository extends EntityRepository
             ],
             [
                 'field_name' => 'fuelType',
-                'criterium_value' =>
-                    (null !== $search->getFuelType())
-                        ? $search->getFuelType()->getId()
-                        : null
+                'criterium_value' => $search->getFuelType()->toArray(),
+                'collection' => true,
             ],
             [
                 'field_name' => 'bodyType',
-                'criterium_value' =>
-                    (null !== $search->getBodyType())
-                        ? $search->getBodyType()->getId()
-                        : null
+                'criterium_value' => $search->getBodyType()->toArray(),
+                'collection' => true,
+            ],
+            [
+                'field_name' => 'transmission',
+                'criterium_value' => $search->getTransmission()->toArray(),
+                'collection' => true,
             ],
             [
                 'field_name' => 'doorsNumber',
@@ -127,24 +125,18 @@ class VehicleRepository extends EntityRepository
             ],
             [
                 'field_name' => 'climateControl',
-                'criterium_value' =>
-                    (null !== $search->getClimateControl())
-                        ? $search->getClimateControl()->getId()
-                        : null
+                'criterium_value' => $search->getClimateControl()->toArray(),
+                'collection' => true,
             ],
             [
                 'field_name' => 'color',
-                'criterium_value' =>
-                    (null !== $search->getColor())
-                        ? $search->getColor()->getId()
-                        : null
+                'criterium_value' => $search->getColor()->toArray(),
+                'collection' => true,
             ],
             [
                 'field_name' => 'defects',
-                'criterium_value' =>
-                    (null !== $search->getDefects())
-                        ? $search->getDefects()->getId()
-                        : null
+                'criterium_value' => $search->getDefects()->toArray(),
+                'collection' => true,
             ],
             [
                 'field_name' => 'wheelsDiameter',
@@ -171,10 +163,8 @@ class VehicleRepository extends EntityRepository
             ],
             [
                 'field_name' => 'firstCountry',
-                'criterium_value' =>
-                    (null !== $search->getFirstCountry())
-                        ? $search->getFirstCountry()->getId()
-                        : null
+                'criterium_value' => $search->getFirstCountry()->toArray(),
+                'collection' => true,
             ],
             [
                 'field_name' => 'gearsNumber',
@@ -267,14 +257,25 @@ class VehicleRepository extends EntityRepository
 
     private function addSearchCriterium(QueryBuilder $query, array $criterium): QueryBuilder
     {
-        if (!isset($criterium['criterium_value'])) {
+        if (!isset($criterium['criterium_value']) || empty($criterium['criterium_value'])) {
             return $query;
         }
         if (!isset($criterium['compare'])) {
             $criterium['compare'] = '=';
         }
-        $whereClause = 'v.' . $criterium['field_name'] . ' ' . $criterium['compare'] . ' ' . $criterium['criterium_value'];
-        $query = $query->andWhere($whereClause);
+        if (isset($criterium['collection']) && $criterium['collection'] == true) {
+            $idsArray = [];
+            foreach ($criterium['criterium_value'] as $item) {
+                $idsArray[] = $item->getId();
+            }
+            $criterium['criterium_value'] = $idsArray;
+            $criterium['compare'] = 'IN';
+        }
+        $whereClause = 'v.' . $criterium['field_name']
+            . ' ' . $criterium['compare']
+            . ' (:' . $criterium['field_name'] . ')';
+        $query = $query->andWhere($whereClause)
+            ->setParameter($criterium['field_name'], $criterium['criterium_value']);
         return $query;
     }
 }

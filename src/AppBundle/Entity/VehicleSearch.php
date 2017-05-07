@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,10 +25,18 @@ class VehicleSearch
     private $id;
 
     /**
-     * @var Provider
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Provider")
-     * @ORM\JoinColumn(name="provider", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="searches")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id")
+     */
+    private $user;
+
+    /**
+     * @var Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Provider", fetch="EXTRA_LAZY")
+     * @ORM\JoinTable(name="searches_providers")
      */
     private $provider;
 
@@ -39,10 +49,10 @@ class VehicleSearch
     private $brand;
 
     /**
-     * @var Model
+     * @var Collection
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Model")
-     * @ORM\JoinColumn(name="model", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="Model", fetch="EXTRA_LAZY")
+     * @ORM\JoinTable(name="searches_models")
      */
     private $model;
 
@@ -83,10 +93,10 @@ class VehicleSearch
     private $country;
 
     /**
-     * @var City
+     * @var Collection
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\City")
-     * @ORM\JoinColumn(name="city", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="City", fetch="EXTRA_LAZY")
+     * @ORM\JoinTable(name="searches_cities")
      */
     private $city;
 
@@ -105,10 +115,10 @@ class VehicleSearch
     private $engineSizeFrom = null;
 
     /**
-     * @var BodyType
+     * @var Collection
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\BodyType")
-     * @ORM\JoinColumn(name="body_type", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="BodyType", fetch="EXTRA_LAZY")
+     * @ORM\JoinTable(name="searches_body_types")
      */
     private $bodyType;
 
@@ -127,10 +137,10 @@ class VehicleSearch
     private $powerTo = null;
 
     /**
-     * @var FuelType
+     * @var Collection
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\FuelType")
-     * @ORM\JoinColumn(name="fuel_type", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="FuelType", fetch="EXTRA_LAZY")
+     * @ORM\JoinTable(name="searches_fuel_types")
      */
     private $fuelType;
 
@@ -156,34 +166,34 @@ class VehicleSearch
     private $driveType = null;
 
     /**
-     * @var Transmission
+     * @var Collection
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Transmission")
-     * @ORM\JoinColumn(name="transmission", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="Transmission", fetch="EXTRA_LAZY")
+     * @ORM\JoinTable(name="searches_transmissions")
      */
     private $transmission = null;
 
     /**
-     * @var ClimateControl
+     * @var Collection
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ClimateControl")
-     * @ORM\JoinColumn(name="climate_control", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="ClimateControl", fetch="EXTRA_LAZY")
+     * @ORM\JoinTable(name="searches_climate_controls")
      */
     private $climateControl = null;
 
     /**
-     * @var Color
+     * @var Collection
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Color")
-     * @ORM\JoinColumn(name="color", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="Color", fetch="EXTRA_LAZY")
+     * @ORM\JoinTable(name="searches_colors")
      */
     private $color;
 
     /**
-     * @var Defects
+     * @var Collection
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Defects")
-     * @ORM\JoinColumn(name="defects", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="Defects", fetch="EXTRA_LAZY")
+     * @ORM\JoinTable(name="searches_defects")
      */
     private $defects;
 
@@ -223,10 +233,10 @@ class VehicleSearch
     private $nextCheckYear = null;
 
     /**
-     * @var Country
+     * @var Collection
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Country")
-     * @ORM\JoinColumn(name="first_country", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="Country", fetch="EXTRA_LAZY")
+     * @ORM\JoinTable(name="searches_first_countries")
      */
     private $firstCountry;
 
@@ -256,6 +266,16 @@ class VehicleSearch
      */
     public function __construct()
     {
+        $this->bodyType = new ArrayCollection();
+        $this->city = new ArrayCollection();
+        $this->climateControl = new ArrayCollection();
+        $this->color = new ArrayCollection();
+        $this->defects = new ArrayCollection();
+        $this->firstCountry = new ArrayCollection();
+        $this->fuelType = new ArrayCollection();
+        $this->model = new ArrayCollection();
+        $this->provider = new ArrayCollection();
+        $this->transmission = new ArrayCollection();
     }
 
     /**
@@ -266,20 +286,10 @@ class VehicleSearch
         return $this->id;
     }
 
-
-    /**
-     * Set provider
-     */
-    public function setProvider(Provider $provider = null): ? VehicleSearch
-    {
-        $this->provider = $provider;
-        return $this;
-    }
-
     /**
      * Get provider
      */
-    public function getProvider(): ? Provider
+    public function getProvider(): Collection
     {
         return $this->provider;
     }
@@ -575,19 +585,9 @@ class VehicleSearch
     }
 
     /**
-     * Set model
-     */
-    public function setModel(Model $model = null): VehicleSearch
-    {
-        $this->model = $model;
-
-        return $this;
-    }
-
-    /**
      * Get model
      */
-    public function getModel(): ? Model
+    public function getModel(): Collection
     {
         return $this->model;
     }
@@ -611,127 +611,57 @@ class VehicleSearch
     }
 
     /**
-     * Set city
-     */
-    public function setCity(City $city = null): VehicleSearch
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    /**
      * Get city
      */
-    public function getCity(): ? City
+    public function getCity(): Collection
     {
         return $this->city;
     }
 
     /**
-     * Set bodyType
-     */
-    public function setBodyType(BodyType $bodyType = null): VehicleSearch
-    {
-        $this->bodyType = $bodyType;
-
-        return $this;
-    }
-
-    /**
      * Get bodyType
      */
-    public function getBodyType(): ? BodyType
+    public function getBodyType(): Collection
     {
         return $this->bodyType;
     }
 
     /**
-     * Set fuelType
-     */
-    public function setFuelType(FuelType $fuelType = null): VehicleSearch
-    {
-        $this->fuelType = $fuelType;
-
-        return $this;
-    }
-
-    /**
      * Get fuelType
      */
-    public function getFuelType(): ? FuelType
+    public function getFuelType(): Collection
     {
         return $this->fuelType;
     }
 
     /**
-     * Set color
-     */
-    public function setColor(Color $color = null): VehicleSearch
-    {
-        $this->color = $color;
-
-        return $this;
-    }
-
-    /**
      * Get color
      */
-    public function getColor(): ? Color
+    public function getColor(): Collection
     {
         return $this->color;
     }
 
     /**
-     * Set transmission
-     */
-    public function setTransmission(Transmission $transmission = null): VehicleSearch
-    {
-        $this->transmission = $transmission;
-
-        return $this;
-    }
-
-    /**
      * Get transmission
      */
-    public function getTransmission(): ? Transmission
+    public function getTransmission(): Collection
     {
         return $this->transmission;
     }
 
     /**
-     * Set climateControl
-     */
-    public function setClimateControl(ClimateControl $climateControl = null): VehicleSearch
-    {
-        $this->climateControl = $climateControl;
-
-        return $this;
-    }
-
-    /**
      * Get climateControl
      */
-    public function getClimateControl(): ? ClimateControl
+    public function getClimateControl(): Collection
     {
         return $this->climateControl;
     }
 
     /**
-     * Set defects
-     */
-    public function setDefects(Defects $defects = null): VehicleSearch
-    {
-        $this->defects = $defects;
-
-        return $this;
-    }
-
-    /**
      * Get defects
      */
-    public function getDefects(): ? Defects
+    public function getDefects(): Collection
     {
         return $this->defects;
     }
@@ -791,19 +721,9 @@ class VehicleSearch
     }
 
     /**
-     * Set firstCountry
-     */
-    public function setFirstCountry(Country $firstCountry = null): VehicleSearch
-    {
-        $this->firstCountry = $firstCountry;
-
-        return $this;
-    }
-
-    /**
      * Get firstCountry
      */
-    public function getFirstCountry(): ? Country
+    public function getFirstCountry(): Collection
     {
         return $this->firstCountry;
     }
@@ -824,5 +744,203 @@ class VehicleSearch
     public function getSortType(): ? int
     {
         return $this->sortType;
+    }
+
+    /**
+     * Add provider
+     */
+    public function addProvider(Provider $provider): VehicleSearch
+    {
+        $this->provider[] = $provider;
+
+        return $this;
+    }
+
+    /**
+     * Remove provider
+     */
+    public function removeProvider(Provider $provider)
+    {
+        $this->provider->removeElement($provider);
+    }
+
+    /**
+     * Add model
+     */
+    public function addModel(Model $model): VehicleSearch
+    {
+        $this->model[] = $model;
+
+        return $this;
+    }
+
+    /**
+     * Remove model
+     */
+    public function removeModel(Model $model)
+    {
+        $this->model->removeElement($model);
+    }
+
+    /**
+     * Add city
+     */
+    public function addCity(City $city): VehicleSearch
+    {
+        $this->city[] = $city;
+
+        return $this;
+    }
+
+    /**
+     * Remove city
+     */
+    public function removeCity(City $city)
+    {
+        $this->city->removeElement($city);
+    }
+
+    /**
+     * Add bodyType
+     */
+    public function addBodyType(BodyType $bodyType): VehicleSearch
+    {
+        $this->bodyType[] = $bodyType;
+
+        return $this;
+    }
+
+    /**
+     * Remove bodyType
+     */
+    public function removeBodyType(BodyType $bodyType)
+    {
+        $this->bodyType->removeElement($bodyType);
+    }
+
+    /**
+     * Add fuelType
+     */
+    public function addFuelType(FuelType $fuelType): VehicleSearch
+    {
+        $this->fuelType[] = $fuelType;
+
+        return $this;
+    }
+
+    /**
+     * Remove fuelType
+     */
+    public function removeFuelType(FuelType $fuelType)
+    {
+        $this->fuelType->removeElement($fuelType);
+    }
+
+    /**
+     * Add transmission
+     */
+    public function addTransmission(Transmission $transmission): VehicleSearch
+    {
+        $this->transmission[] = $transmission;
+
+        return $this;
+    }
+
+    /**
+     * Remove transmission
+     */
+    public function removeTransmission(Transmission $transmission)
+    {
+        $this->transmission->removeElement($transmission);
+    }
+
+    /**
+     * Add climateControl
+     */
+    public function addClimateControl(ClimateControl $climateControl): VehicleSearch
+    {
+        $this->climateControl[] = $climateControl;
+
+        return $this;
+    }
+
+    /**
+     * Remove climateControl
+     */
+    public function removeClimateControl(ClimateControl $climateControl)
+    {
+        $this->climateControl->removeElement($climateControl);
+    }
+
+    /**
+     * Add color
+     */
+    public function addColor(Color $color): VehicleSearch
+    {
+        $this->color[] = $color;
+
+        return $this;
+    }
+
+    /**
+     * Remove color
+     */
+    public function removeColor(Color $color)
+    {
+        $this->color->removeElement($color);
+    }
+
+    /**
+     * Add defect
+     */
+    public function addDefect(Defects $defect): VehicleSearch
+    {
+        $this->defects[] = $defect;
+
+        return $this;
+    }
+
+    /**
+     * Remove defect
+     */
+    public function removeDefect(Defects $defect)
+    {
+        $this->defects->removeElement($defect);
+    }
+
+    /**
+     * Add firstCountry
+     */
+    public function addFirstCountry(Country $firstCountry): VehicleSearch
+    {
+        $this->firstCountry[] = $firstCountry;
+
+        return $this;
+    }
+
+    /**
+     * Remove firstCountry
+     */
+    public function removeFirstCountry(Country $firstCountry)
+    {
+        $this->firstCountry->removeElement($firstCountry);
+    }
+
+    /**
+     * Set user
+     */
+    public function setUser(User $user = null): VehicleSearch
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     */
+    public function getUser(): User
+    {
+        return $this->user;
     }
 }
