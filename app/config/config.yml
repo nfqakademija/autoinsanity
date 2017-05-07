@@ -38,6 +38,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+        img_dir: 'img/ads'
 
 # Doctrine Configuration
 doctrine:
@@ -83,4 +85,28 @@ fos_user:
         form:
             type: AppBundle\Type\RegistrationFormType
 
+liip_imagine :
+    resolvers:
+        default:
+            web_path:
+                web_root: %kernel.root_dir%/../web
+                cache_prefix: media/cache
+
+    loaders:
+        default:
+            filesystem:
+                data_root: %kernel.root_dir%/../web/
+
+    driver:               gd
+    cache:                default
+    data_loader:          default
+    default_image:        null
+
+    filter_sets :
+        cache : ~
+        ad_thumb :
+            quality : 100
+            filters :
+                upscale: { min: [384, 216] }
+                thumbnail  : { size : [384, 216], mode : outbound, allow_upscale: true}
 

@@ -80,6 +80,10 @@ class VehicleRepository extends EntityRepository
             $query = $query->andWhere('v.fuelType = :fuel_type')
                 ->setParameter('fuel_type', $criteria['fuel_type']);
         }
+        if (!empty($criteria['body_type'])) {
+            $query = $query->andWhere('v.bodyType = :body_type')
+                ->setParameter('body_type', $criteria['body_type']);
+        }
         if (!empty($criteria['doors_number'])) {
             $query = $query->andWhere('v.doorsNumber = :doors_number')
                 ->setParameter('doors_number', $criteria['doors_number']);
@@ -123,6 +127,25 @@ class VehicleRepository extends EntityRepository
             $query = $query->andWhere('v.mileage <= :mileage_to')
                 ->setParameter('mileage_to', $criteria['mileage_to']);
         }
+        if (!empty($criteria['next_check'])) {
+            $query = $query->andWhere('v.nextCheckYear >= :next_check')
+                ->setParameter('next_check', $criteria['next_check']);
+        }
+        if (!empty($criteria['first_country'])) {
+            $query = $query->andWhere('v.firstCountry = :first_country')
+                ->setParameter('first_country', $criteria['first_country']);
+        }
+        if (!empty($criteria['gears_number'])) {
+            $query = $query->andWhere('v.gearsNumber = :gears_number')
+                ->setParameter('gears_number', $criteria['gears_number']);
+        }
+        if (!empty($criteria['not_older_than'])) {
+            $date = new \DateTime();
+            $date->setTimestamp(strtotime('-' . $criteria['not_older_than'] . ' days'));
+            $query = $query->andWhere('v.lastAdUpdate >= :not_older_than_date')
+                ->setParameter('not_older_than_date', $date);
+        }
+
         // sorting of results
         $sortValue = 'cost_min'; // default value
         $sortField = 'price';
@@ -135,10 +158,10 @@ class VehicleRepository extends EntityRepository
             $sortField = 'price';
             $sortDir = 'desc';
         } elseif ($sortValue === 'date_new') {
-            $sortField = 'date';
+            $sortField = 'lastAdUpdate';
             $sortDir = 'asc';
         } elseif ($sortValue === 'date_old') {
-            $sortField = 'date';
+            $sortField = 'lastAdUpdate';
             $sortDir = 'desc';
         }
         $query = $query->orderBy("v.$sortField", $sortDir);
@@ -163,14 +186,18 @@ class VehicleRepository extends EntityRepository
     private function getJoinedTablesQuery(): QueryBuilder
     {
         return $this->getEntityManager()->createQueryBuilder()
-            ->select('v, bra, mod, bod, col, cou, cit, fue')
+            ->select('v, bra, mod, bod, cli, col, cou, cit, def, fue, pro, tra')
             ->from('AppBundle:Vehicle', 'v')
-            ->join('v.brand', 'bra')
-            ->join('v.model', 'mod')
-            ->join('v.bodyType', 'bod')
-            ->join('v.color', 'col')
-            ->join('v.country', 'cou')
-            ->join('v.city', 'cit')
-            ->join('v.fuelType', 'fue');
+            ->leftJoin('v.brand', 'bra')
+            ->leftJoin('v.model', 'mod')
+            ->leftJoin('v.bodyType', 'bod')
+            ->leftJoin('v.climateControl', 'cli')
+            ->leftJoin('v.color', 'col')
+            ->leftJoin('v.country', 'cou')
+            ->leftJoin('v.city', 'cit')
+            ->leftJoin('v.defects', 'def')
+            ->leftJoin('v.fuelType', 'fue')
+            ->leftJoin('v.provider', 'pro')
+            ->leftJoin('v.transmission', 'tra');
     }
 }

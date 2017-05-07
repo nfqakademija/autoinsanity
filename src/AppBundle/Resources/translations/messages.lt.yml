@@ -12,6 +12,13 @@ form:
         update: 'Atnaujinti paiešką'
         search: 'Ieškoti'
     choice:
+        not_older_than:
+            1_day: '1 dienos'
+            3_days: '3 dienų'
+            1_week: '1 savaitės'
+            2_weeks: '2 savaičių'
+            1_month: '1 mėnesio'
+            3_months: '3 mėnesių'
         sort:
             cost_min: 'pirmiau pigiausi'
             cost_max: 'pirmiau brangiausi'
@@ -20,6 +27,9 @@ form:
         steering_wheel:
             left: 'Kairė'
             right: 'Dešinė'
+        drive_type:
+            manual: 'Mechaninė'
+            auto: 'Automatinė'
     header:
         update_form: 'Pakeiskite paieškos nustatymus'
     field:
@@ -32,7 +42,8 @@ form:
         year_from: 'Metai nuo'
         year_to: 'Metai iki'
         fuel_type: 'Kuro tipas'
-        provider: 'Šaltinis'
+        body_type: 'Kėbulo tipas'
+        provider: 'Skelbimų šaltinis'
         engine_size_from: 'Variklio tūris nuo'
         engine_size_to: 'Variklio tūris iki'
         power_from: 'Galia nuo'
@@ -40,14 +51,19 @@ form:
         doors_number: 'Durų skaičius'
         seats_number: 'Sėdimų vietų skaičius'
         defects: 'Defektai'
-        drive_type: 'Varantieji ratai'
+        drive_type: 'Pavarų dėžė'
         climate_control: 'Klimato kontrolė'
         color: 'Spalva'
         steering_wheel: 'Vairo padėtis'
         wheels_diameter: 'Padangų diametras'
         mileage_from: 'Rida nuo'
         mileage_to: 'Rida iki'
+        transmission: 'Varantieji ratai'
         sort: 'Skelbimų eiliškumas'
+        next_check: 'Tech. apžiūra galioja iki'
+        gears_number: 'Pavarų skaičius'
+        first_country: 'Pirmos registracijos valstybė'
+        not_older_than: 'Skelbimai ne senesnis kaip:'
 
     placeholder:
         all:
@@ -56,8 +72,17 @@ form:
             country: 'Visos valstybės'
             city: 'Visi miestai'
             fuel_type: 'Visi kuro tipai'
+            body_type: 'Visi kėbulo tipai'
+            provider: 'Bet koks puslapis'
             color: 'Visos spalvos'
             steering_wheel: 'Bet kokia padėtis'
+            defects: 'Nesvarbu'
+            drive_type: 'Bet kokia pavarų dėžė'
+            transmission: 'Bet kokie varantieji ratai'
+            climate_control: 'Bet kokia klimato kontrolė'
+            next_check: 'Nesvarbu'
+            first_country: 'Visos valstybės'
+            not_older_than: 'Nesvarbu'
 
 pagination:
     previous: 'Ankstesnis'

@@ -71,7 +71,7 @@
                                 <div class="panel panel-default">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <img src="#" />
+                                            <img src="{{ asset(img_dir ~ '/' ~ item.image) | imagine_filter('ad_thumb') }}" />
                                             <p>{{ item.provider }}</p>
                                         </div>
                                         <div class="col-md-8">
@@ -96,7 +96,9 @@
                                                         Darbinis tūris: {{ item.engineSize }}
                                                     </p>
                                                     <p>
-                                                        Kėbulo tipas: {{ item.bodyType.name }}
+                                                        {% if item.bodyType %}
+                                                            Kėbulo tipas: {{ item.bodyType.name }}
+                                                        {% endif %}
                                                     </p>
                                                 </div>
                                                 <div class="col-md-4">
@@ -104,18 +106,26 @@
                                                         Galia: {{ item.power }}
                                                     </p>
                                                     <p>
-                                                        Kuro tipas: {{ item.fuelType.name }}
+                                                        {% if item.fuelType %}
+                                                            Kuro tipas: {{ item.fuelType.name }}
+                                                        {% endif %}
                                                     </p>
                                                     <p>
-                                                        Rida: {{ item.mileage }}
+                                                        Rida: {% if item.mileage == null %}-{% else %}{{ item.mileage }}{% endif %}
                                                     </p>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <p>
-                                                        Spalva: {{ item.color.name }}
+                                                        {% if item.color %}
+                                                            Spalva: {{ item.color.name }}
+                                                        {% endif %}
                                                     </p>
                                                     <p>
-                                                        Pavarų dėžė: {{ item.driveType }}
+                                                        Pavarų dėžė: {% if item.driveType == 0 %}
+                                                            {{ 'form.choice.drive_type.manual'|trans()|lower }}
+                                                        {% else %}
+                                                            {{ 'form.choice.drive_type.auto'|trans()|lower }}
+                                                        {% endif %}
                                                     </p>
                                                     <p>
                                                         Vairo padėtis: {% if item.steeringWheel == 0 %}kairėje{% else %}dešinėje{% endif %}
@@ -128,9 +138,15 @@
                                                 <p><b>Kita informacija:</b></p>
                                                 <p>Durų skaičius: {{ item.doorsNumber }}</p>
                                                 <p>Sėdimų vietų skaičius: {{ item.seatsNumber }}</p>
-                                                <p>Transmisija: {{ item.transmission }}</p>
-                                                <p>Klimato kontrolė: {{ item.climateControl }}</p>
-                                                <p>Defektai: {{ item.defects }}</p>
+                                                {% if item.transmission %}
+                                                    <p>Transmisija: {{ item.transmission.name }}</p>
+                                                {% endif %}
+                                                {% if item.climateControl %}
+                                                    <p>Klimato kontrolė: {{ item.climateControl.name }}</p>
+                                                {% endif %}
+                                                {% if item.defects %}
+                                                    <p>Defektai: {{ item.defects.name }}</p>
+                                                {% endif %}
                                                 <p>Padangų diametras: {{ item.wheelsDiameter }}</p>
                                                 <p>Masė: {{ item.weight }}</p>
                                             </div>
@@ -189,7 +205,7 @@
             {{ form_row(searchForm.country) }}
             {{ form_row(searchForm.city) }}
             {{ form_row(searchForm.steering_wheel) }}
-            <!--{{ form_rest(searchForm) }}-->
+            {{ form_rest(searchForm) }}
             <div class="row text-center">
                 <button type="submit" class="btn btn-primary btn-lg">{{ 'form.button.update'|trans() }}</button>
             </div>

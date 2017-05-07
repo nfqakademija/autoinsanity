@@ -2,15 +2,15 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\FuelType;
+use AppBundle\Entity\Provider;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadFuelTypeData extends AbstractLoadData implements FixtureInterface
+class LoadProviderData extends AbstractLoadData implements FixtureInterface
 {
-    protected $fileName = '/data/fuel_types.yml';
-    protected $fixturesName = 'fuel_types';
-    protected $entityClass = FuelType::class;
+    protected $fileName = '/data/providers.yml';
+    protected $fixturesName = 'providers';
+    protected $entityClass = Provider::class;
 
     public function load(ObjectManager $manager)
     {
