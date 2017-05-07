@@ -142,7 +142,7 @@ class VehicleRepository extends EntityRepository
         }
         if (!empty($criteria['not_older_than'])) {
             $date = new \DateTime();
-            $date->setTimestamp(strtotime('-' . $criteria['not_older_than'] . ' days'));
+            $date->setTimestamp(strtotime('-'.$criteria['not_older_than'].' days'));
             $query = $query->andWhere('v.lastAdUpdate >= :not_older_than_date')
                 ->setParameter('not_older_than_date', $date);
         }
@@ -194,7 +194,7 @@ class VehicleRepository extends EntityRepository
             $totalPagesCount++;
         }
         // filter results for pagination
-        $query->setFirstResult(self::RESULTS_PER_PAGE * ($page-1))
+        $query->setFirstResult(self::RESULTS_PER_PAGE * ($page - 1))
             ->setMaxResults(self::RESULTS_PER_PAGE);
         return $totalPagesCount;
     }
