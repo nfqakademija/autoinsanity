@@ -12,6 +12,7 @@ This web project collects vehicle adverts from various websites and allows users
 * PHP 7.1
 * MySQL
 * Symfony 3.2
+* Elasticsearch 5.4.0
 
 # Installation
 ## Download and prepare the project
@@ -26,6 +27,7 @@ This web project collects vehicle adverts from various websites and allows users
 1. Create database with `php bin/console doctrine:database:create --if-not-exists`
 1. Create tables with `php bin/console doctrine:schema:update --force`
 1. Run `php bin/console doctrine:fixtures:load` to insert all needed fixtures to the database.
+1. Run `php bin/console fos:elastica:populate` to populate the Elasticsearch index manually.
 
 ## Run project
 
