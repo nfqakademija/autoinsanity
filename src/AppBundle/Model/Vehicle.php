@@ -384,7 +384,7 @@ class Vehicle
     }
 
     /**
-     * @param string $steeringWheel
+     * @param int $steeringWheel
      * @return Vehicle
      */
     public function setSteeringWheel($steeringWheel)
@@ -403,7 +403,7 @@ class Vehicle
     }
 
     /**
-     * @param string $wheelsDiameter
+     * @param int $wheelsDiameter
      * @return Vehicle
      */
     public function setWheelsDiameter($wheelsDiameter)

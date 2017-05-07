@@ -24,7 +24,7 @@ class DefaultController extends Controller
         );
         $searchForm->handleRequest($request);
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-            return $this->getResultsAction($searchForm, $request);
+            return $this->getResults($searchForm, $request);
         }
         return $this->render(
             'AppBundle:default:index.html.twig',
@@ -40,25 +40,10 @@ class DefaultController extends Controller
         $searchForm = $this->createForm(VehicleSearchType::class, null);
         $searchForm->handleRequest($request);
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-            return $this->getResultsAction($searchForm, $request, $page);
+            return $this->getResults($searchForm, $request, $page);
         }
         return $this->render(
             'AppBundle:default:detailed_search.html.twig', [
-            'searchForm' => $searchForm->createView()
-            ]
-        );
-    }
-
-    public function getResultsAction(Form $searchForm, Request $request, $page = 1)
-    {
-        $entityManager = $this->get('doctrine.orm.default_entity_manager');
-        $repository = $entityManager->getRepository('AppBundle:Vehicle');
-        $queryVehicleParams = $request->query->all();
-        $results = $repository->findAllByCriteria($queryVehicleParams, $page);
-        return $this->render(
-            'AppBundle:default:results_page.html.twig', [
-            'items' => $results['vehicles'],
-            'total_pages_count' => $results['total_pages_count'],
             'searchForm' => $searchForm->createView()
             ]
         );
@@ -137,6 +122,21 @@ class DefaultController extends Controller
             'AppBundle:default:pinned_page.html.twig', [
             'items' => $results['vehicles'],
             'total_pages_count' => $results['total_pages_count'],
+            ]
+        );
+    }
+
+    private function getResults(Form $searchForm, Request $request, $page = 1)
+    {
+        $entityManager = $this->get('doctrine.orm.default_entity_manager');
+        $repository = $entityManager->getRepository('AppBundle:Vehicle');
+        $queryVehicleParams = $request->query->all();
+        $results = $repository->findAllByCriteria($queryVehicleParams, $page);
+        return $this->render(
+            'AppBundle:default:results_page.html.twig', [
+                'items' => $results['vehicles'],
+                'total_pages_count' => $results['total_pages_count'],
+                'searchForm' => $searchForm->createView()
             ]
         );
     }

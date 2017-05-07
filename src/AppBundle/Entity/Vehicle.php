@@ -246,6 +246,7 @@ class Vehicle
     private $lastCheck;
 
     /**
+     * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="User", mappedBy="pinnedVehicles")
      */
     private $users;

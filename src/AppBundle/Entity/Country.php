@@ -31,7 +31,7 @@ class Country
     private $name = null;
 
     /**
-     * @var City[]
+     * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\City", mappedBy="country", cascade="persist")
      */
