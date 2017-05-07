@@ -99,11 +99,25 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/searches", name="searches")
+     * @Route("/searches/{page}", name="searches", requirements={"page": "^[1-9]\d*$"})
      */
-    public function savedSearchesAction()
+    public function savedSearchesAction($page = 1)
     {
-        return new JsonResponse();
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return new JsonResponse(['error' => 'not authenticated']);
+        }
+        $entityManager = $this->get('doctrine.orm.default_entity_manager');
+        $repository = $entityManager->getRepository('AppBundle:VehicleSearch');
+        $user = $this->getUser();
+        $recentSearches = $repository->getRecentSearches($user);
+        $savedSearches = $repository->getSavedSearches($user, $page);
+        return $this->render(
+            'AppBundle:default:searches_page.html.twig', [
+                'searches_recent' => $recentSearches,
+                'searches_saved' => $savedSearches['results'],
+                'total_pages_count' => $savedSearches['total_pages_count'],
+            ]
+        );
     }
 
     /**

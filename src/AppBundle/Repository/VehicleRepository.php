@@ -221,7 +221,7 @@ class VehicleRepository extends EntityRepository
         ];
     }
 
-    private function createQueryPagination(QueryBuilder $query, int $page): int
+    public static function createQueryPagination(QueryBuilder $query, int $page): int
     {
         $allResults = $query->getQuery()->getResult();
         $totalPagesCount = intdiv(count($allResults), self::RESULTS_PER_PAGE);

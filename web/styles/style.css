@@ -9,6 +9,10 @@ select[multiple] {
     height: 46px !important;
 }
 
+/**
+ Special fonts
+ */
+
 @font-face {
     font-family: 'nerisblack';
     src: url('../fonts/neris_black/Neris-Black-webfont.eot');
@@ -42,9 +46,29 @@ select[multiple] {
     font-style: normal;
 }
 
+/**
+ Navigation
+ */
+
+.navbar-brand {
+    font-family: 'nerisblack', Helvetica;
+}
+
+.navbar-nav li {
+    margin-left: 12px;
+}
+
+.navbar-right {
+    margin-right: 0px;
+}
+
+
+/**
+ Index landing page and form
+ */
 #index-container {
     background-attachment: fixed;
-    //background-image: url('../img/index-background-min.jpg');
+    background-image: url('../img/index-background-min.jpg');
     background-position: center;
     background-repeat: no-repeat;
     -ms-background-size: cover;
@@ -82,14 +106,6 @@ select[multiple] {
     font-size: 48px;
 }
 
-.navbar-brand {
-    font-family: 'nerisblack', Helvetica;
-}
-
-.navbar-nav li {
-    margin-right: 12px;
-}
-
 #index-form-container {
     background-color: rgba(0, 16, 63, 0.5);
     padding-top: 20px;
@@ -110,6 +126,10 @@ select[multiple] {
 .inline-block {
     display: inline-block;
 }
+
+/**
+ Style of an advertisment
+ */
 
 .ad-container {
     margin: 15px 0px 15px 0px;
@@ -137,11 +157,18 @@ select[multiple] {
     margin-bottom: 0px;
 }
 
+/**
+
+ */
+
 .column-center {
     float: none;
     margin: auto;
 }
 
+/**
+ Style of multiselect dropdowns
+ */
 .multiselect-native-select {
     display: block;
     color: inherit;

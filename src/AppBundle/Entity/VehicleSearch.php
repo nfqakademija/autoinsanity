@@ -33,6 +33,13 @@ class VehicleSearch
     private $user;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="pinned", type="integer", nullable=true)
+     */
+    private $pinned;
+
+    /**
      * @var Collection
      *
      * @ORM\ManyToMany(targetEntity="Provider", fetch="EXTRA_LAZY")
@@ -942,5 +949,23 @@ class VehicleSearch
     public function getUser(): User
     {
         return $this->user;
+    }
+
+    /**
+     * Set pinned
+     */
+    public function setPinned(int $pinned): VehicleSearch
+    {
+        $this->pinned = $pinned;
+
+        return $this;
+    }
+
+    /**
+     * Get pinned
+     */
+    public function getPinned(): int
+    {
+        return $this->pinned;
     }
 }
