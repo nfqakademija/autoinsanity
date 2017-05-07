@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -38,7 +39,20 @@ class DefaultController extends Controller
         $searchForm = $this->createForm(VehicleSearchType::class, null);
         $searchForm->handleRequest($request);
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-            return $this->getResultsAction($searchForm, $request, $page);
+            $formData = $searchForm->getData();
+            if (isset($formData['search']))
+            {
+                $finder = $this->container->get('fos_elastica.finder.app.vehicle');
+                $results = $finder->find($formData['search']);
+
+                return $this->render('AppBundle:default:results_page.html.twig', [
+                    'items' => $results,
+                    'total_pages_count' => 1,
+                    'searchForm' => $searchForm->createView()
+                ]);
+            } else {
+                return $this->getResultsAction($searchForm, $request, $page);
+            }
         }
         return $this->render('AppBundle:default:detailed_search.html.twig', [
             'searchForm' => $searchForm->createView()

@@ -609,7 +609,7 @@ class Vehicle
     /**
      * Set color
      */
-    public function setColor(Color $color = null): Vehicle
+    public function setColor(Color $color): Vehicle
     {
         $this->color = $color;
 

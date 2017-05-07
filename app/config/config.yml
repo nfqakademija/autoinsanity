@@ -83,4 +83,30 @@ fos_user:
         form:
             type: AppBundle\Type\RegistrationFormType
 
-
+fos_elastica:
+    clients:
+        default: { host: localhost, port: 9200 }
+    indexes:
+        app:
+            types:
+                vehicle:
+                    properties:
+                        brand: ~
+                        model: ~
+                        country: ~
+                        city: ~
+                        body_type: ~
+                        fuel_type: ~
+                        color: ~
+                        provider: ~
+                        price: ~
+                        year: ~
+                        engine_size: ~
+                        power: ~
+                        drive_type: ~
+                    persistence:
+                        driver: orm
+                        model: AppBundle\Entity\Vehicle
+                        provider: ~
+                        finder: ~
+                        listener: ~

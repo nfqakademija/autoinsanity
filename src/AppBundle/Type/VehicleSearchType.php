@@ -69,6 +69,7 @@ class VehicleSearchType extends AbstractType
             ->add('price_to', IntegerType::class, ['label' => 'form.field.price_to'])
             ->add('year_from', IntegerType::class, ['label' => 'form.field.year_from'])
             ->add('year_to', IntegerType::class, ['label' => 'form.field.year_to'])
+            ->add('search', TextType::class, ['label' => 'Ieškoti tekstu'])
 
             ->add('fuel_type', EntityType::class, [
                 'class' => FuelType::class,
