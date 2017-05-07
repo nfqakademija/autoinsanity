@@ -2,17 +2,16 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Vehicle
+ * VehicleSearch
  *
- * @ORM\Entity(repositoryClass="AppBundle\Repository\VehicleRepository")
- * @ORM\Table(name="vehicle")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\VehicleSearchRepository")
+ * @ORM\Table(name="vehicle_search")
  */
 
-class Vehicle
+class VehicleSearch
 {
     /**
      * @var int
@@ -24,26 +23,12 @@ class Vehicle
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="provider_id", type="integer")
-     */
-    private $providerId;
-
-    /**
      * @var Provider
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Provider")
      * @ORM\JoinColumn(name="provider", referencedColumnName="id")
      */
     private $provider;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="link", type="string")
-     */
-    private $link;
 
     /**
      * @var Brand
@@ -64,16 +49,30 @@ class Vehicle
     /**
      * @var int
      *
-     * @ORM\Column(name="price", type="integer")
+     * @ORM\Column(name="price_from", type="integer")
      */
-    private $price;
+    private $priceFrom;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="year", type="integer")
+     * @ORM\Column(name="price_to", type="integer")
      */
-    private $year;
+    private $priceTo;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="year_from", type="integer")
+     */
+    private $yearFrom;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="year_to", type="integer")
+     */
+    private $yearTo;
 
     /**
      * @var Country
@@ -94,9 +93,16 @@ class Vehicle
     /**
      * @var int
      *
-     * @ORM\Column(name="engine_size", type="integer", nullable=true)
+     * @ORM\Column(name="engine_size_to", type="integer", nullable=true)
      */
-    private $engineSize = null;
+    private $engineSizeTo = null;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="engine_size_from", type="integer", nullable=true)
+     */
+    private $engineSizeFrom = null;
 
     /**
      * @var BodyType
@@ -109,9 +115,16 @@ class Vehicle
     /**
      * @var int
      *
-     * @ORM\Column(name="power", type="integer", nullable=true)
+     * @ORM\Column(name="power_from", type="integer", nullable=true)
      */
-    private $power = null;
+    private $powerFrom = null;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="power_to", type="integer", nullable=true)
+     */
+    private $powerTo = null;
 
     /**
      * @var FuelType
@@ -191,23 +204,16 @@ class Vehicle
     /**
      * @var int
      *
-     * @ORM\Column(name="weight", type="integer", nullable=true)
+     * @ORM\Column(name="mileage_from", type="integer", nullable=true)
      */
-    private $weight = null;
+    private $mileageFrom = null;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="mileage", type="integer", nullable=true)
+     * @ORM\Column(name="mileage_to", type="integer", nullable=true)
      */
-    private $mileage = null;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="image", type="string", nullable=true)
-     */
-    private $image = null;
+    private $mileageTo = null;
 
     /**
      * @var int
@@ -239,24 +245,17 @@ class Vehicle
     private $lastAdUpdate;
 
     /**
-     * @var \DateTime
+     * @var int
      *
-     * @ORM\Column(name="last_check", type="datetime", nullable=true)
+     * @ORM\Column(name="sort_type", type="integer", nullable=true)
      */
-    private $lastCheck;
-
-    /**
-     * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="pinnedVehicles")
-     */
-    private $users;
+    private $sortType;
 
     /**
      * Vehicle constructor.
      */
     public function __construct()
     {
-        $this->users = new ArrayCollection();
     }
 
     /**
@@ -267,118 +266,173 @@ class Vehicle
         return $this->id;
     }
 
-    /**
-     * Set providerId
-     */
-    public function setProviderId(int $providerId = null): Vehicle
-    {
-        $this->providerId = $providerId;
-
-        return $this;
-    }
-
-    /**
-     * Get providerId
-     */
-    public function getProviderId(): int
-    {
-        return $this->providerId;
-    }
 
     /**
      * Set provider
      */
-    public function setProvider(Provider $provider = null): Vehicle
+    public function setProvider(Provider $provider = null): ? VehicleSearch
     {
         $this->provider = $provider;
-
         return $this;
     }
 
     /**
      * Get provider
      */
-    public function getProvider(): Provider
+    public function getProvider(): ? Provider
     {
         return $this->provider;
     }
 
     /**
-     * Set price
+     * Set price from
      */
-    public function setPrice(int $price = null): Vehicle
+    public function setPriceFrom(int $price = null): VehicleSearch
     {
-        $this->price = $price;
+        $this->priceFrom = $price;
 
         return $this;
     }
 
     /**
-     * Get price
+     * Get price from
      */
-    public function getPrice(): int
+    public function getPriceFrom(): ? int
     {
-        return $this->price;
+        return $this->priceFrom;
     }
 
     /**
-     * Set year
+     * Set price to
      */
-    public function setYear(int $year = null): Vehicle
+    public function setPriceTo(int $price = null): VehicleSearch
     {
-        $this->year = $year;
+        $this->priceTo = $price;
 
         return $this;
     }
 
     /**
-     * Get year
+     * Get price to
      */
-    public function getYear(): int
+    public function getPriceTo(): ? int
     {
-        return $this->year;
+        return $this->priceTo;
     }
 
     /**
-     * Set engineSize
+     * Set year from
      */
-    public function setEngineSize(int $engineSize = null): Vehicle
+    public function setYearFrom(int $year = null): VehicleSearch
     {
-        $this->engineSize = $engineSize;
+        $this->yearFrom = $year;
 
         return $this;
     }
 
     /**
-     * Get engineSize
+     * Get year from
      */
-    public function getEngineSize(): int
+    public function getYearFrom(): ? int
     {
-        return $this->engineSize;
+        return $this->yearFrom;
     }
 
     /**
-     * Set power
+     * Set year to
      */
-    public function setPower(int $power = null): Vehicle
+    public function setYearTo(int $year = null): VehicleSearch
     {
-        $this->power = $power;
+        $this->yearTo = $year;
 
         return $this;
     }
 
     /**
-     * Get power
+     * Get year to
      */
-    public function getPower(): ? int
+    public function getYearTo(): ? int
     {
-        return $this->power;
+        return $this->yearTo;
     }
+
+    /**
+     * Set engineSize from
+     */
+    public function setEngineSizeFrom(int $engineSize = null): VehicleSearch
+    {
+        $this->engineSizeFrom = $engineSize;
+
+        return $this;
+    }
+
+    /**
+     * Get engineSize from
+     */
+    public function getEngineSizeFrom(): ? int
+    {
+        return $this->engineSizeFrom;
+    }
+
+    /**
+     * Set engineSize to
+     */
+    public function setEngineSizeTo(int $engineSize = null): VehicleSearch
+    {
+        $this->engineSizeTo = $engineSize;
+
+        return $this;
+    }
+
+    /**
+     * Get engineSize to
+     */
+    public function getEngineSizeTo(): ? int
+    {
+        return $this->engineSizeTo;
+    }
+
+    /**
+     * Set power from
+     */
+    public function setPowerFrom(int $power = null): VehicleSearch
+    {
+        $this->powerFrom = $power;
+
+        return $this;
+    }
+
+    /**
+     * Get power from
+     */
+    public function getPowerFrom(): ? int
+    {
+        return $this->powerFrom;
+    }
+
+    /**
+     * Set power to
+     */
+    public function setPowerTo(int $power = null): VehicleSearch
+    {
+        $this->powerTo = $power;
+
+        return $this;
+    }
+
+    /**
+     * Get power to
+     */
+    public function getPowerTo(): ? int
+    {
+        return $this->powerTo;
+    }
+
 
     /**
      * Set doorsNumber
      */
-    public function setDoorsNumber(int $doorsNumber = null): Vehicle
+    public function setDoorsNumber(int $doorsNumber = null): VehicleSearch
     {
         $this->doorsNumber = $doorsNumber;
 
@@ -396,7 +450,7 @@ class Vehicle
     /**
      * Set seatsNumber
      */
-    public function setSeatsNumber(int $seatsNumber = null): Vehicle
+    public function setSeatsNumber(int $seatsNumber = null): VehicleSearch
     {
         $this->seatsNumber = $seatsNumber;
 
@@ -414,7 +468,7 @@ class Vehicle
     /**
      * Set driveType
      */
-    public function setDriveType(int $driveType = null): Vehicle
+    public function setDriveType(int $driveType = null): VehicleSearch
     {
         $this->driveType = $driveType;
 
@@ -432,7 +486,7 @@ class Vehicle
     /**
      * Set steeringWheel
      */
-    public function setSteeringWheel(int $steeringWheel = null): Vehicle
+    public function setSteeringWheel(int $steeringWheel = null): VehicleSearch
     {
         $this->steeringWheel = $steeringWheel;
 
@@ -450,7 +504,7 @@ class Vehicle
     /**
      * Set wheelsDiameter
      */
-    public function setWheelsDiameter(int $wheelsDiameter = null): Vehicle
+    public function setWheelsDiameter(int $wheelsDiameter = null): VehicleSearch
     {
         $this->wheelsDiameter = $wheelsDiameter;
 
@@ -466,46 +520,46 @@ class Vehicle
     }
 
     /**
-     * Set weight
+     * Set mileage from
      */
-    public function setWeight(int $weight = null): Vehicle
+    public function setMileageFrom(int $mileage = null): VehicleSearch
     {
-        $this->weight = $weight;
+        $this->mileageFrom = $mileage;
 
         return $this;
     }
 
     /**
-     * Get weight
+     * Get mileage from
      */
-    public function getWeight(): ? int
+    public function getMileageFrom(): ? int
     {
-        return $this->weight;
+        return $this->mileageFrom;
     }
 
     /**
-     * Set mileage
+     * Set mileage to
      */
-    public function setMileage(int $mileage = null): Vehicle
+    public function setMileageTo(int $mileage = null): VehicleSearch
     {
-        $this->mileage = $mileage;
+        $this->mileageTo = $mileage;
 
         return $this;
     }
 
     /**
-     * Get mileage
+     * Get mileage to
      */
-    public function getMileage(): ? int
+    public function getMileageTo(): ? int
     {
-        return $this->mileage;
+        return $this->mileageTo;
     }
 
 
     /**
      * Set brand
      */
-    public function setBrand(Brand $brand = null): Vehicle
+    public function setBrand(Brand $brand = null): VehicleSearch
     {
         $this->brand = $brand;
 
@@ -523,7 +577,7 @@ class Vehicle
     /**
      * Set model
      */
-    public function setModel(Model $model = null): Vehicle
+    public function setModel(Model $model = null): VehicleSearch
     {
         $this->model = $model;
 
@@ -533,7 +587,7 @@ class Vehicle
     /**
      * Get model
      */
-    public function getModel(): Model
+    public function getModel(): ? Model
     {
         return $this->model;
     }
@@ -541,7 +595,7 @@ class Vehicle
     /**
      * Set country
      */
-    public function setCountry(Country $country = null): Vehicle
+    public function setCountry(Country $country = null): VehicleSearch
     {
         $this->country = $country;
 
@@ -551,7 +605,7 @@ class Vehicle
     /**
      * Get country
      */
-    public function getCountry(): Country
+    public function getCountry(): ? Country
     {
         return $this->country;
     }
@@ -559,7 +613,7 @@ class Vehicle
     /**
      * Set city
      */
-    public function setCity(City $city = null): Vehicle
+    public function setCity(City $city = null): VehicleSearch
     {
         $this->city = $city;
 
@@ -569,7 +623,7 @@ class Vehicle
     /**
      * Get city
      */
-    public function getCity(): City
+    public function getCity(): ? City
     {
         return $this->city;
     }
@@ -577,7 +631,7 @@ class Vehicle
     /**
      * Set bodyType
      */
-    public function setBodyType(BodyType $bodyType = null): Vehicle
+    public function setBodyType(BodyType $bodyType = null): VehicleSearch
     {
         $this->bodyType = $bodyType;
 
@@ -595,7 +649,7 @@ class Vehicle
     /**
      * Set fuelType
      */
-    public function setFuelType(FuelType $fuelType = null): Vehicle
+    public function setFuelType(FuelType $fuelType = null): VehicleSearch
     {
         $this->fuelType = $fuelType;
 
@@ -613,7 +667,7 @@ class Vehicle
     /**
      * Set color
      */
-    public function setColor(Color $color = null): Vehicle
+    public function setColor(Color $color = null): VehicleSearch
     {
         $this->color = $color;
 
@@ -629,46 +683,9 @@ class Vehicle
     }
 
     /**
-     * Set link
-     */
-    public function setLink(string $link = null): Vehicle
-    {
-        $this->link = $link;
-
-        return $this;
-    }
-
-    /**
-     * Get link
-     */
-    public function getLink(): string
-    {
-        return $this->link;
-    }
-
-    /**
-     * Set image
-     */
-    public function setImage(string $image): Vehicle
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    /**
-     * Get image
-     */
-    public function getImage(): ? string
-    {
-        return $this->image;
-    }
-
-
-    /**
      * Set transmission
      */
-    public function setTransmission(Transmission $transmission = null): Vehicle
+    public function setTransmission(Transmission $transmission = null): VehicleSearch
     {
         $this->transmission = $transmission;
 
@@ -685,10 +702,8 @@ class Vehicle
 
     /**
      * Set climateControl
-     *
-     * @return Vehicle
      */
-    public function setClimateControl(ClimateControl $climateControl = null): Vehicle
+    public function setClimateControl(ClimateControl $climateControl = null): VehicleSearch
     {
         $this->climateControl = $climateControl;
 
@@ -706,7 +721,7 @@ class Vehicle
     /**
      * Set defects
      */
-    public function setDefects(Defects $defects = null): Vehicle
+    public function setDefects(Defects $defects = null): VehicleSearch
     {
         $this->defects = $defects;
 
@@ -724,7 +739,7 @@ class Vehicle
     /**
      * Set nextCheckYear
      */
-    public function setNextCheckYear(int $nextCheckYear = null): Vehicle
+    public function setNextCheckYear(int $nextCheckYear = null): VehicleSearch
     {
         $this->nextCheckYear = $nextCheckYear;
 
@@ -742,7 +757,7 @@ class Vehicle
     /**
      * Set gearsNumber
      */
-    public function setGearsNumber(int $gearsNumber = null): Vehicle
+    public function setGearsNumber(int $gearsNumber = null): VehicleSearch
     {
         $this->gearsNumber = $gearsNumber;
 
@@ -760,7 +775,7 @@ class Vehicle
     /**
      * Set lastAdUpdate
      */
-    public function setLastAdUpdate(\DateTime $lastAdUpdate): Vehicle
+    public function setLastAdUpdate(\DateTime $lastAdUpdate): VehicleSearch
     {
         $this->lastAdUpdate = $lastAdUpdate;
 
@@ -776,27 +791,9 @@ class Vehicle
     }
 
     /**
-     * Set lastCheck
-     */
-    public function setLastCheck(\DateTime $lastCheck): Vehicle
-    {
-        $this->lastCheck = $lastCheck;
-
-        return $this;
-    }
-
-    /**
-     * Get lastCheck
-     */
-    public function getLastCheck(): \DateTime
-    {
-        return $this->lastCheck;
-    }
-
-    /**
      * Set firstCountry
      */
-    public function setFirstCountry(Country $firstCountry = null): Vehicle
+    public function setFirstCountry(Country $firstCountry = null): VehicleSearch
     {
         $this->firstCountry = $firstCountry;
 
@@ -812,28 +809,20 @@ class Vehicle
     }
 
     /**
-     * Add user
+     * Set sort type
      */
-    public function addUser(User $user): Vehicle
+    public function setSortType(int $sortType = null): VehicleSearch
     {
-        $this->users[] = $user;
+        $this->sortType = $sortType;
 
         return $this;
     }
 
     /**
-     * Remove user
+     * Get sort type
      */
-    public function removeUser(User $user)
+    public function getSortType(): ? int
     {
-        $this->users->removeElement($user);
-    }
-
-    /**
-     * Get users
-     */
-    public function getUsers(): ArrayCollection
-    {
-        return $this->users;
+        return $this->sortType;
     }
 }

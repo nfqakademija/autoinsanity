@@ -152,7 +152,7 @@
                                 {% if item.lastAdUpdate is not null  %}
                                     <li>
                                         {{ 'advert.field.name.last_update'|trans() }}:
-                                        <b>{{ item.lastAdUpdate|date('Y-m-d') }}</b>
+                                        <b>{{ item.lastAdUpdate|date('Y-m-d H:i') }}</b>
                                     </li>
                                 {% endif %}
                             </ul>

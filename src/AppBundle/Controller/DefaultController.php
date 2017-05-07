@@ -37,7 +37,7 @@ class DefaultController extends Controller
      */
     public function searchAction(Request $request, $page = 1)
     {
-        $searchForm = $this->createForm(VehicleSearchType::class, null);
+        $searchForm = $this->createForm(VehicleSearchType::class);
         $searchForm->handleRequest($request);
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
             return $this->getResults($searchForm, $request, $page);
@@ -128,10 +128,10 @@ class DefaultController extends Controller
 
     private function getResults(Form $searchForm, Request $request, $page = 1)
     {
+        $vehicleSearch = $searchForm->getData();
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
         $repository = $entityManager->getRepository('AppBundle:Vehicle');
-        $queryVehicleParams = $request->query->all();
-        $results = $repository->findAllByCriteria($queryVehicleParams, $page);
+        $results = $repository->findAllByCriteria($vehicleSearch, $page);
         return $this->render(
             'AppBundle:default:results_page.html.twig', [
                 'items' => $results['vehicles'],

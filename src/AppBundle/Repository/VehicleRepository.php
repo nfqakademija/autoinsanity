@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\User;
+use AppBundle\Entity\VehicleSearch;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
@@ -22,148 +23,192 @@ class VehicleRepository extends EntityRepository
             ->getQuery()->getResult();
     }
 
-    public function findAllByCriteria(array $criteria, int $page): array
+    public function findAllByCriteria(VehicleSearch $search, int $page): array
     {
         $query = $this->getJoinedTablesQuery();
-        if (!empty($criteria['provider'])) {
-            $query = $query->andWhere('v.provider = :prov')
-                ->setParameter('prov', $criteria['provider']);
-        }
-        if (!empty($criteria['brand'])) {
-            $query = $query->andWhere('v.brand = :brand')
-                ->setParameter('brand', $criteria['brand']);
-        }
-        if (!empty($criteria['model'])) {
-            $query = $query->andWhere('v.model = :model')
-                ->setParameter('model', $criteria['model']);
-        }
-        if (!empty($criteria['price_from'])) {
-            $query = $query->andWhere('v.price >= :price_from')
-                ->setParameter('price_from', $criteria['price_from']);
-        }
-        if (!empty($criteria['price_to'])) {
-            $query = $query->andWhere('v.price <= :price_to')
-                ->setParameter('price_to', $criteria['price_to']);
-        }
-        if (!empty($criteria['year_from'])) {
-            $query = $query->andWhere('v.year >= :year_from')
-                ->setParameter('year_from', $criteria['year_from']);
-        }
-        if (!empty($criteria['year_to'])) {
-            $query = $query->andWhere('v.year <= :year_to')
-                ->setParameter('year_to', $criteria['year_to']);
-        }
-        if (!empty($criteria['country'])) {
-            $query = $query->andWhere('v.country = :country')
-                ->setParameter('country', $criteria['country']);
-        }
-        if (!empty($criteria['city'])) {
-            $query = $query->andWhere('v.city = :city')
-                ->setParameter('city', $criteria['city']);
-        }
-        if (!empty($criteria['engine_size_from'])) {
-            $query = $query->andWhere('v.engineSize >= :engine_size_from')
-                ->setParameter('engine_size_from', $criteria['engine_size_from']);
-        }
-        if (!empty($criteria['engine_size_to'])) {
-            $query = $query->andWhere('v.engineSize <= :engine_size_to')
-                ->setParameter('engine_size_to', $criteria['engine_size_to']);
-        }
-        if (!empty($criteria['power_from'])) {
-            $query = $query->andWhere('v.power >= :power_from')
-                ->setParameter('power_from', $criteria['power_from']);
-        }
-        if (!empty($criteria['power_to'])) {
-            $query = $query->andWhere('v.power <= :power_to')
-                ->setParameter('power_to', $criteria['power_to']);
-        }
-        if (!empty($criteria['fuel_type'])) {
-            $query = $query->andWhere('v.fuelType = :fuel_type')
-                ->setParameter('fuel_type', $criteria['fuel_type']);
-        }
-        if (!empty($criteria['body_type'])) {
-            $query = $query->andWhere('v.bodyType = :body_type')
-                ->setParameter('body_type', $criteria['body_type']);
-        }
-        if (!empty($criteria['doors_number'])) {
-            $query = $query->andWhere('v.doorsNumber = :doors_number')
-                ->setParameter('doors_number', $criteria['doors_number']);
-        }
-        if (!empty($criteria['seats_number'])) {
-            $query = $query->andWhere('v.seatsNumber = :seats_number')
-                ->setParameter('seats_number', $criteria['seats_number']);
-        }
-        if (!empty($criteria['drive_type'])) {
-            $query = $query->andWhere('v.driveType = :drive_type')
-                ->setParameter('drive_type', $criteria['drive_type']);
-        }
-        if (!empty($criteria['climate_control'])) {
-            $query = $query->andWhere('v.climateControl = :climate_control')
-                ->setParameter('climate_control', $criteria['climate_control']);
-        }
-        if (!empty($criteria['color'])) {
-            $query = $query->andWhere('v.color = :color')
-                ->setParameter('color', $criteria['color']);
-        }
-        if (!empty($criteria['defects'])) {
-            $query = $query->andWhere('v.defects = :defects')
-                ->setParameter('defects', $criteria['defects']);
-        }
-        if (!empty($criteria['wheelsDiameter'])) {
-            $query = $query->andWhere('v.wheelsDiameter = :wheelsDiameter')
-                ->setParameter('wheelsDiameter', $criteria['wheelsDiameter']);
-        }
-        if (!empty($criteria['steering_wheel'])
-            || (isset($criteria['steering_wheel'])
-            && $criteria['steering_wheel'] === '0')
-        ) {
-            $query = $query->andWhere('v.steeringWheel = :steering_wheel')
-                ->setParameter('steering_wheel', $criteria['steering_wheel']);
-        }
-        if (!empty($criteria['mileage_from'])) {
-            $query = $query->andWhere('v.mileage >= :mileage_from')
-                ->setParameter('mileage_from', $criteria['mileage_from']);
-        }
-        if (!empty($criteria['mileage_to'])) {
-            $query = $query->andWhere('v.mileage <= :mileage_to')
-                ->setParameter('mileage_to', $criteria['mileage_to']);
-        }
-        if (!empty($criteria['next_check'])) {
-            $query = $query->andWhere('v.nextCheckYear >= :next_check')
-                ->setParameter('next_check', $criteria['next_check']);
-        }
-        if (!empty($criteria['first_country'])) {
-            $query = $query->andWhere('v.firstCountry = :first_country')
-                ->setParameter('first_country', $criteria['first_country']);
-        }
-        if (!empty($criteria['gears_number'])) {
-            $query = $query->andWhere('v.gearsNumber = :gears_number')
-                ->setParameter('gears_number', $criteria['gears_number']);
-        }
-        if (!empty($criteria['not_older_than'])) {
-            $date = new \DateTime();
-            $date->setTimestamp(strtotime('-'.$criteria['not_older_than'].' days'));
-            $query = $query->andWhere('v.lastAdUpdate >= :not_older_than_date')
-                ->setParameter('not_older_than_date', $date);
+        $criteriaMap = [
+            [
+                'field_name' => 'provider',
+                'criterium_value' => $search->getProvider(),
+            ],
+            [
+                'field_name' => 'brand',
+                'criterium_value' =>
+                    (null !== $search->getBrand())
+                        ? $search->getBrand()->getId()
+                        : null
+            ],
+            [
+                'field_name' => 'model',
+                'criterium_value' =>
+                    (null !== $search->getModel())
+                        ? $search->getModel()->getId()
+                        : null
+            ],
+            [
+                'field_name' => 'price',
+                'criterium_value' => $search->getPriceFrom(),
+                'compare' => '>=',
+            ],
+            [
+                'field_name' => 'price',
+                'criterium_value' => $search->getPriceTo(),
+                'compare' => '<=',
+            ],
+            [
+                'field_name' => 'year',
+                'criterium_value' => $search->getYearFrom(),
+                'compare' => '>=',
+            ],
+            [
+                'field_name' => 'year',
+                'criterium_value' => $search->getYearTo(),
+                'compare' => '<=',
+            ],
+            [
+                'field_name' => 'country',
+                'criterium_value' =>
+                    (null !== $search->getCountry())
+                        ? $search->getCountry()->getId()
+                        : null
+            ],
+            [
+                'field_name' => 'city',
+                'criterium_value' =>
+                    (null !== $search->getCity())
+                        ? $search->getCity()->getId()
+                        : null
+            ],
+            [
+                'field_name' => 'engineSize',
+                'criterium_value' => $search->getEngineSizeFrom(),
+                'compare' => '>=',
+            ],
+            [
+                'field_name' => 'engineSize',
+                'criterium_value' => $search->getEngineSizeTo(),
+                'compare' => '<=',
+            ],
+            [
+                'field_name' => 'power',
+                'criterium_value' => $search->getPowerFrom(),
+                'compare' => '>=',
+            ],
+            [
+                'field_name' => 'power',
+                'criterium_value' => $search->getPowerTo(),
+                'compare' => '<=',
+            ],
+            [
+                'field_name' => 'fuelType',
+                'criterium_value' =>
+                    (null !== $search->getFuelType())
+                        ? $search->getFuelType()->getId()
+                        : null
+            ],
+            [
+                'field_name' => 'bodyType',
+                'criterium_value' =>
+                    (null !== $search->getBodyType())
+                        ? $search->getBodyType()->getId()
+                        : null
+            ],
+            [
+                'field_name' => 'doorsNumber',
+                'criterium_value' => $search->getDoorsNumber(),
+            ],
+            [
+                'field_name' => 'seatsNumber',
+                'criterium_value' => $search->getSeatsNumber(),
+            ],
+            [
+                'field_name' => 'driveType',
+                'criterium_value' => $search->getDriveType(),
+            ],
+            [
+                'field_name' => 'climateControl',
+                'criterium_value' =>
+                    (null !== $search->getClimateControl())
+                        ? $search->getClimateControl()->getId()
+                        : null
+            ],
+            [
+                'field_name' => 'color',
+                'criterium_value' =>
+                    (null !== $search->getColor())
+                        ? $search->getColor()->getId()
+                        : null
+            ],
+            [
+                'field_name' => 'defects',
+                'criterium_value' =>
+                    (null !== $search->getDefects())
+                        ? $search->getDefects()->getId()
+                        : null
+            ],
+            [
+                'field_name' => 'wheelsDiameter',
+                'criterium_value' => $search->getWheelsDiameter(),
+            ],
+            [
+                'field_name' => 'steeringWheel',
+                'criterium_value' => $search->getSteeringWheel(),
+            ],
+            [
+                'field_name' => 'mileage',
+                'criterium_value' => $search->getMileageFrom(),
+                'compare' => '>=',
+            ],
+            [
+                'field_name' => 'mileage',
+                'criterium_value' => $search->getMileageTo(),
+                'compare' => '<=',
+            ],
+            [
+                'field_name' => 'nextCheckYear',
+                'criterium_value' => $search->getNextCheckYear(),
+                'compare' => '>=',
+            ],
+            [
+                'field_name' => 'firstCountry',
+                'criterium_value' =>
+                    (null !== $search->getFirstCountry())
+                        ? $search->getFirstCountry()->getId()
+                        : null
+            ],
+            [
+                'field_name' => 'gearsNumber',
+                'criterium_value' => $search->getGearsNumber(),
+            ],
+            [
+                'field_name' => 'lastAdUpdate',
+                'criterium_value' => (new \DateTime())
+                    ->setTimestamp(strtotime('-'.$search->getLastAdUpdate().' days'))
+                    ->format('Y-m-d'),
+                'compare' => '>='
+            ],
+        ];
+        foreach ($criteriaMap as $criteriumMap) {
+            $query = $this->addSearchCriterium($query, $criteriumMap);
         }
 
         // sorting of results
-        $sortValue = 'cost_min'; // default value
+        $sortValue = 0; // default value
         $sortField = 'price';
         $sortDir = 'asc';
-        if (!empty($criteria['sort'])) {
-            $sortValue = $criteria['sort'];
+        if ($search->getSortType() !== null) {
+            $sortValue = $search->getSortType();
         }
         // set sorting sql parameters
-        if ($sortValue === 'cost_max') {
+        if ($sortValue === 1) {
             $sortField = 'price';
             $sortDir = 'desc';
-        } elseif ($sortValue === 'date_new') {
-            $sortField = 'lastAdUpdate';
-            $sortDir = 'asc';
-        } elseif ($sortValue === 'date_old') {
+        } elseif ($sortValue === 2) {
             $sortField = 'lastAdUpdate';
             $sortDir = 'desc';
+        } elseif ($sortValue === 3) {
+            $sortField = 'lastAdUpdate';
+            $sortDir = 'asc';
         }
         $query = $query->orderBy("v.$sortField", $sortDir);
         $totalPagesCount = $this->createQueryPagination($query, $page);
@@ -218,5 +263,18 @@ class VehicleRepository extends EntityRepository
             ->leftJoin('v.fuelType', 'fue')
             ->leftJoin('v.provider', 'pro')
             ->leftJoin('v.transmission', 'tra');
+    }
+
+    private function addSearchCriterium(QueryBuilder $query, array $criterium): QueryBuilder
+    {
+        if (!isset($criterium['criterium_value'])) {
+            return $query;
+        }
+        if (!isset($criterium['compare'])) {
+            $criterium['compare'] = '=';
+        }
+        $whereClause = 'v.' . $criterium['field_name'] . ' ' . $criterium['compare'] . ' ' . $criterium['criterium_value'];
+        $query = $query->andWhere($whereClause);
+        return $query;
     }
 }
