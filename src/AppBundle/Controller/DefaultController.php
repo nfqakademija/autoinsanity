@@ -17,9 +17,11 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $searchForm = $this->createForm(VehicleSearchType::class, null, [
+        $searchForm = $this->createForm(
+            VehicleSearchType::class, null, [
             'action' => $this->generateUrl('detailed_search'),
-        ]);
+            ]
+        );
         $searchForm->handleRequest($request);
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
             return $this->getResultsAction($searchForm, $request);
@@ -40,9 +42,11 @@ class DefaultController extends Controller
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
             return $this->getResultsAction($searchForm, $request, $page);
         }
-        return $this->render('AppBundle:default:detailed_search.html.twig', [
+        return $this->render(
+            'AppBundle:default:detailed_search.html.twig', [
             'searchForm' => $searchForm->createView()
-        ]);
+            ]
+        );
     }
 
     public function getResultsAction(Form $searchForm, Request $request, $page = 1)
@@ -51,11 +55,13 @@ class DefaultController extends Controller
         $repository = $entityManager->getRepository('AppBundle:Vehicle');
         $queryVehicleParams = $request->query->all();
         $results = $repository->findAllByCriteria($queryVehicleParams, $page);
-        return $this->render('AppBundle:default:results_page.html.twig', [
+        return $this->render(
+            'AppBundle:default:results_page.html.twig', [
             'items' => $results['vehicles'],
             'total_pages_count' => $results['total_pages_count'],
             'searchForm' => $searchForm->createView()
-        ]);
+            ]
+        );
     }
 
     /**
@@ -86,18 +92,22 @@ class DefaultController extends Controller
             $user->addPinnedVehicle($vehicle);
             $entityManager->persist($user);
             $entityManager->flush();
-            return new JsonResponse([
+            return new JsonResponse(
+                [
                 'pin_action' => 'unpin',
                 'button_text' => $translator->trans('results.pin.pinned'),
-            ]);
+                ]
+            );
         } elseif ($pinAction === 'unpin') {
             $user->removePinnedVehicle($vehicle);
             $entityManager->persist($user);
             $entityManager->flush();
-            return new JsonResponse([
+            return new JsonResponse(
+                [
                 'pin_action' => 'pin',
                 'button_text' => $translator->trans('results.pin.unpinned'),
-            ]);
+                ]
+            );
         } else {
             return new JsonResponse(['error' => 'action not implemented']);
         }
@@ -106,14 +116,16 @@ class DefaultController extends Controller
     /**
      * @Route("/searches", name="searches")
      */
-    public function savedSearchesAction() {
+    public function savedSearchesAction()
+    {
         return new JsonResponse();
     }
 
     /**
      * @Route("/pinned/{page}", name="pinned", requirements={"page": "^[1-9]\d*$"})
      */
-    public function pinnedVehiclesAction($page = 1) {
+    public function pinnedVehiclesAction($page = 1)
+    {
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return new JsonResponse(['error' => 'not authenticated']);
         }
@@ -121,9 +133,11 @@ class DefaultController extends Controller
         $repository = $entityManager->getRepository('AppBundle:Vehicle');
         $user = $this->getUser();
         $results = $repository->getPinnedVehicles($user, $page);
-        return $this->render('AppBundle:default:pinned_page.html.twig', [
+        return $this->render(
+            'AppBundle:default:pinned_page.html.twig', [
             'items' => $results['vehicles'],
             'total_pages_count' => $results['total_pages_count'],
-        ]);
+            ]
+        );
     }
 }

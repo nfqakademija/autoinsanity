@@ -19,7 +19,7 @@ class LoadCountryCityData extends AbstractLoadData implements FixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        return $this->loadRelatedFixtures($manager);
+        return $this->loadFixtures($manager);
     }
 
     public function setParent(City $child, Country $parent)

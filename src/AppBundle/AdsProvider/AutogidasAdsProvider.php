@@ -27,6 +27,7 @@ class AutogidasAdsProvider extends AdsProvider
             $row = new Crawler($domRow);
 
             $lastUpdate = $row->filter('.inserted-before');
+            $lastUpdateDate = null;
             if ($lastUpdate->count() > 0) {
                 $lastUpdateDate = $this->parseDate($lastUpdate->text());
             }
@@ -45,7 +46,6 @@ class AutogidasAdsProvider extends AdsProvider
 
     private function parseAd($innerUrl)
     {
-        $dummy = null;
         $car = [];
         $innerHtml = $this->getHtml($innerUrl);
         $innerCrawler = new Crawler($innerHtml);
@@ -91,7 +91,8 @@ class AutogidasAdsProvider extends AdsProvider
                 $car[$key] = $value;
             }
         }
-        $car = array_merge($car, [
+        $car = array_merge(
+            $car, [
             'brand' => $brand,
             'model' => $model,
             'price' => $price,
@@ -99,7 +100,8 @@ class AutogidasAdsProvider extends AdsProvider
             'country' => $country,
             'url' => $innerUrl,
             'providerId' => $providerId,
-        ]);
+            ]
+        );
         return $car;
     }
 
