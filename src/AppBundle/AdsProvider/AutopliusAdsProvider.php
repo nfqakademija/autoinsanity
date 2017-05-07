@@ -47,7 +47,7 @@ class AutopliusAdsProvider extends AdsProvider
         return $cars;
     }
 
-    private function parseAd($innerUrl)
+    private function parseAd(string $innerUrl)
     {
         $car = [];
         $innerHtml = $this->getHtml($innerUrl);
