@@ -43,7 +43,7 @@ abstract class AbstractLoadData
 
     private function parseData(): array
     {
-        $itemsData = Yaml::parse(file_get_contents(__DIR__ . $this->fileName));
+        $itemsData = Yaml::parse(file_get_contents(__DIR__.$this->fileName));
         return $itemsData;
     }
 
