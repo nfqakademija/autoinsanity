@@ -15,9 +15,9 @@ $('.vehicle-pin-button').click(function () {
         success: function(data) {
             if (typeof data.pin_action !== 'undefined') {
                 if (data.pin_action === 'pin') {
-                    button.html(data.button_text);
+                    button.html('<span class="glyphicon glyphicon-heart-empty"></span> ' + data.button_text);
                 } else {
-                    button.html('<b>' + data.button_text + '</b>');
+                    button.html('<span class="glyphicon glyphicon-heart"></span> <b>' + data.button_text + '</b>');
                 }
                 button.addClass(data.pin_action);
            }
