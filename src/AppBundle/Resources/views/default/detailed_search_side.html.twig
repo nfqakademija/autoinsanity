@@ -1,0 +1,29 @@
+<h4>{{ 'form.header.update_form'|trans() }}</h4>
+{{ form_start(searchForm, { attr: {novalidate: 'novalidate', id: search_form_id} }) }}
+            {{ form_row(searchForm.brand) }}
+            {{ form_row(searchForm.model) }}
+<div class="row">
+    <div class="col-md-6">
+        {{ form_row(searchForm.price_from) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_row(searchForm.price_to) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        {{ form_row(searchForm.year_from) }}
+    </div>
+    <div class="col-md-6">
+        {{ form_row(searchForm.year_to) }}
+    </div>
+</div>
+{{ form_row(searchForm.fuel_type) }}
+            {{ form_row(searchForm.country) }}
+            {{ form_row(searchForm.city) }}
+            {{ form_row(searchForm.steering_wheel) }}
+            {{ form_rest(searchForm) }}
+<div class="row text-center">
+    <button type="submit" class="btn btn-primary btn-lg">{{ 'form.button.update'|trans() }}</button>
+</div>
+{{ form_end(searchForm) }}

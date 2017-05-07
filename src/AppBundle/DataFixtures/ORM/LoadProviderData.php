@@ -14,6 +14,6 @@ class LoadProviderData extends AbstractLoadData implements FixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        return $this->loadSimpleFixture($manager);
+        return $this->loadFixtures($manager);
     }
 }

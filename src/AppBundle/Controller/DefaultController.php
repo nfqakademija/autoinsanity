@@ -17,12 +17,14 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $searchForm = $this->createForm(VehicleSearchType::class, null, [
+        $searchForm = $this->createForm(
+            VehicleSearchType::class, null, [
             'action' => $this->generateUrl('detailed_search'),
-        ]);
+            ]
+        );
         $searchForm->handleRequest($request);
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-            return $this->getResultsAction($searchForm, $request);
+            return $this->getResults($searchForm, $request);
         }
         return $this->render(
             'AppBundle:default:index.html.twig',
@@ -38,24 +40,13 @@ class DefaultController extends Controller
         $searchForm = $this->createForm(VehicleSearchType::class, null);
         $searchForm->handleRequest($request);
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-            return $this->getResultsAction($searchForm, $request, $page);
+            return $this->getResults($searchForm, $request, $page);
         }
-        return $this->render('AppBundle:default:detailed_search.html.twig', [
+        return $this->render(
+            'AppBundle:default:detailed_search.html.twig', [
             'searchForm' => $searchForm->createView()
-        ]);
-    }
-
-    public function getResultsAction(Form $searchForm, Request $request, $page = 1)
-    {
-        $entityManager = $this->get('doctrine.orm.default_entity_manager');
-        $repository = $entityManager->getRepository('AppBundle:Vehicle');
-        $queryVehicleParams = $request->query->all();
-        $results = $repository->findAllByCriteria($queryVehicleParams, $page);
-        return $this->render('AppBundle:default:results_page.html.twig', [
-            'items' => $results['vehicles'],
-            'total_pages_count' => $results['total_pages_count'],
-            'searchForm' => $searchForm->createView()
-        ]);
+            ]
+        );
     }
 
     /**
@@ -86,18 +77,22 @@ class DefaultController extends Controller
             $user->addPinnedVehicle($vehicle);
             $entityManager->persist($user);
             $entityManager->flush();
-            return new JsonResponse([
+            return new JsonResponse(
+                [
                 'pin_action' => 'unpin',
                 'button_text' => $translator->trans('results.pin.pinned'),
-            ]);
+                ]
+            );
         } elseif ($pinAction === 'unpin') {
             $user->removePinnedVehicle($vehicle);
             $entityManager->persist($user);
             $entityManager->flush();
-            return new JsonResponse([
+            return new JsonResponse(
+                [
                 'pin_action' => 'pin',
                 'button_text' => $translator->trans('results.pin.unpinned'),
-            ]);
+                ]
+            );
         } else {
             return new JsonResponse(['error' => 'action not implemented']);
         }
@@ -106,59 +101,43 @@ class DefaultController extends Controller
     /**
      * @Route("/searches", name="searches")
      */
-    public function savedSearchesAction() {
+    public function savedSearchesAction()
+    {
         return new JsonResponse();
     }
 
     /**
-     * @Route("/pinned", name="pinned")
+     * @Route("/pinned/{page}", name="pinned", requirements={"page": "^[1-9]\d*$"})
      */
-    public function pinnedVehiclesAction() {
-        return new JsonResponse();
+    public function pinnedVehiclesAction($page = 1)
+    {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return new JsonResponse(['error' => 'not authenticated']);
+        }
+        $entityManager = $this->get('doctrine.orm.default_entity_manager');
+        $repository = $entityManager->getRepository('AppBundle:Vehicle');
+        $user = $this->getUser();
+        $results = $repository->getPinnedVehicles($user, $page);
+        return $this->render(
+            'AppBundle:default:pinned_page.html.twig', [
+            'items' => $results['vehicles'],
+            'total_pages_count' => $results['total_pages_count'],
+            ]
+        );
     }
 
-    /**
-     * @Route("/generate", name="generate_fakes")
-     */
-    public function generateFakesAction()
+    private function getResults(Form $searchForm, Request $request, $page = 1)
     {
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
-        $brands = $entityManager->getRepository('AppBundle:Brand')->findAll();
-        $models = $entityManager->getRepository('AppBundle:Model')->findAll();
-        $bodyTypes = $entityManager->getRepository('AppBundle:BodyType')->findAll();
-        $fuelTypes = $entityManager->getRepository('AppBundle:FuelType')->findAll();
-        $countries = $entityManager->getRepository('AppBundle:Country')->findAll();
-        $cities = $entityManager->getRepository('AppBundle:City')->findAll();
-        $colors = $entityManager->getRepository('AppBundle:Color')->findAll();
-        for ($i = 0; $i < 100; $i++) {
-            $vehicle = new Vehicle();
-            $vehicle->setBrand($brands[$i%sizeof($brands)]);
-            $vehicle->setBodyType($bodyTypes[$i%sizeof($bodyTypes)]);
-            $vehicle->setModel($models[$i%sizeof($models)]);
-            $vehicle->setFuelType($fuelTypes[$i%sizeof($fuelTypes)]);
-            $vehicle->setCountry($countries[$i%sizeof($countries)]);
-            $vehicle->setCity($cities[$i%sizeof($cities)]);
-            $vehicle->setColor($colors[$i%sizeof($colors)]);
-            $vehicle->setClimateControl("Lala");
-            $vehicle->setDefects("Lala");
-            $vehicle->setDoorsNumber($i % 4);
-            $vehicle->setSeatsNumber($i % 4);
-            $vehicle->setDriveType("Gaga");
-            $vehicle->setEngineSize($i*1000 % 2000);
-            $vehicle->setMileage($i*100000 % 100000);
-            $vehicle->setProviderId($i * 100000 % 200000);
-            $vehicle->setProvider("Autoplius");
-            $vehicle->setLink("https://www.Autoplius.lt");
-            $vehicle->setPrice($i * 4211 % 10000);
-            $vehicle->setYear($i * 515151 % 2010);
-            $vehicle->setPower($i * 545 % 100);
-            $vehicle->setTransmission("RW");
-            $vehicle->setSteeringWheel($i % 2);
-            $vehicle->setWheelsDiameter($i % 20);
-            $vehicle->setWeight($i * 5454 % 2000);
-            $entityManager->persist($vehicle);
-        }
-        $entityManager->flush();
-        return $this->render('AppBundle:default:index.html.twig');
+        $repository = $entityManager->getRepository('AppBundle:Vehicle');
+        $queryVehicleParams = $request->query->all();
+        $results = $repository->findAllByCriteria($queryVehicleParams, $page);
+        return $this->render(
+            'AppBundle:default:results_page.html.twig', [
+                'items' => $results['vehicles'],
+                'total_pages_count' => $results['total_pages_count'],
+                'searchForm' => $searchForm->createView()
+            ]
+        );
     }
 }

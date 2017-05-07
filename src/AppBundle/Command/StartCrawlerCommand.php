@@ -126,10 +126,12 @@ class StartCrawlerCommand extends Command
 
         // update vehicle if it already exists
         $repository = $em->getRepository("AppBundle:Vehicle");
-        $vehicle = $repository->findOneBy([
+        $vehicle = $repository->findOneBy(
+            [
             'provider' => $ad->getProvider(),
             'providerId' => $ad->getProviderId(),
-        ]);
+            ]
+        );
         // if not found, create new
         if ($vehicle == null) {
             $vehicle = new VehicleEntity();
@@ -171,6 +173,7 @@ class StartCrawlerCommand extends Command
 
     private function resolveFields($fieldsMap)
     {
+        $relations = [];
         foreach ($fieldsMap as $key => $relationMap) {
             $relations[$key] = $this->findOneInRepository($relationMap[0], $relationMap[1]);
             if ($relations[$key] == null && !empty($relationMap[1]['name'])) {

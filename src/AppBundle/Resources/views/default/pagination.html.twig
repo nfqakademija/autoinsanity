@@ -1,0 +1,37 @@
+<div class="row text-center">
+    <nav>
+        <ul class="pagination">
+            <li>
+                {% if page > 1 %}
+                <a href="{{ path(current_path, {'page': page-1}|merge(app.request.query.all)) }}">
+                    {% else %}
+                    <a href="#">
+                        {% endif %}
+                        <span>&laquo</span> {{ 'pagination.previous'|trans() }}
+                    </a>
+            </li>
+            {% for i in page-3..page+3 %}
+                {% if i > 0 and i <= total_pages_count %}
+                    {% if i == page %}
+                        <li class="active">
+                    {% else %}
+                        <li>
+                    {% endif %}
+                    <a href="{{ path(current_path, {'page': i}|merge(app.request.query.all)) }}">
+                        <span>{{ i }}</span>
+                    </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            <li>
+                {% if page < total_pages_count %}
+                <a href="{{ path(current_path, {'page': page+1}|merge(app.request.query.all)) }}">
+                    {% else %}
+                    <a href="#">
+                        {% endif %}
+                        {{ 'pagination.next'|trans() }} <span>&raquo</span>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+</div>

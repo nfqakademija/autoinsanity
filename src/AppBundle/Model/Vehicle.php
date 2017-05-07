@@ -51,7 +51,7 @@ class Vehicle
     private $city;
 
     /**
-     * @var float
+     * @var int
      */
     private $engineSize = null;
 
@@ -71,12 +71,12 @@ class Vehicle
     private $fuelType;
 
     /**
-     * @var string
+     * @var int
      */
     private $doorsNumber = null;
 
     /**
-     * @var float
+     * @var int
      */
     private $seatsNumber = null;
 
@@ -270,7 +270,7 @@ class Vehicle
     }
 
     /**
-     * @param string $doorsNumber
+     * @param int $doorsNumber
      * @return Vehicle
      */
     public function setDoorsNumber($doorsNumber)
@@ -289,7 +289,7 @@ class Vehicle
     }
 
     /**
-     * @param float $seatsNumber
+     * @param int $seatsNumber
      * @return Vehicle
      */
     public function setSeatsNumber($seatsNumber)
@@ -300,7 +300,7 @@ class Vehicle
     }
 
     /**
-     * @return float
+     * @return int
      */
     public function getSeatsNumber()
     {
@@ -384,7 +384,7 @@ class Vehicle
     }
 
     /**
-     * @param string $steeringWheel
+     * @param int $steeringWheel
      * @return Vehicle
      */
     public function setSteeringWheel($steeringWheel)
@@ -403,7 +403,7 @@ class Vehicle
     }
 
     /**
-     * @param string $wheelsDiameter
+     * @param int $wheelsDiameter
      * @return Vehicle
      */
     public function setWheelsDiameter($wheelsDiameter)

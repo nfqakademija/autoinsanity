@@ -29,6 +29,7 @@ class AutopliusAdsProvider extends AdsProvider
             //vehicle is not saved if it is sold
             if ($row->filter('.is-sold')->count() == 0) {
                 $lastUpdate = $row->filter('.details-list  .tools-right');
+                $lastUpdateDate = null;
                 if ($lastUpdate->count() > 0) {
                     $lastUpdate = preg_replace('/\W\w+\s*(\W*)$/', '$1', $lastUpdate->text());
                     $lastUpdateDate = $this->parseDate($lastUpdate);
@@ -46,9 +47,8 @@ class AutopliusAdsProvider extends AdsProvider
         return $cars;
     }
 
-    private function parseAd($innerUrl)
+    private function parseAd(string $innerUrl)
     {
-        $dummy = null;
         $car = [];
         $innerHtml = $this->getHtml($innerUrl);
         $innerCrawler = new Crawler($innerHtml);
@@ -84,7 +84,8 @@ class AutopliusAdsProvider extends AdsProvider
                 $car[$key] = $value;
             }
         }
-        $car = array_merge($car, [
+        $car = array_merge(
+            $car, [
             'brand' => $brand,
             'model' => $model,
             'price' => $price,
@@ -92,7 +93,8 @@ class AutopliusAdsProvider extends AdsProvider
             'country' => $country,
             'url' => $innerUrl,
             'providerId' => $providerId,
-        ]);
+            ]
+        );
         return $car;
     }
 

@@ -32,7 +32,7 @@ class Brand
     private $name = null;
 
     /**
-     * @var Model[]
+     * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Model", mappedBy="brand", cascade="persist")
      */
     private $models;
