@@ -15,7 +15,8 @@ class VehicleSearchRepository extends EntityRepository
     // maximum number of recent searches stored for one user
     const MAX_SEARCHES_PER_USER = 10;
 
-    public function getRecentSearches(User $user) {
+    public function getRecentSearches(User $user)
+    {
         return $this->getEntityManager()
             ->createQueryBuilder()
             ->select('s')
@@ -27,7 +28,8 @@ class VehicleSearchRepository extends EntityRepository
             ->getResult();
     }
 
-    public function getSavedSearches(User $user, int $page) {
+    public function getSavedSearches(User $user, int $page)
+    {
         $query = $this->getEntityManager()
             ->createQueryBuilder()
             ->select('s')
