@@ -142,7 +142,7 @@ abstract class AdsProvider
         return $html;
     }
 
-    protected function getFunctionFromKey(string $key): ?string
+    protected function getFunctionFromKey(string $key)
     {
         $funcMap = [
             'year' => 'adParseYear',

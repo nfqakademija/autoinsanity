@@ -370,7 +370,7 @@ class Vehicle
     /**
      * Get power
      */
-    public function getPower(): ? int
+    public function getPower()
     {
         return $this->power;
     }
@@ -388,7 +388,7 @@ class Vehicle
     /**
      * Get doorsNumber
      */
-    public function getDoorsNumber(): ? int
+    public function getDoorsNumber()
     {
         return $this->doorsNumber;
     }
@@ -406,7 +406,7 @@ class Vehicle
     /**
      * Get seatsNumber
      */
-    public function getSeatsNumber(): ? int
+    public function getSeatsNumber()
     {
         return $this->seatsNumber;
     }
@@ -424,7 +424,7 @@ class Vehicle
     /**
      * Get driveType
      */
-    public function getDriveType(): ? int
+    public function getDriveType()
     {
         return $this->driveType;
     }
@@ -442,7 +442,7 @@ class Vehicle
     /**
      * Get steeringWheel
      */
-    public function getSteeringWheel(): ? int
+    public function getSteeringWheel()
     {
         return $this->steeringWheel;
     }
@@ -460,7 +460,7 @@ class Vehicle
     /**
      * Get wheelsDiameter
      */
-    public function getWheelsDiameter(): ? int
+    public function getWheelsDiameter()
     {
         return $this->wheelsDiameter;
     }
@@ -478,7 +478,7 @@ class Vehicle
     /**
      * Get weight
      */
-    public function getWeight(): ? int
+    public function getWeight()
     {
         return $this->weight;
     }
@@ -496,7 +496,7 @@ class Vehicle
     /**
      * Get mileage
      */
-    public function getMileage(): ? int
+    public function getMileage()
     {
         return $this->mileage;
     }
@@ -515,7 +515,7 @@ class Vehicle
     /**
      * Get brand
      */
-    public function getBrand(): ? Brand
+    public function getBrand()
     {
         return $this->brand;
     }
@@ -533,7 +533,7 @@ class Vehicle
     /**
      * Get model
      */
-    public function getModel(): Model
+    public function getModel()
     {
         return $this->model;
     }
@@ -551,7 +551,7 @@ class Vehicle
     /**
      * Get country
      */
-    public function getCountry(): Country
+    public function getCountry()
     {
         return $this->country;
     }
@@ -587,7 +587,7 @@ class Vehicle
     /**
      * Get bodyType
      */
-    public function getBodyType(): ? BodyType
+    public function getBodyType()
     {
         return $this->bodyType;
     }
@@ -605,7 +605,7 @@ class Vehicle
     /**
      * Get fuelType
      */
-    public function getFuelType(): ? FuelType
+    public function getFuelType()
     {
         return $this->fuelType;
     }
@@ -623,7 +623,7 @@ class Vehicle
     /**
      * Get color
      */
-    public function getColor(): ? Color
+    public function getColor()
     {
         return $this->color;
     }
@@ -659,7 +659,7 @@ class Vehicle
     /**
      * Get image
      */
-    public function getImage(): ? string
+    public function getImage()
     {
         return $this->image;
     }
@@ -678,7 +678,7 @@ class Vehicle
     /**
      * Get transmission
      */
-    public function getTransmission(): ? Transmission
+    public function getTransmission()
     {
         return $this->transmission;
     }
@@ -698,7 +698,7 @@ class Vehicle
     /**
      * Get climateControl
      */
-    public function getClimateControl(): ? ClimateControl
+    public function getClimateControl()
     {
         return $this->climateControl;
     }
@@ -716,7 +716,7 @@ class Vehicle
     /**
      * Get defects
      */
-    public function getDefects(): ? Defects
+    public function getDefects()
     {
         return $this->defects;
     }
@@ -734,7 +734,7 @@ class Vehicle
     /**
      * Get nextCheckYear
      */
-    public function getNextCheckYear(): ? int
+    public function getNextCheckYear()
     {
         return $this->nextCheckYear;
     }
@@ -752,7 +752,7 @@ class Vehicle
     /**
      * Get gearsNumber
      */
-    public function getGearsNumber(): ? int
+    public function getGearsNumber()
     {
         return $this->gearsNumber;
     }
@@ -770,7 +770,7 @@ class Vehicle
     /**
      * Get lastAdUpdate
      */
-    public function getLastAdUpdate(): ? \DateTime
+    public function getLastAdUpdate()
     {
         return $this->lastAdUpdate;
     }
@@ -788,7 +788,7 @@ class Vehicle
     /**
      * Get lastCheck
      */
-    public function getLastCheck(): \DateTime
+    public function getLastCheck()
     {
         return $this->lastCheck;
     }
@@ -806,7 +806,7 @@ class Vehicle
     /**
      * Get firstCountry
      */
-    public function getFirstCountry(): ? Country
+    public function getFirstCountry()
     {
         return $this->firstCountry;
     }

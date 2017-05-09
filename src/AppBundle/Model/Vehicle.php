@@ -625,7 +625,7 @@ class Vehicle
     /**
      * Get image
      */
-    public function getImage(): ?string
+    public function getImage()
     {
         return $this->image;
     }
@@ -643,7 +643,7 @@ class Vehicle
     /**
      * Get nextCheckYear
      */
-    public function getNextCheckYear(): ?int
+    public function getNextCheckYear()
     {
         return $this->nextCheckYear;
     }
@@ -661,7 +661,7 @@ class Vehicle
     /**
      * Get gearsNumber
      */
-    public function getGearsNumber(): ?int
+    public function getGearsNumber()
     {
         return $this->gearsNumber;
     }
@@ -715,7 +715,7 @@ class Vehicle
     /**
      * Get firstCountry
      */
-    public function getFirstCountry(): ?string
+    public function getFirstCountry()
     {
         return $this->firstCountry;
     }

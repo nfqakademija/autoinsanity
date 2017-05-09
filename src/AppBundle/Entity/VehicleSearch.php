@@ -314,7 +314,7 @@ class VehicleSearch
     /**
      * Get price from
      */
-    public function getPriceFrom(): ? int
+    public function getPriceFrom()
     {
         return $this->priceFrom;
     }
@@ -332,7 +332,7 @@ class VehicleSearch
     /**
      * Get price to
      */
-    public function getPriceTo(): ? int
+    public function getPriceTo()
     {
         return $this->priceTo;
     }
@@ -350,7 +350,7 @@ class VehicleSearch
     /**
      * Get year from
      */
-    public function getYearFrom(): ? int
+    public function getYearFrom()
     {
         return $this->yearFrom;
     }
@@ -368,7 +368,7 @@ class VehicleSearch
     /**
      * Get year to
      */
-    public function getYearTo(): ? int
+    public function getYearTo()
     {
         return $this->yearTo;
     }
@@ -386,7 +386,7 @@ class VehicleSearch
     /**
      * Get engineSize from
      */
-    public function getEngineSizeFrom(): ? int
+    public function getEngineSizeFrom()
     {
         return $this->engineSizeFrom;
     }
@@ -404,7 +404,7 @@ class VehicleSearch
     /**
      * Get engineSize to
      */
-    public function getEngineSizeTo(): ? int
+    public function getEngineSizeTo()
     {
         return $this->engineSizeTo;
     }
@@ -422,7 +422,7 @@ class VehicleSearch
     /**
      * Get power from
      */
-    public function getPowerFrom(): ? int
+    public function getPowerFrom()
     {
         return $this->powerFrom;
     }
@@ -440,7 +440,7 @@ class VehicleSearch
     /**
      * Get power to
      */
-    public function getPowerTo(): ? int
+    public function getPowerTo()
     {
         return $this->powerTo;
     }
@@ -459,7 +459,7 @@ class VehicleSearch
     /**
      * Get doorsNumber
      */
-    public function getDoorsNumber(): ? int
+    public function getDoorsNumber()
     {
         return $this->doorsNumber;
     }
@@ -477,7 +477,7 @@ class VehicleSearch
     /**
      * Get seatsNumber
      */
-    public function getSeatsNumber(): ? int
+    public function getSeatsNumber()
     {
         return $this->seatsNumber;
     }
@@ -495,7 +495,7 @@ class VehicleSearch
     /**
      * Get driveType
      */
-    public function getDriveType(): ? int
+    public function getDriveType()
     {
         return $this->driveType;
     }
@@ -513,7 +513,7 @@ class VehicleSearch
     /**
      * Get steeringWheel
      */
-    public function getSteeringWheel(): ? int
+    public function getSteeringWheel()
     {
         return $this->steeringWheel;
     }
@@ -531,7 +531,7 @@ class VehicleSearch
     /**
      * Get wheelsDiameter
      */
-    public function getWheelsDiameter(): ? int
+    public function getWheelsDiameter()
     {
         return $this->wheelsDiameter;
     }
@@ -549,7 +549,7 @@ class VehicleSearch
     /**
      * Get mileage from
      */
-    public function getMileageFrom(): ? int
+    public function getMileageFrom()
     {
         return $this->mileageFrom;
     }
@@ -567,7 +567,7 @@ class VehicleSearch
     /**
      * Get mileage to
      */
-    public function getMileageTo(): ? int
+    public function getMileageTo()
     {
         return $this->mileageTo;
     }
@@ -586,7 +586,7 @@ class VehicleSearch
     /**
      * Get brand
      */
-    public function getBrand(): ? Brand
+    public function getBrand()
     {
         return $this->brand;
     }
@@ -612,7 +612,7 @@ class VehicleSearch
     /**
      * Get country
      */
-    public function getCountry(): ? Country
+    public function getCountry()
     {
         return $this->country;
     }
@@ -686,7 +686,7 @@ class VehicleSearch
     /**
      * Get nextCheckYear
      */
-    public function getNextCheckYear(): ? int
+    public function getNextCheckYear()
     {
         return $this->nextCheckYear;
     }
@@ -704,7 +704,7 @@ class VehicleSearch
     /**
      * Get gearsNumber
      */
-    public function getGearsNumber(): ? int
+    public function getGearsNumber()
     {
         return $this->gearsNumber;
     }
@@ -722,7 +722,7 @@ class VehicleSearch
     /**
      * Get lastAdUpdate
      */
-    public function getLastAdUpdate(): ? \DateTime
+    public function getLastAdUpdate()
     {
         return $this->lastAdUpdate;
     }
@@ -748,7 +748,7 @@ class VehicleSearch
     /**
      * Get sort type
      */
-    public function getSortType(): ? int
+    public function getSortType()
     {
         return $this->sortType;
     }

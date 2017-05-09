@@ -119,7 +119,7 @@ class AutogidasAdsProvider extends AdsProvider
         return $date;
     }
 
-    protected function getKeyName(string $title): ?string
+    protected function getKeyName(string $title)
     {
         $keyMap = [
             'Metai' => 'year',
