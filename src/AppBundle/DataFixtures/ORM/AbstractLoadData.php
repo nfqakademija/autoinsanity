@@ -46,8 +46,4 @@ abstract class AbstractLoadData
         $itemsData = Yaml::parse(file_get_contents(__DIR__ . $this->fileName));
         return $itemsData;
     }
-
-    protected function setParent($item, $parent)
-    {
-    }
 }

@@ -37,7 +37,7 @@ class DefaultController extends Controller
      */
     public function searchAction(Request $request, $page = 1)
     {
-        $searchForm = $this->createForm(VehicleSearchType::class, null);
+        $searchForm = $this->createForm(VehicleSearchType::class);
         $searchForm->handleRequest($request);
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
             return $this->getResults($searchForm, $request, $page);
@@ -99,11 +99,25 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/searches", name="searches")
+     * @Route("/searches/{page}", name="searches", requirements={"page": "^[1-9]\d*$"})
      */
-    public function savedSearchesAction()
+    public function savedSearchesAction($page = 1)
     {
-        return new JsonResponse();
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return new JsonResponse(['error' => 'not authenticated']);
+        }
+        $entityManager = $this->get('doctrine.orm.default_entity_manager');
+        $repository = $entityManager->getRepository('AppBundle:VehicleSearch');
+        $user = $this->getUser();
+        $recentSearches = $repository->getRecentSearches($user);
+        $savedSearches = $repository->getSavedSearches($user, $page);
+        return $this->render(
+            'AppBundle:default:searches_page.html.twig', [
+                'searches_recent' => $recentSearches,
+                'searches_saved' => $savedSearches['results'],
+                'total_pages_count' => $savedSearches['total_pages_count'],
+            ]
+        );
     }
 
     /**
@@ -128,10 +142,24 @@ class DefaultController extends Controller
 
     private function getResults(Form $searchForm, Request $request, $page = 1)
     {
+        $vehicleSearch = $searchForm->getData();
+        $user = $this->getUser();
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
-        $repository = $entityManager->getRepository('AppBundle:Vehicle');
-        $queryVehicleParams = $request->query->all();
-        $results = $repository->findAllByCriteria($queryVehicleParams, $page);
+        $results = $entityManager->getRepository('AppBundle:Vehicle')
+            ->findAllByCriteria($vehicleSearch, $page);
+
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            $vehicleSearch->setUser($user);
+            $user->addSearch($vehicleSearch);
+            // remove outdated searches and insert new one
+            $outdatedSearches = $entityManager->getRepository('AppBundle:VehicleSearch')
+                ->getOutdatedSearches($user);
+            foreach ($outdatedSearches as $outSearch) {
+                $entityManager->remove($outSearch);
+            }
+            $entityManager->persist($user);
+            $entityManager->flush();
+        }
         return $this->render(
             'AppBundle:default:results_page.html.twig', [
                 'items' => $results['vehicles'],

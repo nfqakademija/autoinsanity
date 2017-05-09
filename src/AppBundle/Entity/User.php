@@ -21,15 +21,21 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Vehicle", inversedBy="users", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="Vehicle", inversedBy="users", fetch="EXTRA_LAZY", cascade="persist")
      * @ORM\JoinTable(name="users_vehicles")
      */
     private $pinnedVehicles;
+
+    /**
+     * @ORM\OneToMany(targetEntity="VehicleSearch", mappedBy="user", fetch="EXTRA_LAZY", cascade="persist")
+     */
+    private $searches;
 
     public function __construct()
     {
         parent::__construct();
         $this->pinnedVehicles = new ArrayCollection();
+        $this->searches = new ArrayCollection();
     }
 
     public function setEmail($email)
@@ -66,5 +72,32 @@ class User extends BaseUser
     public function getPinnedVehicles(): Collection
     {
         return $this->pinnedVehicles;
+    }
+
+    /**
+     * Add search
+     */
+    public function addSearch(VehicleSearch $search): User
+    {
+        $this->searches[] = $search;
+
+        return $this;
+    }
+
+    /**
+     * Remove search
+     */
+    public function removeSearch(VehicleSearch $search)
+    {
+        $this->searches->removeElement($search);
+        $search->setUser(null);
+    }
+
+    /**
+     * Get searches
+     */
+    public function getSearches(): Collection
+    {
+        return $this->searches;
     }
 }

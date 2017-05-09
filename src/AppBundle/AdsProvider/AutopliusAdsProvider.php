@@ -133,7 +133,7 @@ class AutopliusAdsProvider extends AdsProvider
         return $date;
     }
 
-    protected function getKeyName(string $title): ?string
+    protected function getKeyName(string $title)
     {
         $keyMap = [
             'Pagaminimo data' => 'year',

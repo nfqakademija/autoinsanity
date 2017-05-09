@@ -34,8 +34,8 @@
                             {{ block('pagination') }}
                         </div>
                         <div class="col-md-3">
-                                {{ form_label(searchForm.sort, null, {'attr': {'class': 'inline-block'}}) }}
-                                {{ form_widget(searchForm.sort, {'attr': {'class': 'inline-block', 'form': search_form_id}}) }}
+                                {{ form_label(searchForm.sort_type, null, {'attr': {'class': 'inline-block'}}) }}
+                                {{ form_widget(searchForm.sort_type, {'attr': {'class': 'inline-block', 'form': search_form_id}}) }}
                         </div>
                     </div>
                     {{ block('ad_list') }}

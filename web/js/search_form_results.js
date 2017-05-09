@@ -1,5 +1,5 @@
 // automatically submit the search form when type of sort is changed
-$('#sort').change(function () {
+$('#sort_type').change(function () {
     this.form.submit();
 });
 

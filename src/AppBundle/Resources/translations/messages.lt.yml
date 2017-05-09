@@ -50,6 +50,7 @@ form:
         update: 'Atnaujinti paiešką'
         search: 'Ieškoti'
     choice:
+        all: 'Pasirinkti viską'
         not_older_than:
             1_day: '1 dienos'
             3_days: '3 dienų'
@@ -121,6 +122,8 @@ form:
             next_check: 'Nesvarbu'
             first_country: 'Visos valstybės'
             not_older_than: 'Nesvarbu'
+        choices: 'pasirinkimai'
+        search: 'Ieškoti...'
 
 pagination:
     previous: 'Ankstesnis'
@@ -130,18 +133,23 @@ results:
     error:
         no_pinned: 'Jūs neturite jokių išsaugotų skelbimų'
         no_results: 'Skelbimų pagal nurodytus paieškos kriterijus nebuvo rasta.'
+        no_searches: 'Nerasta jokių išsaugotų paieškų'
     features:
     pin:
         pinned: 'Išsaugota'
         unpinned: 'Išsaugoti'
 
-
+subtitle:
+    searches_recent: 'Mano paskutinės paieškos'
+    searches_saved: 'Mano išsaugotos paieškos'
 
 title:
     index: 'Pagrindinis'
     detailed_search: 'Detalioji paieška'
     pinned: 'Mano išsaugoti skelbimai'
+    searches: 'Mano paieškos'
     results: 'Paieškos rezultatai'
     pagination: '(%page% psl. iš %pages%)'
     website_name: 'AutoInsanity'
+
 
