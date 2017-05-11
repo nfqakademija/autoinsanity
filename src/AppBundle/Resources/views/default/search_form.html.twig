@@ -30,7 +30,7 @@
             nSelectedText: ' {{ 'form.placeholder.choices'|trans() }}',
             onDropdownShown : function(event) {
                 this.$select.parent().find(".dropdown-menu").css("width", '100%');
-                this.$select.parent().find("button.multiselect-clear-filter").click();
+                //this.$select.parent().find("button.multiselect-clear-filter").click();
                 this.$select.parent().find("input[type='text'].multiselect-search").focus();
             },
             filterPlaceholder: '{{ 'form.placeholder.search'|trans() }}',

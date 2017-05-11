@@ -679,7 +679,7 @@ class Vehicle
     /**
      * Get lastAdUpdate
      */
-    public function getLastAdUpdate(): \DateTime
+    public function getLastAdUpdate()
     {
         return $this->lastAdUpdate;
     }

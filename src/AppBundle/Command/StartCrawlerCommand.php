@@ -54,7 +54,11 @@ class StartCrawlerCommand extends Command
                 echo "(Page " . $pageNumber . ") Saved to database " . count($ads) . " entries.\n";
 
                 $pageNumber++;
-                //sleep(1);
+                sleep(1);
+
+                // --------------------------
+                if($pageNumber == 5) break;
+                // --------------------------
             }
 
             echo "Finishing " . $adsProvider->getName() . "\n";
@@ -178,7 +182,8 @@ class StartCrawlerCommand extends Command
             $relations[$key] = $this->findOneInRepository($relationMap[0], $relationMap[1]);
             if ($relations[$key] == null && !empty($relationMap[1]['name'])) {
                 echo "Skipped: Failed to find element in " . $relationMap[0]
-                    . " with parameters: " . print_r($relationMap[1]) . "\n";
+                    . " with parameters: " . $relationMap[1]['name']
+                    . "\n";
                 return null;
             }
         }
