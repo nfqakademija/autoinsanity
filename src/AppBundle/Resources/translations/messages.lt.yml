@@ -49,6 +49,8 @@ form:
         detailed_search: 'Eiti į detaliąją paiešką'
         update: 'Atnaujinti paiešką'
         search: 'Ieškoti'
+        view_more: 'Žiūrėti daugiau parinkčių'
+        view_less: 'Žiūrėti mažiau parinkčių'
     choice:
         all: 'Pasirinkti viską'
         not_older_than:

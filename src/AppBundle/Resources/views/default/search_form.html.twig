@@ -1,113 +1,151 @@
-<script>
-    var multiselectDefaults = {
-        {% if app.request.attributes.get('_route') == 'homepage' %}
+{% extends '@App/base.html.twig' %}
+
+{% form_theme searchForm 'bootstrap_3_layout.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/css/bootstrap-slider.min.css" />
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        // expand fields in results
+        $('.form-more-fields button').click(function () {
+            var btnText =
+                ($(this).text().trim() === "{{ 'form.button.view_more'|trans() }}")
+                    ? "{{ 'form.button.view_less'|trans() }}"
+                    : "{{ 'form.button.view_more'|trans() }}"
+            $(this).text(btnText);
+        });
+
+        var multiselectDefaults = {
+            {% if app.request.attributes.get('_route') == 'homepage' %}
             buttonClass: 'btn-lg index-form',
-        {% endif %}
-        buttonWidth: '100%',
-        enableCaseInsensitiveFiltering: true,
-        disableIfEmpty: true,
-        includeSelectAllOption: true,
-        maxHeight: 300,
-        numberDisplayed: 2,
-        nSelectedText: ' {{ 'form.placeholder.choices'|trans() }}',
-        filterPlaceholder: '{{ 'form.placeholder.search'|trans() }}',
-        selectAllJustVisible: true,
-        selectAllNumber: false,
-        selectAllText: '{{ 'form.choice.all'|trans() }}'
-    };
+            {% endif %}
+            buttonWidth: '100%',
+            disableIfEmpty: true,
+            includeSelectAllOption: true,
+            maxHeight: 300,
+            numberDisplayed: 2,
+            nSelectedText: ' {{ 'form.placeholder.choices'|trans() }}',
+            onDropdownShown : function(event) {
+                this.$select.parent().find(".dropdown-menu").css("width", '100%');
+                this.$select.parent().find("button.multiselect-clear-filter").click();
+                this.$select.parent().find("input[type='text'].multiselect-search").focus();
+            },
+            filterPlaceholder: '{{ 'form.placeholder.search'|trans() }}',
+            selectAllJustVisible: true,
+            selectAllNumber: false,
+            selectAllText: '{{ 'form.choice.all'|trans() }}',
+            enableCaseInsensitiveFiltering: false
+        };
 
-    var modelOptions = Object.assign({}, multiselectDefaults, {
-        allSelectedText: '{{ 'form.placeholder.all.model'|trans() }}',
-        nonSelectedText: '{{ 'form.placeholder.all.model'|trans() }}'
-    });
-
-    var cityOptions = Object.assign({}, multiselectDefaults, {
-        allSelectedText: '{{ 'form.placeholder.all.city'|trans() }}',
-        nonSelectedText: '{{ 'form.placeholder.all.city'|trans() }}'
-    });
-
-    // get models when brand is selected
-    var $brand = $('#brand');
-    $brand.change(function () {
-        var $form = $(this).closest('form');
-        var data = { };
-        var classes = $('#model').attr('class');
-
-        data[$brand.attr('name')] = $brand.val();
-        $.ajax({
-            url : "{{ url('detailed_search') }}",
-            type: $form.attr('method'),
-            data : data,
-            success: function(html) {
-                $('#model').multiselect('destroy');
-                var model = $('#model');
-                model.replaceWith($(html).find('#model'));
-                model.attr('class', classes);
-                $('#model').multiselect(modelOptions);
-                $('#model').multiselect('rebuild');
-            }
+        var modelOptions = Object.assign({}, multiselectDefaults, {
+            allSelectedText: '{{ 'form.placeholder.all.model'|trans() }}',
+            nonSelectedText: '{{ 'form.placeholder.all.model'|trans() }}',
+            enableCaseInsensitiveFiltering: true
         });
-    });
 
-    // get cities when country is selected
-    var $country = $('#country');
-    $country.change(function () {
-        var $form = $(this).closest('form');
-        var data = { };
-        var classes = $('#city').attr('class');
-        data[$country.attr('name')] = $country.val();
-        $.ajax({
-            url : "{{ url('detailed_search') }}",
-            type: $form.attr('method'),
-            data : data,
-            success: function(html) {
-                $('#city').multiselect('destroy');
-                var city = $('#city');
-                city.replaceWith($(html).find('#city'));
-                city.attr('class', classes);
-                $('#city').multiselect(cityOptions);
-                $('#city').multiselect('rebuild');
-            }
+        var cityOptions = Object.assign({}, multiselectDefaults, {
+            allSelectedText: '{{ 'form.placeholder.all.city'|trans() }}',
+            nonSelectedText: '{{ 'form.placeholder.all.city'|trans() }}',
+            enableCaseInsensitiveFiltering: true
         });
-    });
 
-    $(document).ready(function() {
-        $('#model').multiselect(modelOptions);
-        $('#city').multiselect(cityOptions);
-        $('#fuel_type').multiselect(Object.assign({}, multiselectDefaults, {
-            allSelectedText: '{{ 'form.placeholder.all.fuel_type'|trans() }}',
-            nonSelectedText: '{{ 'form.placeholder.all.fuel_type'|trans() }}'
-        }));
-        $('#body_type').multiselect(Object.assign({}, multiselectDefaults, {
-            allSelectedText: '{{ 'form.placeholder.all.body_type'|trans() }}',
-            nonSelectedText: '{{ 'form.placeholder.all.body_type'|trans() }}'
-        }));
-        $('#provider').multiselect(Object.assign({}, multiselectDefaults, {
-            allSelectedText: '{{ 'form.placeholder.all.provider'|trans() }}',
-            nonSelectedText: '{{ 'form.placeholder.all.provider'|trans() }}'
-        }));
-        $('#color').multiselect(Object.assign({}, multiselectDefaults, {
-            allSelectedText: '{{ 'form.placeholder.all.color'|trans() }}',
-            nonSelectedText: '{{ 'form.placeholder.all.color'|trans() }}'
-        }));
-        $('#defects').multiselect(Object.assign({}, multiselectDefaults, {
-            allSelectedText: '{{ 'form.placeholder.all.defects'|trans() }}',
-            nonSelectedText: '{{ 'form.placeholder.all.defects'|trans() }}'
-        }));
-        $('#transmission').multiselect(Object.assign({}, multiselectDefaults, {
-            allSelectedText: '{{ 'form.placeholder.all.transmission'|trans() }}',
-            nonSelectedText: '{{ 'form.placeholder.all.transmission'|trans() }}'
-        }));
-        $('#climate_control').multiselect(Object.assign({}, multiselectDefaults, {
-            allSelectedText: '{{ 'form.placeholder.all.climate_control'|trans() }}',
-            nonSelectedText: '{{ 'form.placeholder.all.climate_control'|trans() }}'
-        }));
-        $('#first_country').multiselect(Object.assign({}, multiselectDefaults, {
-            enableCaseInsensitiveFiltering: true,
-            allSelectedText: '{{ 'form.placeholder.all.first_country'|trans() }}',
-            nonSelectedText: '{{ 'form.placeholder.all.first_country'|trans() }}'
-        }));
+        // get models when brand is selected
+        var $brand = $('#brand');
+        $brand.change(function () {
+            var $form = $(this).closest('form');
+            var data = { };
+            var classes = $('#model').attr('class');
 
-        $('select').multiselect(multiselectDefaults);
-    });
-</script>
+            data[$brand.attr('name')] = $brand.val();
+            $.ajax({
+                url : "{{ url('detailed_search') }}",
+                type: $form.attr('method'),
+                data : data,
+                success: function(html) {
+                    $('#model').multiselect('destroy');
+                    var model = $('#model');
+                    model.replaceWith($(html).find('#model'));
+                    model.attr('class', classes);
+                    $('#model').multiselect(modelOptions);
+                    $('#model').multiselect('rebuild');
+                }
+            });
+        });
+
+        // get cities when country is selected
+        var $country = $('#country');
+        $country.change(function () {
+            var $form = $(this).closest('form');
+            var data = { };
+            var classes = $('#city').attr('class');
+            data[$country.attr('name')] = $country.val();
+            $.ajax({
+                url : "{{ url('detailed_search') }}",
+                type: $form.attr('method'),
+                data : data,
+                success: function(html) {
+                    $('#city').multiselect('destroy');
+                    var city = $('#city');
+                    city.replaceWith($(html).find('#city'));
+                    city.attr('class', classes);
+                    $('#city').multiselect(cityOptions);
+                    $('#city').multiselect('rebuild');
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            $('#brand').multiselect(Object.assign({}, multiselectDefaults, {
+                enableCaseInsensitiveFiltering: true
+            }));
+            $('#model').multiselect(modelOptions);
+            $('#country').multiselect(Object.assign({}, multiselectDefaults, {
+                enableCaseInsensitiveFiltering: true
+            }));
+            $('#city').multiselect(cityOptions);
+            $('#fuel_type').multiselect(Object.assign({}, multiselectDefaults, {
+                allSelectedText: '{{ 'form.placeholder.all.fuel_type'|trans() }}',
+                nonSelectedText: '{{ 'form.placeholder.all.fuel_type'|trans() }}',
+                enableCaseInsensitiveFiltering: true
+            }));
+            $('#body_type').multiselect(Object.assign({}, multiselectDefaults, {
+                allSelectedText: '{{ 'form.placeholder.all.body_type'|trans() }}',
+                nonSelectedText: '{{ 'form.placeholder.all.body_type'|trans() }}',
+                enableCaseInsensitiveFiltering: true
+            }));
+            $('#provider').multiselect(Object.assign({}, multiselectDefaults, {
+                allSelectedText: '{{ 'form.placeholder.all.provider'|trans() }}',
+                nonSelectedText: '{{ 'form.placeholder.all.provider'|trans() }}'
+            }));
+            $('#color').multiselect(Object.assign({}, multiselectDefaults, {
+                allSelectedText: '{{ 'form.placeholder.all.color'|trans() }}',
+                nonSelectedText: '{{ 'form.placeholder.all.color'|trans() }}',
+                enableCaseInsensitiveFiltering: true
+            }));
+            $('#defects').multiselect(Object.assign({}, multiselectDefaults, {
+                allSelectedText: '{{ 'form.placeholder.all.defects'|trans() }}',
+                nonSelectedText: '{{ 'form.placeholder.all.defects'|trans() }}',
+                enableCaseInsensitiveFiltering: true
+            }));
+            $('#transmission').multiselect(Object.assign({}, multiselectDefaults, {
+                allSelectedText: '{{ 'form.placeholder.all.transmission'|trans() }}',
+                nonSelectedText: '{{ 'form.placeholder.all.transmission'|trans() }}'
+            }));
+            $('#climate_control').multiselect(Object.assign({}, multiselectDefaults, {
+                allSelectedText: '{{ 'form.placeholder.all.climate_control'|trans() }}',
+                nonSelectedText: '{{ 'form.placeholder.all.climate_control'|trans() }}'
+            }));
+            $('#first_country').multiselect(Object.assign({}, multiselectDefaults, {
+                allSelectedText: '{{ 'form.placeholder.all.first_country'|trans() }}',
+                nonSelectedText: '{{ 'form.placeholder.all.first_country'|trans() }}',
+                enableCaseInsensitiveFiltering: true
+            }));
+
+            $('select').multiselect(multiselectDefaults);
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/bootstrap-slider.min.js"></script>
+{% endblock %}

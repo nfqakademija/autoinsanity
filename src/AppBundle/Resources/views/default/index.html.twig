@@ -1,5 +1,4 @@
-{% extends 'AppBundle::base.html.twig' %}
-{% form_theme searchForm 'bootstrap_3_layout.html.twig' %}
+{% extends '@App/default/search_form.html.twig' %}
 
 {% block title %}
     {{ 'title.index'|trans() }}
@@ -65,5 +64,5 @@
 {% endblock %}
 
 {% block javascripts %}
-    {% include('@App/default/search_form.html.twig') %}
+    {{ parent() }}
 {% endblock %}
