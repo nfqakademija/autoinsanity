@@ -669,7 +669,7 @@ class Vehicle
     /**
      * Set lastAdUpdate
      */
-    public function setLastAdUpdate(\DateTime $lastAdUpdate): Vehicle
+    public function setLastAdUpdate(\DateTime $lastAdUpdate = null): Vehicle
     {
         $this->lastAdUpdate = $lastAdUpdate;
 
@@ -679,7 +679,7 @@ class Vehicle
     /**
      * Get lastAdUpdate
      */
-    public function getLastAdUpdate(): \DateTime
+    public function getLastAdUpdate()
     {
         return $this->lastAdUpdate;
     }

@@ -1,5 +1,4 @@
-{% extends 'AppBundle::base.html.twig' %}
-{% form_theme searchForm 'bootstrap_3_layout.html.twig' %}
+{% extends '@App/default/search_form.html.twig' %}
 
 {% use('@App/default/ad_list.html.twig') %}
 
@@ -51,7 +50,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    {% include('@App/default/search_form.html.twig') %}
+    {{ parent() }}
     <script src="{{ asset('js/search_form_results.js') }}"></script>
     {{ block('ad_list_javascripts') }}
 {% endblock %}

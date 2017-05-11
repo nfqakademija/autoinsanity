@@ -1,4 +1,4 @@
-# Load DSL and Setup Up Stages
+ # Load DSL and Setup Up Stages
 require 'ongr_deploy'
 
 # Includes default deployment tasks
