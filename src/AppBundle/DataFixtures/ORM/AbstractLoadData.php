@@ -24,7 +24,7 @@ abstract class AbstractLoadData
                 $item = new $this->entityClass();
                 $item->setName($itemData['name']);
                 $manager->persist($item);
-                if ($itemData[$this->relatedFixtureName] !== null) {
+                if (isset($itemData[$this->relatedFixtureName])) {
                     foreach ($itemData[$this->relatedFixtureName] as $relatedItemName) {
                         $relatedItem = new $this->relatedEntityClass();
                         $relatedItem->setName($relatedItemName);
