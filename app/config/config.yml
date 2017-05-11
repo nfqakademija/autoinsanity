@@ -86,21 +86,6 @@ fos_user:
             type: AppBundle\Type\RegistrationFormType
 
 liip_imagine :
-    resolvers:
-        default:
-            web_path:
-                web_root: 
-                    - "%kernel.root_dir%/../web"
-                    - "%kernel.root_dir%/../../shared/web"
-                cache_prefix: media/cache
-
-    loaders:
-        default:
-            filesystem:
-                data_root: 
-                    - "%kernel.root_dir%/../web/"
-                    - "%kernel.root_dir%/../../shared/web"
-
     driver:               gd
     cache:                default
     data_loader:          default
