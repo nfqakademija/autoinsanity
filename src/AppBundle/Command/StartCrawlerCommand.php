@@ -57,7 +57,9 @@ class StartCrawlerCommand extends Command
                 sleep(1);
 
                 // --------------------------
-                if($pageNumber == 5) break;
+                if ($pageNumber == 5) {
+                    break;
+                }
                 // --------------------------
             }
 
