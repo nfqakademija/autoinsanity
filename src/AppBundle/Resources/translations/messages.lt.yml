@@ -34,6 +34,18 @@ advert:
                 manual: 'mechaninė'
                 auto: 'automatinė'
 
+date:
+    short:
+        year: 'm.'
+        month: 'mėn.'
+        week: 'sav.'
+        day: 'd.'
+        hour: 'val.'
+        minute: 'min'
+        second: 's'
+    others:
+        ago: 'prieš'
+
 header:
     link:
         detailed_search: 'Detalioji paieška'
@@ -140,6 +152,49 @@ results:
     pin:
         pinned: 'Išsaugota'
         unpinned: 'Išsaugoti'
+
+searches:
+    field:
+        brand: 'Markė'
+        models: 'Modeliai'
+        country: 'Valstybė'
+        cities: 'Miestai'
+        body_type: 'Kėbulo tipai'
+        fuel_type: 'Kuro tipai'
+        price_from: 'Kaina nuo'
+        price_to: 'Kaina iki'
+        year_from: 'Metai nuo'
+        year_to: 'Metai iki'
+        engine_size_from: 'Variklio tūris nuo'
+        engine_size_to: 'Variklio tūris iki'
+        power_from: 'Galia nuo'
+        power_to: 'Galia iki'
+        doors_number: 'Durų skaičius'
+        seats_number: 'Sėdimų vietų skaičius'
+        defects: 'Defektai'
+        drive_type: 'Pavarų dėžė'
+        climate_control: 'Klimato kontrolė'
+        colors: 'Spalvos'
+        steering_wheel: 'Vairo padėtis'
+        wheels_diameter: 'Padangų diametras'
+        mileage_from: 'Rida nuo'
+        mileage_to: 'Rida iki'
+        transmission: 'Varantieji ratai'
+        sort_type: 'Rūšiavimas'
+        next_check_year: 'Tech. apžiūra galioja iki'
+        gears_number: 'Pavarų skaičius'
+        first_countries: 'Pirmosios registracijos valstybės'
+        providers: 'Skelbimų šaltiniai'
+        last_ad_update: 'Paskutinį kartą atnaujintas'
+    pin:
+        pinned: 'Paieška išsaugota'
+        unpinned: 'Išsaugoti paiešką'
+    value:
+        sort:
+            cost_min: 'pirmiau pigiausi'
+            cost_max: 'pirmiau brangiausi'
+            date_new: 'pirmiau naujausi'
+            date_old: 'pirmiau seniausi'
 
 subtitle:
     searches_recent: 'Mano paskutinės paieškos'

@@ -9,6 +9,12 @@ select[multiple] {
     height: 46px !important;
 }
 
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
 /**
  Special fonts
  */
@@ -141,7 +147,7 @@ select[multiple] {
     margin-top: 0px;
     text-decoration: underline;
 }
-.ad-fields-list b {
+.ad-container b {
     letter-spacing: 0.5px;
 }
 

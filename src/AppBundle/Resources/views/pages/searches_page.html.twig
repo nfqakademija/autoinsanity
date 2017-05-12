@@ -1,6 +1,6 @@
 {% extends 'AppBundle::base.html.twig' %}
 
-{% use '@App/default/searches_list.html.twig' %}
+{% use '@App/includes/searches_list.html.twig' %}
 
 {% set page = app.request.get('page') %}
 {% set current_path = 'searches' %}
@@ -13,15 +13,13 @@
 {% endblock %}
 
 {% block pagination %}
-    {% include('@App/default/pagination.html.twig') %}
+    {% include('@App/includes/pagination.html.twig') %}
 {% endblock %}
-
-{% set header_title = block('title') %}
 
 {% block body %}
     <div class="row ">
         <div class="col-md-12">
-            <h3>{{ header_title }}</h3>
+            <h3>{{ block('title') }}</h3>
             {{ block('searches_list') }}
             {{ block('pagination') }}
         </div>
@@ -29,7 +27,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('js/search_form_results.js') }}"></script>
+    <script src="{{ asset('js/searches.js') }}"></script>
     {{ block('ad_list_javascripts') }}
 {% endblock %}
 

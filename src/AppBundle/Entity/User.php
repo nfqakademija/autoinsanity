@@ -21,7 +21,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Vehicle", inversedBy="users", fetch="EXTRA_LAZY", cascade="persist")
+     * @ORM\ManyToMany(targetEntity="Vehicle", inversedBy="users", fetch="LAZY", cascade="persist")
      * @ORM\JoinTable(name="users_vehicles")
      */
     private $pinnedVehicles;

@@ -36,13 +36,13 @@
                                 {% if item.year is not null %}
                                     <li>
                                         {{ 'advert.field.name.year'|trans() }}:
-                                        <b>{{ item.year ~ ' m.' }}</b>
+                                        <b>{{ item.year|year }}</b>
                                     </li>
                                 {% endif %}
                                 {% if item.engineSize is not null %}
                                     <li>
                                         {{ 'advert.field.name.engine_size'|trans() }}:
-                                        <b>{{ (item.engineSize / 1000)|number_format(1, '.', '') ~ ' l.' }}</b>
+                                        <b>{{ item.engineSize|engineSize() }}</b>
                                     </li>
                                 {% endif %}
                                 {% if item.bodyType.name is defined %}
@@ -64,13 +64,13 @@
                                 {% if item.power is not null %}
                                     <li>
                                         {{ 'advert.field.name.power'|trans() }}:
-                                        <b>{{ item.power ~ ' kW' }}</b>
+                                        <b>{{ item.power|power() }}</b>
                                     </li>
                                 {% endif %}
                                 {% if item.mileage is not null %}
                                     <li>
                                         {{ 'advert.field.name.mileage'|trans() }}:
-                                        <b>{{ item.mileage|number_format(0, '.', ' ') ~ ' km' }}</b>
+                                        <b>{{ item.mileage|mileage() }}</b>
                                     </li>
                                 {% endif %}
                                 {% if item.driveType is not null %}
@@ -152,7 +152,7 @@
                                 {% if item.lastAdUpdate is not null  %}
                                     <li>
                                         {{ 'advert.field.name.last_update'|trans() }}:
-                                        <b>{{ item.lastAdUpdate|date('Y-m-d H:i') }}</b>
+                                        <b>{{ item.lastAdUpdate|dateago() }}</b>
                                     </li>
                                 {% endif %}
                             </ul>
@@ -174,19 +174,19 @@
                                 {% if item.wheelsDiameter is not null  %}
                                     <li>
                                         {{ 'advert.field.name.wheels_diameter'|trans() }}:
-                                        <b>{{ 'R' ~ item.wheelsDiameter }}</b>
+                                        <b>{{ item.wheelsDiameter|wheelsDiameter() }}</b>
                                     </li>
                                 {% endif %}
                                 {% if item.nextCheckYear is not null  %}
                                     <li>
                                         {{ 'advert.field.name.next_check'|trans() }}:
-                                        <b>{{ item.nextCheckYear ~ ' m.' }}</b>
+                                        <b>{{ item.nextCheckYear|year() }}</b>
                                     </li>
                                 {% endif %}
                                 {% if item.weight is not null  %}
                                     <li>
                                         {{ 'advert.field.name.weight'|trans() }}:
-                                        <b>{{ item.weight ~ ' kg' }}</b>
+                                        <b>{{ item.weight|weight() }}</b>
                                     </li>
                                 {% endif %}
                                 {% if item.gearsNumber is not null  %}
@@ -200,7 +200,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-4">
-                            <h3 class="ad-price">{{ item.price|number_format(0, '.', ' ') ~ ' €'}}</h3>
+                            <h3 class="ad-price">{{ item.price|price() }}</h3>
                         </div>
                         <div class="col-xs-4">
                             <h4 class="ad-location">

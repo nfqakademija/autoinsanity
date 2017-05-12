@@ -24,6 +24,7 @@ class VehicleSearchRepository extends EntityRepository
             ->where('s.user = :user')
             ->setParameter('user', $user)
             ->andWhere('s.pinned IS NULL')
+            ->orderBy('s.id', 'DESC')
             ->getQuery()
             ->getResult();
     }
@@ -36,7 +37,8 @@ class VehicleSearchRepository extends EntityRepository
             ->from('AppBundle:VehicleSearch', 's')
             ->where('s.user = :user')
             ->setParameter('user', $user)
-            ->andWhere('s.pinned IS NOT NULL');
+            ->andWhere('s.pinned = 1')
+            ->orderBy('s.id', 'DESC');
         $totalPagesCount = VehicleRepository::createQueryPagination($query, $page);
         return [
             'results' => $query->getQuery()->getResult(),
