@@ -3,7 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Vehicle;
+use AppBundle\Type\ProfileFormType;
 use AppBundle\Type\VehicleSearchType;
+use FOS\UserBundle\Form\Type\ChangePasswordFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
@@ -162,6 +164,19 @@ class DefaultController extends Controller
                 'searchForm' => $searchForm->createView()
             ]
         );
+    }
+
+    /**
+     * @Route("/settings", name="settings")
+     */
+    public function settingsAction()
+    {
+        $changePasswordForm = $this->createForm(ChangePasswordFormType::class);
+        $editProfileForm = $this->createForm(ProfileFormType::class);
+        return $this->render('AppBundle:pages:settings_page.html.twig', [
+            'changePasswordForm' => $changePasswordForm->createView(),
+            'editProfileForm' => $editProfileForm->createView(),
+        ]);
     }
 
     private function getResults(Form $searchForm, $page = 1)

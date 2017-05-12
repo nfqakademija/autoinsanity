@@ -9,6 +9,21 @@
     <div id="index-container">
         <div class="index-jumbotron-container">
             <div class="jumbotron index-jumbotron-content">
+                {% if app.request.hasPreviousSession %}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3">
+                                {% for type, messages in app.session.flashbag.all() %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-{{ type }}">
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
                 <div class="container text-center">
                 <span>
                     <h1>

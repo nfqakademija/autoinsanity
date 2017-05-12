@@ -1,11 +1,13 @@
 {% trans_default_domain 'FOSUserBundle' %}
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-<form action="{{ path("fos_user_security_check") }}" method="post" class="form-signin">
+<h1 class="text-center">{{ title }}</h1>
+
+{% if error %}
+    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+<form action="{{ path("fos_user_security_check") }}" method="post" class="form-signin" novalidate="novalidate">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-    <div class="row login-container">
-        <h1 class="text-center">Prisijungimas</h1>
+    <div class="login-container">
         <form>
             <div class="form-group">
                 <label for="username">{{ 'security.login.email'|trans }}</label>
@@ -27,7 +29,7 @@
             </div>
         </form>
     </div>
-    <div class="row login-help">
+    <div class="login-help">
         <p>
             Neturite paskyros mūsų puslapyje? <a href="{{ path('fos_user_registration_register') }}">Užsiregistruokite</a>
         </p>

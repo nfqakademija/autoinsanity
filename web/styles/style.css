@@ -99,7 +99,6 @@ select[multiple] {
 .index-jumbotron-content {
     background: rgba(0, 16, 63, 0.5);
     display: table-cell;
-    font-family: 'nerisblack', Helvetica;
     min-height: 30vh;
     height: 30vh;
     vertical-align: middle;
@@ -107,6 +106,7 @@ select[multiple] {
 
 .index-jumbotron-content .container h1,h2 {
     color: white;
+    font-family: 'nerisblack', Helvetica;
 }
 
 .index-jumbotron-content .container {

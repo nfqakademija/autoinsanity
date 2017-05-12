@@ -1,16 +1,10 @@
 {% extends "@App/base.html.twig" %}
 
-{% block body %}
-    {% if app.request.hasPreviousSession %}
-        {% for type, messages in app.session.flashbag.all() %}
-            {% for message in messages %}
-                <div class="flash-{{ type }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endfor %}
-    {% endif %}
+{% block title %}
+    {{ title }}
+{% endblock %}
 
+{% block body %}
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             {% block fos_user_content %}

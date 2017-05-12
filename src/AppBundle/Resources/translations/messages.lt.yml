@@ -51,7 +51,9 @@ header:
         detailed_search: 'Detalioji paieška'
         searches: 'Mano paieškos'
         pinned: 'Išsaugoti skelbimai'
-        profile: 'Nustatymai'
+        settings: 'Nustatymai'
+        change_password: 'Keisti slaptažodį'
+        change_email: 'Keisti el. pašto adresą'
         logout: 'Atsijungti'
         register: 'Užsiregistruoti'
         login: 'Prisijungti'
@@ -208,5 +210,11 @@ title:
     results: 'Paieškos rezultatai'
     pagination: '(%page% psl. iš %pages%)'
     website_name: 'AutoInsanity'
+    login: 'Prisijungimas'
+    register: 'Registracija'
+    change_password: 'Slaptažodžio keitimas'
+    remind_password: 'Slaptažodžio priminimas'
+    reset_password: 'Slaptažodžio atkūrimas'
+    edit_profile: 'El. pašto adreso atnaujinimas'
 
 

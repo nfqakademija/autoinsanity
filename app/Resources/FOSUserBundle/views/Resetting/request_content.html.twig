@@ -1,7 +1,7 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
-    <h1 class="text-center">Slaptažodžio atkūrimas</h1>
+<h1 class="text-center">{{ title }}</h1>
+<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request" novalidate="novalidate">
     <div class="form-group">
         <label for="username">{{ 'resetting.request.email'|trans }}</label>
         <input class="form-control" type="text" id="username" name="username" required="required" />
