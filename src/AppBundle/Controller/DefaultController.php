@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Vehicle;
+use AppBundle\Entity\VehicleSearch;
 use AppBundle\Type\ProfileFormType;
 use AppBundle\Type\VehicleSearchType;
 use FOS\UserBundle\Form\Type\ChangePasswordFormType;
@@ -42,8 +43,8 @@ class DefaultController extends Controller
         $searchForm = $this->createForm(VehicleSearchType::class);
         $searchForm->handleRequest($request);
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            $vehicleSearch = $searchForm->getData();
             if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-                $vehicleSearch = $searchForm->getData();
                 $entityManager = $this->get('doctrine.orm.default_entity_manager');
                 $repo = $entityManager->getRepository('AppBundle:VehicleSearch');
                 $user = $this->getUser();
@@ -57,8 +58,9 @@ class DefaultController extends Controller
                     $entityManager->persist($vehicleSearch);
                     $entityManager->flush();
                 }
+                return $this->getResults($searchForm, $page, $vehicleSearch->getId());
             }
-            return $this->getResults($searchForm, $page);
+            return $this->getResults($searchForm, $page, null);
         }
         return $this->render(
             'AppBundle:pages:detailed_search.html.twig', [
@@ -157,7 +159,7 @@ class DefaultController extends Controller
         $searchForm = $this->createForm(VehicleSearchType::class, $vehicleSearch);
         $searchForm->submit([]);
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-            return $this->getResults($searchForm, $page);
+            return $this->getResults($searchForm, $page, $vehicleSearch->getId());
         }
         return $this->render(
             'AppBundle:pages:detailed_search.html.twig', [
@@ -179,10 +181,17 @@ class DefaultController extends Controller
         ]);
     }
 
-    private function getResults(Form $searchForm, $page = 1)
+    private function getResults(Form $searchForm, $page = 1, $vehicleSearchId = null)
     {
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
-        $vehicleSearch = $searchForm->getData();
+
+        if ($vehicleSearchId == null) {
+            $vehicleSearch = $searchForm->getData();
+        } else {
+            $vehicleSearch = $entityManager->getRepository('AppBundle:VehicleSearch')
+                ->findOneBy(['id' => $vehicleSearchId]);
+        }
+
         $results = $entityManager->getRepository('AppBundle:Vehicle')
             ->findAllByCriteria($vehicleSearch, $page);
         return $this->render(
@@ -190,7 +199,7 @@ class DefaultController extends Controller
                 'items' => $results['vehicles'],
                 'total_pages_count' => $results['total_pages_count'],
                 'searchForm' => $searchForm->createView(),
-                'vehicleSearch' => $vehicleSearch,
+                'vehicleSearch' => ($vehicleSearchId !== null) ? $vehicleSearch : null,
             ]
         );
     }

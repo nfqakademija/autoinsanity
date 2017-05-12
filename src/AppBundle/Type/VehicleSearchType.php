@@ -26,6 +26,8 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 
 class VehicleSearchType extends AbstractType
 {
@@ -78,11 +80,32 @@ class VehicleSearchType extends AbstractType
                     'required' => false,
                 ]
             )
-            ->add('price_from', IntegerType::class, ['label' => 'form.field.price_from'])
-            ->add('price_to', IntegerType::class, ['label' => 'form.field.price_to'])
-            ->add('year_from', IntegerType::class, ['label' => 'form.field.year_from'])
-            ->add('year_to', IntegerType::class, ['label' => 'form.field.year_to'])
-
+            ->add('price_from', IntegerType::class, [
+                'constraints' => [
+                    new GreaterThanOrEqual(0),
+                ],
+                'label' => 'form.field.price_from'
+            ])
+            ->add('price_to', IntegerType::class, [
+                'constraints' => [
+                    new GreaterThanOrEqual(0),
+                ],
+                'label' => 'form.field.price_to',
+            ])
+            ->add('year_from', IntegerType::class, [
+                'constraints' => [
+                    new GreaterThanOrEqual(1900),
+                    new LessThanOrEqual($currentYear),
+                ],
+                'label' => 'form.field.year_from',
+            ])
+            ->add('year_to', IntegerType::class, [
+                'constraints' => [
+                    new GreaterThanOrEqual(1900),
+                    new LessThanOrEqual($currentYear),
+                ],
+                'label' => 'form.field.year_to',
+            ])
             ->add(
                 'fuel_type', EntityType::class, [
                 'class' => FuelType::class,
@@ -127,12 +150,56 @@ class VehicleSearchType extends AbstractType
                 'required' => false,
                 ]
             )
-            ->add('engine_size_from', IntegerType::class, ['label' => 'form.field.engine_size_from'])
-            ->add('engine_size_to', IntegerType::class, ['label' => 'form.field.engine_size_to'])
-            ->add('power_from', IntegerType::class, ['label' => 'form.field.power_from'])
-            ->add('power_to', IntegerType::class, ['label' => 'form.field.power_to'])
-            ->add('doors_number', IntegerType::class, ['label' => 'form.field.doors_number'])
-            ->add('seats_number', IntegerType::class, ['label' => 'form.field.seats_number'])
+            ->add('engine_size_from', IntegerType::class, [
+                'constraints' => [
+                    new GreaterThanOrEqual(0),
+                ],
+                'label' => 'form.field.engine_size_from'
+            ])
+            ->add('engine_size_to', IntegerType::class, [
+                'constraints' => [
+                    new GreaterThanOrEqual(0),
+                ],
+                'label' => 'form.field.engine_size_to'
+            ])
+            ->add('power_from', IntegerType::class, [
+                'constraints' => [
+                    new GreaterThanOrEqual(0),
+                ],
+                'label' => 'form.field.power_from',
+            ])
+            ->add('power_to', IntegerType::class, [
+                'constraints' => [
+                    new GreaterThanOrEqual(0),
+                ],
+                'label' => 'form.field.power_to',
+            ])
+            ->add('doors_number', ChoiceType::class, [
+                'choices' => [
+                    '2' => 2,
+                    '3' => 3,
+                    '4' => 4,
+                    '5' => 5,
+                    '6' => 6,
+                    '7' => 7,
+                ],
+                'label' => 'form.field.doors_number',
+                'placeholder' => 'form.placeholder.all.doors_number',
+                'required' => false,
+            ])
+            ->add('seats_number', ChoiceType::class, [
+                'choices' => [
+                    '2' => 2,
+                    '3' => 3,
+                    '4' => 4,
+                    '5' => 5,
+                    '6' => 6,
+                    '7' => 7,
+                ],
+                'label' => 'form.field.seats_number',
+                'placeholder' => 'form.placeholder.all.seats_number',
+                'required' => false,
+            ])
             ->add(
                 'drive_type', ChoiceType::class, [
                 'choices' => [
@@ -164,7 +231,6 @@ class VehicleSearchType extends AbstractType
                         return $repo->createQueryBuilder('color')->orderBy('color.name', 'ASC');
                     },
                     'required' => false,
-                    //'multiple' => true,
                 ]
             )
             ->add(
@@ -200,9 +266,36 @@ class VehicleSearchType extends AbstractType
                     'required' => false,
                 ]
             )
-            ->add('wheelsDiameter', IntegerType::class, ['label' => 'form.field.wheels_diameter'])
-            ->add('mileage_from', IntegerType::class, ['label' => 'form.field.mileage_from'])
-            ->add('mileage_to', IntegerType::class, ['label' => 'form.field.mileage_to'])
+            ->add('wheelsDiameter', ChoiceType::class, [
+                'choices' => [
+                    'R12' => 12,
+                    'R13' => 13,
+                    'R14' => 14,
+                    'R15' => 15,
+                    'R16' => 16,
+                    'R17' => 17,
+                    'R18' => 18,
+                    'R19' => 19,
+                    'R20' => 20,
+                    'R21' => 21,
+                    'R22' => 22,
+                ],
+                'label' => 'form.field.wheels_diameter',
+                'placeholder' => 'form.placeholder.all.wheels_diameter',
+                'required' => false,
+            ])
+            ->add('mileage_from', IntegerType::class, [
+                'constraints' => [
+                    new GreaterThanOrEqual(0),
+                ],
+                'label' => 'form.field.mileage_from',
+            ])
+            ->add('mileage_to', IntegerType::class, [
+                'constraints' => [
+                    new GreaterThanOrEqual(0),
+                ],
+                'label' => 'form.field.mileage_to'
+            ])
             ->add(
                 'sort_type', ChoiceType::class, [
                 'choices' => [
@@ -243,7 +336,18 @@ class VehicleSearchType extends AbstractType
                 'required' => false,
                 ]
             )
-            ->add('gears_number', IntegerType::class, ['label' => 'form.field.gears_number'])
+            ->add('gears_number', ChoiceType::class, [
+                'choices' => [
+                    '3' => 3,
+                    '4' => 4,
+                    '5' => 5,
+                    '6' => 6,
+                    '7' => 7,
+                ],
+                'label' => 'form.field.gears_number',
+                'placeholder' => 'form.placeholder.all.gears_number',
+                'required' => false,
+            ])
             ->add(
                 'last_ad_update', ChoiceType::class, [
                 'choices' => [

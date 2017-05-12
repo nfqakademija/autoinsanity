@@ -138,6 +138,10 @@ form:
             next_check: 'Nesvarbu'
             first_country: 'Visos valstybės'
             not_older_than: 'Nesvarbu'
+            doors_number: 'Nesvarbu'
+            seats_number: 'Nesvarbu'
+            wheels_diameter: 'Nesvarbu'
+            gears_number: 'Nesvarbu'
         choices: 'pasirinkimai'
         search: 'Ieškoti...'
 
