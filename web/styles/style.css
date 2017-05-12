@@ -68,6 +68,11 @@ select[multiple] {
     margin-right: 0px;
 }
 
+.navbar-inverse .navbar-toggle {
+    background-color: #001f3f !important;
+    border-color: #ddd;
+}
+
 
 /**
  Index landing page and form

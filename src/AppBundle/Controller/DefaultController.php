@@ -141,6 +141,7 @@ class DefaultController extends Controller
      */
     public function searchesViewResultsAction($id, $page = 1)
     {
+        // TODO: NOT WORKING
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return new JsonResponse(['error' => 'not authenticated']);
         }

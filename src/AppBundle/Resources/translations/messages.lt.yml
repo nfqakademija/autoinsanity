@@ -51,7 +51,7 @@ header:
         detailed_search: 'Detalioji paieška'
         searches: 'Mano paieškos'
         pinned: 'Išsaugoti skelbimai'
-        profile: 'Mano profilis'
+        profile: 'Nustatymai'
         logout: 'Atsijungti'
         register: 'Užsiregistruoti'
         login: 'Prisijungti'
@@ -140,7 +140,7 @@ form:
         search: 'Ieškoti...'
 
 pagination:
-    previous: 'Ankstesnis'
+    previous: 'Atgal'
     next: 'Kitas'
 
 results:
