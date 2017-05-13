@@ -243,7 +243,7 @@ class VehicleRepository extends EntityRepository
     private function getJoinedTablesQuery(): QueryBuilder
     {
         return $this->getEntityManager()->createQueryBuilder()
-            ->select('v, bra, mod, bod, cli, col, cou, cit, def, fue, pro, tra')
+            ->select('v, bra, mod, bod, cli, col, cou, cit, def, fue, pro, tra, fcou')
             ->from('AppBundle:Vehicle', 'v')
             ->leftJoin('v.brand', 'bra')
             ->leftJoin('v.model', 'mod')
@@ -255,7 +255,8 @@ class VehicleRepository extends EntityRepository
             ->leftJoin('v.defects', 'def')
             ->leftJoin('v.fuelType', 'fue')
             ->leftJoin('v.provider', 'pro')
-            ->leftJoin('v.transmission', 'tra');
+            ->leftJoin('v.transmission', 'tra')
+            ->leftJoin('v.firstCountry', 'fcou');
     }
 
     private function addSearchCriterium(QueryBuilder $query, array $criterium): QueryBuilder

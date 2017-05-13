@@ -27,7 +27,7 @@ class User extends BaseUser
     private $pinnedVehicles;
 
     /**
-     * @ORM\OneToMany(targetEntity="VehicleSearch", mappedBy="user", fetch="EXTRA_LAZY", cascade="persist")
+     * @ORM\OneToMany(targetEntity="VehicleSearch", mappedBy="user", fetch="LAZY", cascade="persist")
      */
     private $searches;
 

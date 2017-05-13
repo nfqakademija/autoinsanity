@@ -185,7 +185,6 @@ class DefaultController extends Controller
                 $searchForm->setData($vehicleSearch);
             }
         }
-        dump($vehicleSearch);
         $results = $entityManager->getRepository('AppBundle:Vehicle')
             ->findAllByCriteria($vehicleSearch, $page);
         return $this->render(
