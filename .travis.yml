@@ -7,5 +7,5 @@ before_script:
     - php bin/console assets:install --symlink
 
 script:
-    - vendor/bin/phpunit
-    - vendor/bin/phpcs src/ --standard=PSR2 --extensions=php
+    - php vendor/bin/phpunit
+    - php vendor/bin/phpcs src/ --standard=PSR2 --extensions=php

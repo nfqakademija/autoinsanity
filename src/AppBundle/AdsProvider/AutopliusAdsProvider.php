@@ -113,7 +113,6 @@ class AutopliusAdsProvider extends AdsProvider
         $dateString = str_replace('val.', 'hours', $dateString);
         $dateString = str_replace('min.', 'minutes', $dateString);
         $dateString = str_replace('d.', 'days', $dateString);
-
         $months = [
             ["Sausio", "January"],
             ["Vasario", "February"],
