@@ -21,7 +21,6 @@
         <div class="col-md-12">
             <h3>{{ block('title') }}</h3>
             {{ block('searches_list') }}
-            {{ block('pagination') }}
         </div>
     </div>
 {% endblock %}
@@ -29,5 +28,15 @@
 {% block javascripts %}
     <script src="{{ asset('js/searches.js') }}"></script>
     {{ block('ad_list_javascripts') }}
+    <script>
+        $('.searches-collapse').click(function () {
+            var btnText =
+                ($(this).text().trim() === "{{ 'searches.button.view_more'|trans() }}")
+                    ? "{{ 'searches.button.view_less'|trans() }}"
+                    : "{{ 'searches.button.view_more'|trans() }}"
+            $(this).text(btnText);
+        });
+    </script>
+
 {% endblock %}
 

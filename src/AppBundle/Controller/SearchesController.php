@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Repository\VehicleSearchRepository;
 use AppBundle\Type\VehicleSearchType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -33,6 +34,7 @@ class SearchesController extends Controller
                 'searches_recent' => $recentSearches,
                 'searches_saved' => $savedSearches['results'],
                 'total_pages_count' => $savedSearches['total_pages_count'],
+                'pageSearchCount' => $repository::MAX_SEARCHES_PER_USER,
             ]
         );
     }

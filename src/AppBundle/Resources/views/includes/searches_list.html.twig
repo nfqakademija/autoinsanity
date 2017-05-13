@@ -3,12 +3,16 @@
         <div class="row ad-container">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-xs-6">
-                        <p><b>#{{ loop.index }}</b></p>
+                    <div class="col-xs-2">
+                        <p><b>#{{ loop.index + pageCount * (page-1) }}</b></p>
                     </div>
-                    <div class="col-xs-6 text-right">
+                    <div class="col-xs-10 text-right">
                         {% set vehicleSearch = item %}
                         {% include('@App/includes/searches_pin_button.html.twig') %}
+                        <a href="{{ path('searches_view_results', {'id': vehicleSearch.id}) }}"
+                           class="btn btn-primary">
+                            {{ 'searches.button.view'|trans() }}
+                        </a>
                     </div>
 
                 </div>
@@ -227,27 +231,40 @@
 
 
 {% block searches_list %}
+    {% set pageCount = 0 %}
     <h4>{{ 'subtitle.searches_recent'|trans() }}</h4>
     {% if searches_recent|length == 0 %}
         <div class="alert alert-danger">
             {{ 'results.error.no_searches'|trans() }}
         </div>
     {% else %}
-        {% for item in searches_recent %}
-            {{ block('item_block') }}
-        {% endfor %}
+        <p><a
+            class="btn btn-default searches-collapse"
+            data-toggle="collapse"
+            data-target="#recent-searches"
+            aria-expanded="false">
+            {{ 'searches.button.view_more'|trans() }}
+        </a></p>
+        <div id="recent-searches" class="collapse">
+            {% for item in searches_recent %}
+                {{ block('item_block') }}
+            {% endfor %}
+        </div>
+
     {% endif %}
-    {{ block('pagination') }}
+
+    {% set pageCount = pageSearchCount %}
     <h4>{{ 'subtitle.searches_saved'|trans() }}</h4>
     {% if searches_saved|length == 0 %}
-    <div class="alert alert-danger">
-        {{ 'results.error.no_searches'|trans() }}
-    </div>
+        <div class="alert alert-danger">
+            {{ 'results.error.no_searches'|trans() }}
+        </div>
     {% else %}
         {% for item in searches_saved %}
             {{ block('item_block') }}
         {% endfor %}
     {% endif %}
+    {{ block('pagination') }}
 {% endblock %}
 
 {% block ad_list_javascripts %}

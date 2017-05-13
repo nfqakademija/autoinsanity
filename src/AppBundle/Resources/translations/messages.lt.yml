@@ -86,7 +86,7 @@ form:
             manual: 'Mechaninė'
             auto: 'Automatinė'
     header:
-        update_form: 'Pakeiskite paieškos nustatymus'
+        update_form: 'Pakeiskite dabartinę paiešką'
     field:
         brand: 'Markė'
         model: 'Modelis'
@@ -160,6 +160,10 @@ results:
         unpinned: 'Išsaugoti'
 
 searches:
+    button:
+        view: 'Ieškoti skelbimų'
+        view_more: 'Žiūrėti paieškas'
+        view_less: 'Slėpti paieškas'
     field:
         brand: 'Markė'
         models: 'Modeliai'

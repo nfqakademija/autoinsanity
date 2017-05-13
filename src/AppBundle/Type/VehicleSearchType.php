@@ -175,6 +175,7 @@ class VehicleSearchType extends AbstractType
                 'label' => 'form.field.power_to',
             ])
             ->add('doors_number', ChoiceType::class, [
+                'choice_translation_domain' => false,
                 'choices' => [
                     '2' => 2,
                     '3' => 3,
@@ -188,6 +189,7 @@ class VehicleSearchType extends AbstractType
                 'required' => false,
             ])
             ->add('seats_number', ChoiceType::class, [
+                'choice_translation_domain' => false,
                 'choices' => [
                     '2' => 2,
                     '3' => 3,
@@ -267,6 +269,7 @@ class VehicleSearchType extends AbstractType
                 ]
             )
             ->add('wheelsDiameter', ChoiceType::class, [
+                'choice_translation_domain' => false,
                 'choices' => [
                     'R12' => 12,
                     'R13' => 13,
@@ -337,6 +340,7 @@ class VehicleSearchType extends AbstractType
                 ]
             )
             ->add('gears_number', ChoiceType::class, [
+                'choice_translation_domain' => false,
                 'choices' => [
                     '3' => 3,
                     '4' => 4,

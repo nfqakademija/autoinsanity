@@ -5,7 +5,8 @@
             <!-- Render "Previous" button -->
             <li>
                 {% if page > 1 %}
-                <a href="{{ path(current_path, {'page': page-1}|merge(app.request.query.all)) }}">
+                <a href="{{ path(current_path,
+                app.request.attributes.get('_route_params')|merge({'page': page-1})|merge(app.request.query.all)) }}">
                     {% else %}
                     <a href="#">
                         {% endif %}
@@ -15,7 +16,8 @@
             <!-- Render first page button if it is needed -->
             {% if page > page_interval_diff + 1  %}
                 <li>
-                    <a href="{{ path(current_path, {'page': 1}|merge(app.request.query.all)) }}">
+                    <a href="{{ path(current_path,
+                    app.request.attributes.get('_route_params')|merge({'page': 1})|merge(app.request.query.all)) }}">
                         <span>1</span>
                     </a>
                 </li>
@@ -36,7 +38,8 @@
                     {% else %}
                         <li>
                     {% endif %}
-                    <a href="{{ path(current_path, {'page': i}|merge(app.request.query.all)) }}">
+                    <a href="{{ path(current_path,
+                    app.request.attributes.get('_route_params')|merge({'page': i})|merge(app.request.query.all)) }}">
                         <span>{{ i }}</span>
                     </a>
                     </li>
@@ -53,7 +56,8 @@
             <!-- Render last page button if it is needed -->
             {% if page < total_pages_count - page_interval_diff  %}
                 <li>
-                    <a href="{{ path(current_path, {'page': total_pages_count}|merge(app.request.query.all)) }}">
+                    <a href="{{ path(current_path,
+                    app.request.attributes.get('_route_params')|merge({'page': total_pages_count})|merge(app.request.query.all)) }}">
                         <span>{{ total_pages_count }}</span>
                     </a>
                 </li>
@@ -61,7 +65,8 @@
             <!-- Render "Next" button -->
             <li>
                 {% if page < total_pages_count %}
-                <a href="{{ path(current_path, {'page': page+1}|merge(app.request.query.all)) }}">
+                <a href="{{ path(current_path,
+                app.request.attributes.get('_route_params')|merge({'page': page+1})|merge(app.request.query.all)) }}">
                     {% else %}
                     <a href="#">
                         {% endif %}

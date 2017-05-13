@@ -221,16 +221,19 @@ class VehicleRepository extends EntityRepository
         ];
     }
 
-    public static function createQueryPagination(QueryBuilder $query, int $page): int
+    public static function createQueryPagination(
+        QueryBuilder $query,
+        int $page,
+        int $resultsPerPage = self::RESULTS_PER_PAGE): int
     {
         $allResults = $query->getQuery()->getResult();
-        $totalPagesCount = intdiv(count($allResults), self::RESULTS_PER_PAGE);
-        if (count($allResults) % self::RESULTS_PER_PAGE != 0) {
+        $totalPagesCount = intdiv(count($allResults), $resultsPerPage);
+        if (count($allResults) % $resultsPerPage != 0) {
             $totalPagesCount++;
         }
         // filter results for pagination
-        $query->setFirstResult(self::RESULTS_PER_PAGE * ($page - 1))
-            ->setMaxResults(self::RESULTS_PER_PAGE);
+        $query->setFirstResult($resultsPerPage * ($page - 1))
+            ->setMaxResults($resultsPerPage);
         return $totalPagesCount;
     }
 

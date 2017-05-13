@@ -104,46 +104,50 @@
         </div>
     </div>
     <div id="search-more-fields" class="row collapse">
-        <div class="col-md-3 col-sm-6">
-            {{ form_row(searchForm.transmission) }}
-        </div>
-        <div class="col-md-3 col-sm-6">
-            {{ form_row(searchForm.climate_control) }}
-        </div>
-        <div class="col-md-3 col-sm-6">
-            {{ form_row(searchForm.seats_number) }}
-        </div>
-        <div class="col-md-3 col-sm-6">
-            {{ form_row(searchForm.wheelsDiameter) }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3 col-sm-6">
-            {{ form_row(searchForm.gears_number) }}
-        </div>
-        <div class="col-md-3 col-sm-6">
-            {{ form_row(searchForm.defects) }}
-        </div>
-        <div class="col-md-3 col-sm-6">
-            {{ form_row(searchForm.next_check_year) }}
-        </div>
-        <div class="col-md-3 col-sm-6">
-            {{ form_row(searchForm.first_country) }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-12">
             <div class="row">
-                <div class="col-md-6 col-xs-6">
-                    {{ form_row(searchForm.power_from) }}
+                <div class="col-md-3 col-sm-6">
+                    {{ form_row(searchForm.transmission) }}
                 </div>
-                <div class="col-md-6 col-xs-6">
-                    {{ form_row(searchForm.power_to) }}
+                <div class="col-md-3 col-sm-6">
+                    {{ form_row(searchForm.climate_control) }}
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    {{ form_row(searchForm.seats_number) }}
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    {{ form_row(searchForm.wheelsDiameter) }}
                 </div>
             </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            {{ form_row(searchForm.provider) }}
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    {{ form_row(searchForm.gears_number) }}
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    {{ form_row(searchForm.defects) }}
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    {{ form_row(searchForm.next_check_year) }}
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    {{ form_row(searchForm.first_country) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6">
+                            {{ form_row(searchForm.power_from) }}
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            {{ form_row(searchForm.power_to) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    {{ form_row(searchForm.provider) }}
+                </div>
+            </div>
         </div>
     </div>
     <div class="row text-center">

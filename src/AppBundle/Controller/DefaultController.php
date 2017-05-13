@@ -139,13 +139,12 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/searches_results/{id}/{page}",
+     * @Route("/searches/results/{id}/{page}",
      *     name="searches_view_results",
      *     requirements={"page": "^[1-9]\d*$", "id": "\d+"})
      */
     public function searchesViewResultsAction($id, $page = 1)
     {
-        // TODO: NOT WORKING
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return new JsonResponse(['error' => 'not authenticated']);
         }
@@ -156,16 +155,8 @@ class DefaultController extends Controller
         if ($vehicleSearch == null) {
             return new JsonResponse(['error' => 'vehicle search was not found']);
         }
-        $searchForm = $this->createForm(VehicleSearchType::class, $vehicleSearch);
-        $searchForm->submit([]);
-        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
-            return $this->getResults($searchForm, $page, $vehicleSearch->getId());
-        }
-        return $this->render(
-            'AppBundle:pages:detailed_search.html.twig', [
-                'searchForm' => $searchForm->createView()
-            ]
-        );
+        $searchForm = $this->createForm(VehicleSearchType::class);
+        return $this->getResults($searchForm, $page, $vehicleSearch->getId());
     }
 
     /**
@@ -190,8 +181,11 @@ class DefaultController extends Controller
         } else {
             $vehicleSearch = $entityManager->getRepository('AppBundle:VehicleSearch')
                 ->findOneBy(['id' => $vehicleSearchId]);
+            if (!($searchForm->isSubmitted() && $searchForm->isValid())) {
+                $searchForm->setData($vehicleSearch);
+            }
         }
-
+        dump($vehicleSearch);
         $results = $entityManager->getRepository('AppBundle:Vehicle')
             ->findAllByCriteria($vehicleSearch, $page);
         return $this->render(

@@ -39,7 +39,7 @@ class VehicleSearchRepository extends EntityRepository
             ->setParameter('user', $user)
             ->andWhere('s.pinned = 1')
             ->orderBy('s.id', 'DESC');
-        $totalPagesCount = VehicleRepository::createQueryPagination($query, $page);
+        $totalPagesCount = VehicleRepository::createQueryPagination($query, $page, self::MAX_SEARCHES_PER_USER);
         return [
             'results' => $query->getQuery()->getResult(),
             'total_pages_count' => $totalPagesCount,

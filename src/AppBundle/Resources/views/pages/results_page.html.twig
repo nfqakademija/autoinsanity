@@ -3,7 +3,8 @@
 {% use('@App/includes/ad_list.html.twig') %}
 
 {% set page = app.request.get('page') %}
-{% set current_path = 'detailed_search' %}
+
+{% set current_path = app.request.attributes.get('_route') %}
 {% set search_form_id = 'search_form' %}
 
 {% block title %}
