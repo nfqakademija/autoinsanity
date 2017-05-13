@@ -35,7 +35,7 @@ class AutopliusAdsProvider extends AdsProvider
                     $lastUpdateDate = $this->parseDate($lastUpdate);
                     $innerUrl = $row->filter('.title-list a')->attr('href');
                     $car = $this->parseAd($innerUrl);
-                    if ($car !== null && $car['']) {
+                    if ($car !== null) {
                         $car['last_update'] = $lastUpdateDate;
                         $accessor = PropertyAccess::createPropertyAccessor();
                         $vehicle = $this->saveToModel($accessor, $car);
