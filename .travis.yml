@@ -4,6 +4,8 @@ php:
 
 before_script:
     - composer install
+    - php bin/console assets:install --symlink
 
 script:
+    - vendor/bin/phpunit
     - vendor/bin/phpcs src/ --standard=PSR2 --extensions=php
