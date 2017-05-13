@@ -229,8 +229,9 @@ class VehicleRepository extends EntityRepository
         QueryBuilder $query,
         int $page,
         int $resultsPerPage = self::RESULTS_PER_PAGE,
-        bool $fetchJoinCollection = false): Paginator
-    {
+        bool $fetchJoinCollection = false
+    ): Paginator {
+    
         $query->setFirstResult($resultsPerPage * ($page - 1))
             ->setMaxResults($resultsPerPage);
         $paginator = new Paginator($query, $fetchJoinCollection);

@@ -443,9 +443,15 @@ class VehicleSearchType extends AbstractType
         return null;
     }
 
-    private function generateNumberRange(int $from, int $to, bool $reorder = false,
-                                         int $step = 1, string $text = '', bool $text_left = true)
-    {
+    private function generateNumberRange(
+        int $from,
+        int $to,
+        bool $reorder = false,
+        int $step = 1,
+        string $text = '',
+        bool $text_left = true
+    ) {
+    
         $range = [];
         for ($i = $from; $i <= $to; $i += $step) {
             if ($text_left) {

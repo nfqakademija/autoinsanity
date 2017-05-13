@@ -85,20 +85,20 @@ class AppExtension extends \Twig_Extension
 
         if ($diff->y) {
             $result .= $diff->y . ' ' . $this->translator->trans('date.short.year');
-        } else if ($diff->m) {
+        } elseif ($diff->m) {
             $result .= $diff->m . ' ' . $this->translator->trans('date.short.month');
-        } else if ($diff->w) {
+        } elseif ($diff->w) {
             $result .= $diff->w . ' ' . $this->translator->trans('date.short.week');
-        } else if ($diff->d) {
+        } elseif ($diff->d) {
             $result .= $diff->d . ' ' . $this->translator->trans('date.short.day');
-        } else if ($diff->h) {
+        } elseif ($diff->h) {
             if ($diff->h < 2 && $diff->i) {
                 $result .= $diff->h . ' ' . $this->translator->trans('date.short.hour')
                     . ' ' . $diff->i . ' ' . $this->translator->trans('date.short.minute');
             } else {
                 $result .= $diff->h . ' ' . $this->translator->trans('date.short.hour');
             }
-        } else if ($diff->i) {
+        } elseif ($diff->i) {
             $result .= $diff->i . ' ' . $this->translator->trans('date.short.minute');
         } else {
             $result .= '1 ' . $this->translator->trans('date.short.minute');
