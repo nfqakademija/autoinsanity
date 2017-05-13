@@ -52,6 +52,17 @@ select[multiple] {
     font-style: normal;
 }
 
+html, body {
+    height: 100%;
+}
+
+body .body {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -50px; /* the bottom margin is the negative value of the footer's height */
+}
+
 /**
  Navigation
  */
@@ -79,7 +90,7 @@ select[multiple] {
  */
 #index-container {
     background-attachment: fixed;
-    /*background-image: url('../img/index-background-min.jpg');*/
+    background-image: url('../img/index-background-min.jpg');
     background-position: center;
     background-repeat: no-repeat;
     -ms-background-size: cover;
@@ -160,6 +171,10 @@ select[multiple] {
     color: white;
     padding-top: 15px;
     padding-bottom: 15px;
+}
+
+#footer, .wrap {
+    height: 50px;
 }
 
 

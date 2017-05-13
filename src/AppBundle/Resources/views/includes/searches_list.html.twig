@@ -3,10 +3,10 @@
         <div class="row ad-container">
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-xs-2">
+                    <div class="col-md-2 col-xs-12">
                         <p><b>{{ 'searches.name.search'|trans() }} #{{ loop.index + pageCount * (page-1) }}</b></p>
                     </div>
-                    <div class="col-xs-10 text-right">
+                    <div class="col-md-10 col-xs-12 text-right">
                         {% set vehicleSearch = item %}
                         {% include('@App/includes/searches_pin_button.html.twig') %}
                         <a href="{{ path('searches_view_results', {'id': vehicleSearch.id}) }}"

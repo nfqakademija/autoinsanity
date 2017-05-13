@@ -20,7 +20,7 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-9 col-xs-12">
             <h3>
                 {{ block('title') }}
                 {% include('@App/includes/searches_pin_button.html.twig') %}
@@ -46,7 +46,7 @@
             </div>
            {% endif %}
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 col-xs-12">
             {% include('@App/includes/detailed_search_side.html.twig') %}
         </div>
     </div>

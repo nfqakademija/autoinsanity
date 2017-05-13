@@ -8,7 +8,16 @@ $('.vehicle-search-pin-button').click(function () {
         type: 'POST',
         data : '',
         success: function(data) {
-            if (typeof data.pin_action !== 'undefined') {
+            if(data.error === 'auth-error') {
+                button.popover({
+                    'animation': true,
+                    'html': true,
+                    'placement': 'bottom',
+                    'trigger': 'click|focus'
+                })
+                button.popover('show');
+            }
+            else if (typeof data.pin_action !== 'undefined') {
                 if (data.pin_action === 'pin') {
                     button.html('<span class="glyphicon glyphicon-heart-empty"></span> ' + data.button_text);
                 } else {
@@ -22,14 +31,3 @@ $('.vehicle-search-pin-button').click(function () {
         }
     });
 });
-
-// $(document).on('click', function (e) {
-//     $('[data-toggle="popover"],[data-original-title]').each(function () {
-//         //the 'is' for buttons that trigger popups
-//         //the 'has' for icons within a button that triggers a popup
-//         if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
-//             (($(this).popover('hide').data('bs.popover')||{}).inState||{}).click = false  // fix for BS 3.3.6
-//         }
-//
-//     });
-// });
