@@ -64,7 +64,7 @@ class AutogidasAdsProvider extends AdsProvider
         $brand = trim($innerCrawler->filter('.bread-crumb a')->eq(1)->text());
         $model = trim($innerCrawler->filter('.bread-crumb a')->eq(2)->text());
 
-        $brandModelRegex = '(?<=[A-Za-z0-9])+-(?=[A-Za-z0-9])+';
+        $brandModelRegex = '(?<=[A-Za-z0-9])-(?=[A-Za-z0-9])';
         preg_replace($brandModelRegex, ' ', $brand);
         preg_replace($brandModelRegex, ' ', $model);
 
