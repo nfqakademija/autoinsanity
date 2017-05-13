@@ -46,7 +46,7 @@ class SearchesController extends Controller
      *     requirements={"id": "\d+", "pinAction": "pin|unpin"}
      * )
      */
-    public function pinVehicleSearchAction($id = null, $pinAction)
+    public function pinVehicleSearchAction($pinAction, $id = null)
     {
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return new JsonResponse(['error' => 'auth-error']);
