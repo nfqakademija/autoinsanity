@@ -33,14 +33,14 @@ class AutopliusAdsProvider extends AdsProvider
                 if ($lastUpdate->count() > 0) {
                     $lastUpdate = preg_replace('/\W\w+\s*(\W*)$/', '$1', $lastUpdate->text());
                     $lastUpdateDate = $this->parseDate($lastUpdate);
-                }
-                $innerUrl = $row->filter('.title-list a')->attr('href');
-                $car = $this->parseAd($innerUrl);
-                if ($car !== null) {
-                    $car['last_update'] = $lastUpdateDate;
-                    $accessor = PropertyAccess::createPropertyAccessor();
-                    $vehicle = $this->saveToModel($accessor, $car);
-                    $cars[] = $vehicle;
+                    $innerUrl = $row->filter('.title-list a')->attr('href');
+                    $car = $this->parseAd($innerUrl);
+                    if ($car !== null && $car['']) {
+                        $car['last_update'] = $lastUpdateDate;
+                        $accessor = PropertyAccess::createPropertyAccessor();
+                        $vehicle = $this->saveToModel($accessor, $car);
+                        $cars[] = $vehicle;
+                    }
                 }
             }
             sleep(1);
