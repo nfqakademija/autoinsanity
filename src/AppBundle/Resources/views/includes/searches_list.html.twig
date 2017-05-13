@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-xs-2">
-                        <p><b>#{{ loop.index + pageCount * (page-1) }}</b></p>
+                        <p><b>{{ 'searches.name.search'|trans() }} #{{ loop.index + pageCount * (page-1) }}</b></p>
                     </div>
                     <div class="col-xs-10 text-right">
                         {% set vehicleSearch = item %}

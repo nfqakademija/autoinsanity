@@ -48,7 +48,7 @@ class VehicleSearchRepository extends EntityRepository
             ->from('AppBundle:VehicleSearch', 's')
             ->where('s.user = :user')
             ->setParameter('user', $user)
-            ->andWhere('s.pinned IS NULL')
+            ->andWhere('s.pinned <> 1')
             ->orderBy('s.id', 'DESC')
             ->setFirstResult(self::MAX_SEARCHES_PER_USER - 2) // +1 for new, +1 because it's an offset
             ->getQuery()

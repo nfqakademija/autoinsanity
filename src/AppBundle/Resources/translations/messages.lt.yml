@@ -196,6 +196,8 @@ searches:
         first_countries: 'Pirmosios registracijos valstybės'
         providers: 'Skelbimų šaltiniai'
         last_ad_update: 'Paskutinį kartą atnaujintas'
+    name:
+        search: 'Paieška'
     pin:
         pinned: 'Paieška išsaugota'
         unpinned: 'Išsaugoti paiešką'

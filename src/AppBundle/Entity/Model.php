@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="model")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ModelRepository")
  */
-class Model
+class Model implements \JsonSerializable
 {
     /**
      * @var int
@@ -88,5 +88,13 @@ class Model
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' =>  $this->getName()
+        ];
     }
 }

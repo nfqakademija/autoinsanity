@@ -84,4 +84,12 @@ class City
     {
         return $this->name;
     }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' =>  $this->getName()
+        ];
+    }
 }
