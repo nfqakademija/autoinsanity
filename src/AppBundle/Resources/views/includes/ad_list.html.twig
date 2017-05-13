@@ -16,18 +16,31 @@
                             </a>
                         </div>
                         <div class="col-xs-4 text-right">
-                            {% if app.user and app.user.pinnedVehicles.contains(item) %}
-                                <button type="button" class="unpin vehicle-pin-button btn btn-default" value="{{ item.id }}">
-                                    <span class="glyphicon glyphicon-heart"></span>
-                                    <b>{{ 'results.pin.pinned'|trans() }}</b>
-                                </button>
-                            {% else %}
-                                <button type="button" class="pin vehicle-pin-button btn btn-default" value="{{ item.id }}">
-                                    <span class="glyphicon glyphicon-heart-empty"></span>
-                                    {{ 'results.pin.unpinned'|trans() }}
-                                </button>
-                            {% endif %}
-
+                            <button
+                                type="button"
+                                {% if app.user and app.user.pinnedVehicles.contains(item) %}
+                                    class="unpin vehicle-pin-button btn btn-default"
+                                {% else %}
+                                    class="pin vehicle-pin-button btn btn-default"
+                                {% endif %}
+                                value="{{ item.id }}"
+                                data-toggle="popover"
+                                data-content="
+                                        {{ 'popup.login'|trans() }}
+                                    <div class=&quot text-center&quot>
+                                        <a role=&quot button&quot href=&quot{{ path('fos_user_security_login') }}&quot class=&quot btn btn-primary&quot>
+                                        {{ 'header.link.login'|trans }}
+                                        </a>
+                                    </div>
+                            ">
+                                {% if app.user and app.user.pinnedVehicles.contains(item) %}
+                                        <span class="glyphicon glyphicon-heart"></span>
+                                        <b>{{ 'results.pin.pinned'|trans() }}</b>
+                                {% else %}
+                                        <span class="glyphicon glyphicon-heart-empty"></span>
+                                        {{ 'results.pin.unpinned'|trans() }}
+                                {% endif %}
+                            </button>
                         </div>
                     </div>
                     <div class="row">

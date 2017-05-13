@@ -38,7 +38,7 @@ class VehicleSearch
      *
      * @ORM\Column(name="pinned", type="integer", nullable=true)
      */
-    private $pinned;
+    private $pinned = 0;
 
     /**
      * @var Collection

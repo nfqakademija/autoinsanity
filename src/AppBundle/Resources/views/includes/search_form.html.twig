@@ -64,11 +64,12 @@
                     $('#model').multiselect('destroy');
                     $('#model option').remove();
                     var json = $.parseJSON(json);
-                    $.each(json, function(index, element)  {
+                    $.each(json, function (index, element) {
                         $('#model').append($('<option>').text(element.name).attr('value', element.id));
                     });
                     $('#model').multiselect(modelOptions);
-                    $('#model').multiselect('rebuild')
+                    $('#model').multiselect('rebuild');
+                }
             });
         });
 
@@ -77,19 +78,20 @@
         $country.change(function () {
             var id = $country.val();
             $.ajax({
-                url : Routing.generate('get_countries', {id: id}),
+                url : Routing.generate('get_cities', {id: id}),
                 data : null,
                 dataType: 'json',
                 success: function(json) {
                     $('#city').multiselect('destroy');
                     $('#city option').remove();
                     var json = $.parseJSON(json);
-                    $.each(json, function(index, element)  {
+                    $.each(json, function (index, element) {
                         $('#city').append($('<option>').text(element.name).attr('value', element.id));
                     });
-                    $('#city').multiselect(modelOptions);
-                    $('#city').multiselect('rebuild')
-                });
+                    $('#city').multiselect(cityOptions);
+                    $('#city').multiselect('rebuild');
+                }
+            });
         });
 
         $(document).ready(function() {

@@ -13,7 +13,16 @@ $('.vehicle-pin-button').click(function () {
         type: 'POST',
         data : '',
         success: function(data) {
-            if (typeof data.pin_action !== 'undefined') {
+            if(data.error === 'auth-error') {
+                button.popover({
+                    'animation': true,
+                    'html': true,
+                    'placement': 'bottom',
+                    'trigger': 'focus'
+                })
+                button.popover('show');
+            }
+            else if (typeof data.pin_action !== 'undefined') {
                 if (data.pin_action === 'pin') {
                     button.html('<span class="glyphicon glyphicon-heart-empty"></span> ' + data.button_text);
                 } else {

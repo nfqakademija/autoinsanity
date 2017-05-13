@@ -80,7 +80,7 @@ class DefaultController extends Controller
     public function pinVehicleAction($id, $pinAction)
     {
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return new JsonResponse(['error' => 'not authenticated']);
+            return new JsonResponse(['error' => 'auth-error']);
         }
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
         $repository = $entityManager->getRepository('AppBundle:Vehicle');
@@ -124,7 +124,7 @@ class DefaultController extends Controller
     public function pinnedVehiclesAction($page = 1)
     {
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return new JsonResponse(['error' => 'not authenticated']);
+            return new JsonResponse(['error' => 'auth-error']);
         }
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
         $repository = $entityManager->getRepository('AppBundle:Vehicle');

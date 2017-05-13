@@ -149,6 +149,9 @@ pagination:
     previous: 'Atgal'
     next: 'Kitas'
 
+popup:
+    login: 'Norėdami naudotis šia funkcija privalote prisijungti'
+
 results:
     error:
         no_pinned: 'Jūs neturite jokių išsaugotų skelbimų'

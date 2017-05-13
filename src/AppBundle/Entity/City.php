@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="city")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CityRepository")
  */
-class City
+class City implements \JsonSerializable
 {
     /**
      * @var int

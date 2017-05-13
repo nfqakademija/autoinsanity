@@ -20,8 +20,9 @@ class VehicleSearchRepository extends EntityRepository
         return $this->getJoinedTablesQuery()
             ->where('s.user = :user')
             ->setParameter('user', $user)
-            ->andWhere('s.pinned IS NULL')
+            ->andWhere('s.pinned <> 1')
             ->orderBy('s.id', 'DESC')
+            ->setMaxResults(self::MAX_SEARCHES_PER_USER)
             ->getQuery()
             ->getResult();
     }
@@ -33,10 +34,11 @@ class VehicleSearchRepository extends EntityRepository
             ->setParameter('user', $user)
             ->andWhere('s.pinned = 1')
             ->orderBy('s.id', 'DESC');
-        $totalPagesCount = VehicleRepository::createQueryPagination($query, $page, self::MAX_SEARCHES_PER_USER);
+        $paginator = VehicleRepository::createQueryPagination($query, $page, self::MAX_SEARCHES_PER_USER, true);
+        $totalPagesCount = ceil(count($paginator) / self::MAX_SEARCHES_PER_USER);
         return [
-            'results' => $query->getQuery()->getResult(),
-            'total_pages_count' => $totalPagesCount,
+            'vehicles' => $paginator->getIterator()->getArrayCopy(),
+            'total_pages_count' => $totalPagesCount
         ];
     }
 
@@ -50,7 +52,7 @@ class VehicleSearchRepository extends EntityRepository
             ->setParameter('user', $user)
             ->andWhere('s.pinned <> 1')
             ->orderBy('s.id', 'DESC')
-            ->setFirstResult(self::MAX_SEARCHES_PER_USER - 2) // +1 for new, +1 because it's an offset
+            ->setFirstResult(self::MAX_SEARCHES_PER_USER - 1) // +1 for new
             ->getQuery()
             ->getResult();
     }

@@ -6,6 +6,7 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\VehicleSearch;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * VehicleRepository
@@ -200,10 +201,11 @@ class VehicleRepository extends EntityRepository
             $sortField = 'lastAdUpdate';
             $sortDir = 'asc';
         }
-        $query = $query->orderBy("v.$sortField", $sortDir);
-        $totalPagesCount = $this->createQueryPagination($query, $page);
+        $query = $query->addOrderBy("v.".$sortField, $sortDir);
+        $paginator = $this->createQueryPagination($query, $page);
+        $totalPagesCount = ceil(count($paginator) / self::RESULTS_PER_PAGE);
         return [
-            'vehicles' => $query->getQuery()->getResult(),
+            'vehicles' => $paginator->getIterator()->getArrayCopy(),
             'total_pages_count' => $totalPagesCount
         ];
     }
@@ -214,9 +216,10 @@ class VehicleRepository extends EntityRepository
         $query->innerJoin('v.users', 'u')
             ->where('u.id = :user_id')
             ->setParameter('user_id', $user->getId());
-        $totalPagesCount = $this->createQueryPagination($query, $page);
+        $paginator = $this->createQueryPagination($query, $page);
+        $totalPagesCount = ceil(count($paginator) / self::RESULTS_PER_PAGE);
         return [
-            'vehicles' => $query->getQuery()->getResult(),
+            'vehicles' => $paginator->getIterator()->getArrayCopy(),
             'total_pages_count' => $totalPagesCount
         ];
     }
@@ -224,17 +227,13 @@ class VehicleRepository extends EntityRepository
     public static function createQueryPagination(
         QueryBuilder $query,
         int $page,
-        int $resultsPerPage = self::RESULTS_PER_PAGE): int
+        int $resultsPerPage = self::RESULTS_PER_PAGE,
+        bool $fetchJoinCollection = false): Paginator
     {
-        $allResults = $query->getQuery()->getResult();
-        $totalPagesCount = intdiv(count($allResults), $resultsPerPage);
-        if (count($allResults) % $resultsPerPage != 0) {
-            $totalPagesCount++;
-        }
-        // filter results for pagination
         $query->setFirstResult($resultsPerPage * ($page - 1))
             ->setMaxResults($resultsPerPage);
-        return $totalPagesCount;
+        $paginator = new Paginator($query, $fetchJoinCollection);
+        return $paginator;
     }
 
     /**
@@ -242,7 +241,7 @@ class VehicleRepository extends EntityRepository
      */
     private function getJoinedTablesQuery(): QueryBuilder
     {
-        return $this->getEntityManager()->createQueryBuilder()
+        return $this->getEntityManager()->createQueryBuilder('v')
             ->select('v, bra, mod, bod, cli, col, cou, cit, def, fue, pro, tra, fcou')
             ->from('AppBundle:Vehicle', 'v')
             ->leftJoin('v.brand', 'bra')

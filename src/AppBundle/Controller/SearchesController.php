@@ -32,7 +32,7 @@ class SearchesController extends Controller
         return $this->render(
             'AppBundle:pages:searches_page.html.twig', [
                 'searches_recent' => $recentSearches,
-                'searches_saved' => $savedSearches['results'],
+                'searches_saved' => $savedSearches['vehicles'],
                 'total_pages_count' => $savedSearches['total_pages_count'],
                 'pageSearchCount' => $repository::MAX_SEARCHES_PER_USER,
             ]

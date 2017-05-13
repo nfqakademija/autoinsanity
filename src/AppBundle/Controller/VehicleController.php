@@ -19,7 +19,7 @@ class VehicleController extends Controller
     {
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
         $repo = $entityManager->getRepository('AppBundle:Model');
-        $models = $repo->findBy(['brand' => $id]);
+        $models = $repo->findBy(['brand' => $id], ['name' => 'ASC']);
         $jsonModels = json_encode($models);
         return new JsonResponse($jsonModels);
     }
@@ -27,12 +27,12 @@ class VehicleController extends Controller
     /**
      * @Route("/getcities/{id}", name="get_cities", options = {"expose" = true}, requirements={"id": "\d+"})
      */
-    public function getModelsAction($id)
+    public function getCitiesAction($id)
     {
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
         $repo = $entityManager->getRepository('AppBundle:City');
-        $cities = $repo->findBy(['country' => $id]);
+        $cities = $repo->findBy(['country' => $id], ['name' => 'ASC']);
         $jsonModels = json_encode($cities);
-        return new JsonResponse($cities);
+        return new JsonResponse($jsonModels);
     }
 }
