@@ -79,7 +79,7 @@ class AppExtension extends \Twig_Extension
         $now = new \DateTime();
 
         $diff = $now->diff($date);
-        $diff->w = floor($diff->d / 7);
+        $weeks = floor($diff->d / 7);
 
         $result = $this->translator->trans('date.others.ago') . ' ';
 
@@ -87,8 +87,8 @@ class AppExtension extends \Twig_Extension
             $result .= $diff->y . ' ' . $this->translator->trans('date.short.year');
         } elseif ($diff->m) {
             $result .= $diff->m . ' ' . $this->translator->trans('date.short.month');
-        } elseif ($diff->w) {
-            $result .= $diff->w . ' ' . $this->translator->trans('date.short.week');
+        } elseif ($weeks) {
+            $result .= $weeks . ' ' . $this->translator->trans('date.short.week');
         } elseif ($diff->d) {
             $result .= $diff->d . ' ' . $this->translator->trans('date.short.day');
         } elseif ($diff->h) {

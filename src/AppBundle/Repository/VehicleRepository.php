@@ -231,7 +231,7 @@ class VehicleRepository extends EntityRepository
         int $resultsPerPage = self::RESULTS_PER_PAGE,
         bool $fetchJoinCollection = false
     ): Paginator {
-    
+
         $query->setFirstResult($resultsPerPage * ($page - 1))
             ->setMaxResults($resultsPerPage);
         $paginator = new Paginator($query, $fetchJoinCollection);
@@ -243,7 +243,7 @@ class VehicleRepository extends EntityRepository
      */
     private function getJoinedTablesQuery(): QueryBuilder
     {
-        return $this->getEntityManager()->createQueryBuilder('v')
+        return $this->getEntityManager()->createQueryBuilder()
             ->select('v, bra, mod, bod, cli, col, cou, cit, def, fue, pro, tra, fcou')
             ->from('AppBundle:Vehicle', 'v')
             ->leftJoin('v.brand', 'bra')

@@ -89,7 +89,7 @@ class City implements \JsonSerializable
     {
         return [
             'id' => $this->getId(),
-            'name' =>  $this->getName()
+            'name' =>  $this->name,
         ];
     }
 }

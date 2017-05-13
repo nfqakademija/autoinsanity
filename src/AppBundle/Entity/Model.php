@@ -94,7 +94,7 @@ class Model implements \JsonSerializable
     {
         return [
             'id' => $this->getId(),
-            'name' =>  $this->getName()
+            'name' =>  $this->name,
         ];
     }
 }

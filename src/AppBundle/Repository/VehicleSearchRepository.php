@@ -52,7 +52,7 @@ class VehicleSearchRepository extends EntityRepository
             ->setParameter('user', $user)
             ->andWhere('s.pinned <> 1')
             ->orderBy('s.id', 'DESC')
-            ->setFirstResult(self::MAX_SEARCHES_PER_USER - 1) // +1 for new
+            ->setFirstResult(self::MAX_SEARCHES_PER_USER - 1) // +1 new advert
             ->getQuery()
             ->getResult();
     }
