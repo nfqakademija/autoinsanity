@@ -56,6 +56,11 @@ class AutopliusAdsProvider extends AdsProvider
 
         $brand = trim($innerCrawler->filter('.content-container .breadcrumbs li')->eq(2)->text());
         $model = trim($innerCrawler->filter('.content-container .breadcrumbs li')->eq(3)->text());
+
+        $brandModelRegex = '(?<=[A-Za-z0-9])+-(?=[A-Za-z0-9])+';
+        preg_replace($brandModelRegex, ' ', $brand);
+        preg_replace($brandModelRegex, ' ', $model);
+
         $price = trim($innerCrawler->filter('.classifieds-info .view-price')->text());
         $price = (int)str_replace(' ', '', $price);
         $providerId = $innerCrawler->filter('.announcement-id strong')->text();

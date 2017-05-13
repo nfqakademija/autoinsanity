@@ -47,12 +47,9 @@ class StartCrawlerCommand extends Command
             );
             $crawlerManager->setProvider($provider);
             $pageNumber = 1;
+            $ads = [];
             while ($pageNumber == 1 || !empty($ads)) {
-                try {
-                    $ads = $crawlerManager->getNewAds($pageNumber);
-                } catch (Exception $e) {
-                    echo $e->getMessage() . "\n";
-                }
+                $ads = $crawlerManager->getNewAds($pageNumber);
                 foreach ($ads as $ad) {
                     $this->save($ad);
                 }
@@ -61,18 +58,20 @@ class StartCrawlerCommand extends Command
 
                 $pageNumber++;
             }
+            echo 'Deleting expired ads\n';
+            // delete not found vehicles
+            $this->em->createQueryBuilder()
+                ->delete('v')
+                ->from('AppBundle:Vehicle', 'v')
+                ->where('v.lastCheck < :time')
+                ->setParameter('time', $startingTime)
+                ->andWhere('v.provider = :provider')
+                ->setParameter('provider', $provider)
+                ->getQuery()
+                ->execute();
 
             echo "Finishing " . $adsProvider->getName() . "\n";
         }
-        echo 'Deleting expired ads\n';
-        // delete not found vehicles
-        $this->em->createQueryBuilder()
-            ->delete('v')
-            ->from('AppBundle:Vehicle', 'v')
-            ->where('v.lastCheck < :time')
-            ->setParameter('time', $startingTime)
-            ->getQuery()
-            ->execute();
     }
 
     private function save(Vehicle $ad)
