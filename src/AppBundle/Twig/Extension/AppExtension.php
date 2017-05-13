@@ -23,6 +23,7 @@ class AppExtension extends \Twig_Extension
             new \Twig_SimpleFilter('power', array($this, 'powerFilter')),
             new \Twig_SimpleFilter('wheelsDiameter', array($this, 'wheelsDiameterFilter')),
             new \Twig_SimpleFilter('engineSize', array($this, 'engineSizeFilter')),
+            new \Twig_SimpleFilter('dayago', array($this, 'dayAgoFilter')),
             new \Twig_SimpleFilter('dateago', array($this, 'dateAgoFilter')),
         );
     }
@@ -65,6 +66,12 @@ class AppExtension extends \Twig_Extension
     {
         $engineSize = number_format($number/1000, 1, '.', ' ');
         return $engineSize.' l.';
+    }
+
+    public function dayAgoFilter($days)
+    {
+        $date = (new \DateTime)->setTimestamp(strtotime('-' . $days . 'days'));
+        return $this->dateAgoFilter($date);
     }
 
     public function dateAgoFilter($date)

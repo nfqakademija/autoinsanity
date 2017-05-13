@@ -179,8 +179,8 @@ class VehicleRepository extends EntityRepository
                 'compare' => '>='
             ],
         ];
-        foreach ($criteriaMap as $criteriumMap) {
-            $query = $this->addSearchCriterium($query, $criteriumMap);
+        foreach ($criteriaMap as $key => $criteriumMap) {
+            $query = $this->addSearchCriterium($query, $criteriumMap, $key);
         }
 
         // sorting of results
@@ -215,7 +215,8 @@ class VehicleRepository extends EntityRepository
         $query = $this->getJoinedTablesQuery();
         $query->innerJoin('v.users', 'u')
             ->where('u.id = :user_id')
-            ->setParameter('user_id', $user->getId());
+            ->setParameter('user_id', $user->getId())
+            ->orderBy('v.id', 'DESC');
         $paginator = $this->createQueryPagination($query, $page);
         $totalPagesCount = ceil(count($paginator) / self::RESULTS_PER_PAGE);
         return [
@@ -258,7 +259,7 @@ class VehicleRepository extends EntityRepository
             ->leftJoin('v.firstCountry', 'fcou');
     }
 
-    private function addSearchCriterium(QueryBuilder $query, array $criterium): QueryBuilder
+    private function addSearchCriterium(QueryBuilder $query, array $criterium, int $i): QueryBuilder
     {
         if (!isset($criterium['criterium_value']) || empty($criterium['criterium_value'])) {
             return $query;
@@ -276,9 +277,9 @@ class VehicleRepository extends EntityRepository
         }
         $whereClause = 'v.' . $criterium['field_name']
             . ' ' . $criterium['compare']
-            . ' (:' . $criterium['field_name'] . ')';
+            . ' (:' . $criterium['field_name'] . $i . ')';
         $query = $query->andWhere($whereClause)
-            ->setParameter($criterium['field_name'], $criterium['criterium_value']);
+            ->setParameter($criterium['field_name'] . $i, $criterium['criterium_value']);
         return $query;
     }
 }

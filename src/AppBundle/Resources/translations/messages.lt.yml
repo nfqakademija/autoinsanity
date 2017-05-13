@@ -142,6 +142,7 @@ form:
             seats_number: 'Nesvarbu'
             wheels_diameter: 'Nesvarbu'
             gears_number: 'Nesvarbu'
+            not_specified: 'Nesvarbu'
         choices: 'pasirinkimai'
         search: 'Ieškoti...'
 

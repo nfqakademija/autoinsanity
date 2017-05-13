@@ -18,9 +18,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\RangeType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -80,31 +77,57 @@ class VehicleSearchType extends AbstractType
                     'required' => false,
                 ]
             )
-            ->add('price_from', IntegerType::class, [
+            ->add('price_from', ChoiceType::class, [
                 'constraints' => [
                     new GreaterThanOrEqual(0),
                 ],
-                'label' => 'form.field.price_from'
+                'label' => 'form.field.price_from',
+                'choice_translation_domain' => false,
+                'choices' => array_merge(
+                    $this->generateNumberRange(0, 5000, false, 200, ' €', false),
+                    $this->generateNumberRange(5000, 10000, false, 500, ' €', false),
+                    $this->generateNumberRange(10000, 20000, false, 1000, ' €', false),
+                    $this->generateNumberRange(20000, 100000, false, 10000, ' €', false)
+                    ),
+                'placeholder' => 'form.placeholder.all.not_specified',
+                'required' => false,
             ])
-            ->add('price_to', IntegerType::class, [
+            ->add('price_to', ChoiceType::class, [
                 'constraints' => [
                     new GreaterThanOrEqual(0),
                 ],
                 'label' => 'form.field.price_to',
+                'choice_translation_domain' => false,
+                'choices' => array_merge(
+                    $this->generateNumberRange(0, 5000, false, 200, ' €', false),
+                    $this->generateNumberRange(5000, 10000, false, 500, ' €', false),
+                    $this->generateNumberRange(10000, 20000, false, 1000, ' €', false),
+                    $this->generateNumberRange(20000, 100000, false, 10000, ' €', false)
+                ),
+                'placeholder' => 'form.placeholder.all.not_specified',
+                'required' => false,
             ])
-            ->add('year_from', IntegerType::class, [
+            ->add('year_from', ChoiceType::class, [
                 'constraints' => [
                     new GreaterThanOrEqual(1900),
                     new LessThanOrEqual($currentYear),
                 ],
                 'label' => 'form.field.year_from',
+                'choice_translation_domain' => false,
+                'choices' => $this->generateNumberRange(1980, $currentYear, true, 1, ' m.', false),
+                'placeholder' => 'form.placeholder.all.not_specified',
+                'required' => false,
             ])
-            ->add('year_to', IntegerType::class, [
+            ->add('year_to', ChoiceType::class, [
                 'constraints' => [
                     new GreaterThanOrEqual(1900),
                     new LessThanOrEqual($currentYear),
                 ],
                 'label' => 'form.field.year_to',
+                'choice_translation_domain' => false,
+                'choices' => $this->generateNumberRange(1980, $currentYear, true, 1, ' m.', false),
+                'placeholder' => 'form.placeholder.all.not_specified',
+                'required' => false,
             ])
             ->add(
                 'fuel_type', EntityType::class, [
@@ -150,54 +173,65 @@ class VehicleSearchType extends AbstractType
                 'required' => false,
                 ]
             )
-            ->add('engine_size_from', IntegerType::class, [
+            ->add('engine_size_from', ChoiceType::class, [
                 'constraints' => [
                     new GreaterThanOrEqual(0),
                 ],
-                'label' => 'form.field.engine_size_from'
+                'label' => 'form.field.engine_size_from',
+                'choice_translation_domain' => false,
+                'choices' => array_merge(
+                    $this->generateNumberRange(1000, 3000, false, 100, ' cm³', false),
+                    $this->generateNumberRange(3000, 6000, false, 200, ' cm³', false)
+                ),
+                'placeholder' => 'form.placeholder.all.not_specified',
+                'required' => false,
             ])
-            ->add('engine_size_to', IntegerType::class, [
+            ->add('engine_size_to', ChoiceType::class, [
                 'constraints' => [
                     new GreaterThanOrEqual(0),
                 ],
-                'label' => 'form.field.engine_size_to'
+                'label' => 'form.field.engine_size_to',
+                'choices' => array_merge(
+                    $this->generateNumberRange(1000, 3000, false, 100, ' cm³', false),
+                    $this->generateNumberRange(3000, 6000, false, 200, ' cm³', false)
+                ),
+                'placeholder' => 'form.placeholder.all.not_specified',
+                'required' => false,
             ])
-            ->add('power_from', IntegerType::class, [
+            ->add('power_from', ChoiceType::class, [
                 'constraints' => [
                     new GreaterThanOrEqual(0),
                 ],
                 'label' => 'form.field.power_from',
+                'choices' => array_merge(
+                    $this->generateNumberRange(20, 100, false, 10, ' kW', false),
+                    $this->generateNumberRange(100, 300, false, 30, ' kW', false)
+                ),
+                'placeholder' => 'form.placeholder.all.not_specified',
+                'required' => false,
             ])
-            ->add('power_to', IntegerType::class, [
+            ->add('power_to', ChoiceType::class, [
                 'constraints' => [
                     new GreaterThanOrEqual(0),
                 ],
                 'label' => 'form.field.power_to',
+                'choices' => array_merge(
+                    $this->generateNumberRange(20, 100, false, 10, ' kW', false),
+                    $this->generateNumberRange(100, 300, false, 30, ' kW', false)
+                ),
+                'placeholder' => 'form.placeholder.all.not_specified',
+                'required' => false,
             ])
             ->add('doors_number', ChoiceType::class, [
                 'choice_translation_domain' => false,
-                'choices' => [
-                    '2' => 2,
-                    '3' => 3,
-                    '4' => 4,
-                    '5' => 5,
-                    '6' => 6,
-                    '7' => 7,
-                ],
+                'choices' => $this->generateNumberRange(2, 7),
                 'label' => 'form.field.doors_number',
                 'placeholder' => 'form.placeholder.all.doors_number',
                 'required' => false,
             ])
             ->add('seats_number', ChoiceType::class, [
                 'choice_translation_domain' => false,
-                'choices' => [
-                    '2' => 2,
-                    '3' => 3,
-                    '4' => 4,
-                    '5' => 5,
-                    '6' => 6,
-                    '7' => 7,
-                ],
+                'choices' => $this->generateNumberRange(2, 7),
                 'label' => 'form.field.seats_number',
                 'placeholder' => 'form.placeholder.all.seats_number',
                 'required' => false,
@@ -270,34 +304,34 @@ class VehicleSearchType extends AbstractType
             )
             ->add('wheelsDiameter', ChoiceType::class, [
                 'choice_translation_domain' => false,
-                'choices' => [
-                    'R12' => 12,
-                    'R13' => 13,
-                    'R14' => 14,
-                    'R15' => 15,
-                    'R16' => 16,
-                    'R17' => 17,
-                    'R18' => 18,
-                    'R19' => 19,
-                    'R20' => 20,
-                    'R21' => 21,
-                    'R22' => 22,
-                ],
+                'choices' => $this->generateNumberRange(12, 22, false, 1, 'R'),
                 'label' => 'form.field.wheels_diameter',
                 'placeholder' => 'form.placeholder.all.wheels_diameter',
                 'required' => false,
             ])
-            ->add('mileage_from', IntegerType::class, [
+            ->add('mileage_from', ChoiceType::class, [
                 'constraints' => [
                     new GreaterThanOrEqual(0),
                 ],
                 'label' => 'form.field.mileage_from',
+                'choices' => array_merge(
+                    $this->generateNumberRange(10000, 100000, false, 10000, ' km', false),
+                    $this->generateNumberRange(100000, 400000, false, 100000, ' km', false)
+                ),
+                'placeholder' => 'form.placeholder.all.not_specified',
+                'required' => false,
             ])
-            ->add('mileage_to', IntegerType::class, [
+            ->add('mileage_to', ChoiceType::class, [
                 'constraints' => [
                     new GreaterThanOrEqual(0),
                 ],
-                'label' => 'form.field.mileage_to'
+                'label' => 'form.field.mileage_to',
+                'choices' => array_merge(
+                    $this->generateNumberRange(10000, 100000, false, 10000, ' km', false),
+                    $this->generateNumberRange(100000, 400000, false, 100000, ' km', false)
+                ),
+                'placeholder' => 'form.placeholder.all.not_specified',
+                'required' => false,
             ])
             ->add(
                 'sort_type', ChoiceType::class, [
@@ -315,14 +349,7 @@ class VehicleSearchType extends AbstractType
             ->add(
                 'next_check_year', ChoiceType::class, [
                 'choice_translation_domain' => false,
-                'choices' => [
-                    $currentYear => $currentYear,
-                    $currentYear + 1 => $currentYear + 1,
-                    $currentYear + 2 => $currentYear + 2,
-                    $currentYear + 3 => $currentYear + 3,
-                    $currentYear + 4 => $currentYear + 4,
-                    $currentYear + 5 => $currentYear + 5,
-                ],
+                'choices' => $this->generateNumberRange($currentYear, $currentYear+5, false, 1, ' m.', false),
                 'label' => 'form.field.next_check',
                 'placeholder' => 'form.placeholder.all.next_check',
                 'required' => false,
@@ -341,13 +368,7 @@ class VehicleSearchType extends AbstractType
             )
             ->add('gears_number', ChoiceType::class, [
                 'choice_translation_domain' => false,
-                'choices' => [
-                    '3' => 3,
-                    '4' => 4,
-                    '5' => 5,
-                    '6' => 6,
-                    '7' => 7,
-                ],
+                'choices' => $this->generateNumberRange(3, 7),
                 'label' => 'form.field.gears_number',
                 'placeholder' => 'form.placeholder.all.gears_number',
                 'required' => false,
@@ -415,5 +436,22 @@ class VehicleSearchType extends AbstractType
     public function getBlockPrefix()
     {
         return null;
+    }
+
+    private function generateNumberRange(int $from, int $to, bool $reorder = false,
+                                         int $step = 1, string $text = '', bool $text_left = true)
+    {
+        $range = [];
+        for ($i = $from; $i <= $to; $i += $step) {
+            if ($text_left) {
+                $range[$text . $i] = $i;
+            } else {
+                $range[$i . $text] = $i;
+            }
+        }
+        if ($reorder) {
+            arsort($range);
+        }
+        return $range;
     }
 }

@@ -197,7 +197,7 @@ select[multiple] {
 
 .multiselect-native-select .btn-group > button > .caret {
     position: absolute;
-    left: 95%;
+    right: 8px;
     top: 45%;
 }
 

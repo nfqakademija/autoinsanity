@@ -256,9 +256,9 @@ class VehicleSearch
     private $gearsNumber = null;
 
     /**
-     * @var \DateTime
+     * @var int
      *
-     * @ORM\Column(name="last_ad_update", type="datetime", nullable=true)
+     * @ORM\Column(name="last_ad_update", type="integer", nullable=true)
      */
     private $lastAdUpdate;
 
@@ -713,7 +713,7 @@ class VehicleSearch
     /**
      * Set lastAdUpdate
      */
-    public function setLastAdUpdate(\DateTime $lastAdUpdate): VehicleSearch
+    public function setLastAdUpdate(int $lastAdUpdate = null): VehicleSearch
     {
         $this->lastAdUpdate = $lastAdUpdate;
 
