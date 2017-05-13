@@ -1,5 +1,5 @@
 <h4>{{ 'form.header.update_form'|trans() }}</h4>
-{{ form_start(searchForm, { attr: {novalidate: 'novalidate', id: search_form_id} }) }}
+{{ form_start(searchForm, { attr: {novalidate: 'novalidate', id: search_form_id, action: path('detailed_search')} }) }}
             {{ form_row(searchForm.brand) }}
             {{ form_row(searchForm.model) }}
 <div class="row">

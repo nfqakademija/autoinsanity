@@ -17,30 +17,28 @@ class VehicleSearchRepository extends EntityRepository
 
     public function getRecentSearches(User $user)
     {
-        return $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select('s')
-            ->from('AppBundle:VehicleSearch', 's')
+        return $this->getJoinedTablesQuery()
             ->where('s.user = :user')
             ->setParameter('user', $user)
-            ->andWhere('s.pinned IS NULL')
+            ->andWhere('s.pinned <> 1')
+            ->orderBy('s.id', 'DESC')
+            ->setMaxResults(self::MAX_SEARCHES_PER_USER)
             ->getQuery()
             ->getResult();
     }
 
     public function getSavedSearches(User $user, int $page)
     {
-        $query = $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select('s')
-            ->from('AppBundle:VehicleSearch', 's')
+        $query = $this->getJoinedTablesQuery()
             ->where('s.user = :user')
             ->setParameter('user', $user)
-            ->andWhere('s.pinned IS NOT NULL');
-        $totalPagesCount = VehicleRepository::createQueryPagination($query, $page);
+            ->andWhere('s.pinned = 1')
+            ->orderBy('s.id', 'DESC');
+        $paginator = VehicleRepository::createQueryPagination($query, $page, self::MAX_SEARCHES_PER_USER, true);
+        $totalPagesCount = ceil(count($paginator) / self::MAX_SEARCHES_PER_USER);
         return [
-            'results' => $query->getQuery()->getResult(),
-            'total_pages_count' => $totalPagesCount,
+            'vehicles' => $paginator->getIterator()->getArrayCopy(),
+            'total_pages_count' => $totalPagesCount
         ];
     }
 
@@ -52,10 +50,31 @@ class VehicleSearchRepository extends EntityRepository
             ->from('AppBundle:VehicleSearch', 's')
             ->where('s.user = :user')
             ->setParameter('user', $user)
-            ->andWhere('s.pinned IS NULL')
+            ->andWhere('s.pinned <> 1')
             ->orderBy('s.id', 'DESC')
-            ->setFirstResult(self::MAX_SEARCHES_PER_USER - 2) // +1 for new, +1 because it's an offset
+            ->setFirstResult(self::MAX_SEARCHES_PER_USER - 1) // +1 new advert
             ->getQuery()
             ->getResult();
+    }
+    /**
+     * Generates database query that joins vehicle table with other related tables
+     */
+    private function getJoinedTablesQuery(): QueryBuilder
+    {
+        return $this->getEntityManager()->createQueryBuilder()
+            ->select('s, bra, mod, bod, cli, col, cou, cit, def, fue, pro, tra, fcou')
+            ->from('AppBundle:VehicleSearch', 's')
+            ->leftJoin('s.brand', 'bra')
+            ->leftJoin('s.model', 'mod')
+            ->leftJoin('s.bodyType', 'bod')
+            ->leftJoin('s.climateControl', 'cli')
+            ->leftJoin('s.color', 'col')
+            ->leftJoin('s.country', 'cou')
+            ->leftJoin('s.city', 'cit')
+            ->leftJoin('s.defects', 'def')
+            ->leftJoin('s.fuelType', 'fue')
+            ->leftJoin('s.provider', 'pro')
+            ->leftJoin('s.transmission', 'tra')
+            ->leftJoin('s.firstCountry', 'fcou');
     }
 }

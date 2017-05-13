@@ -1,8 +1,9 @@
 {% trans_default_domain 'FOSUserBundle' %}
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
-{# TODO: fix font in registration form#}
-<h1 class="text-center">Registracija</h1><br>
-{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+
+<h1 class="text-center">{{ title }}</h1>
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'),
+    'attr': {'class': 'fos_user_registration_register', novalidate: 'novalidate'}}) }}
     {{ form_widget(form) }}
     <div class="text-center">
         <button type="submit" class="btn btn-primary btn-lg">{{ 'registration.submit'|trans }}</button>

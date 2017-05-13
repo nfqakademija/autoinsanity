@@ -3,6 +3,7 @@
 namespace AppBundle\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class ProfileFormType extends AbstractType
@@ -13,6 +14,12 @@ class ProfileFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->remove('username');  // we use email as the username
+
+        // override email field to change its title
+        $builder->remove('email');
+        $builder->add('email',
+            EmailType::class,
+            array('label' => 'form.new_email', 'translation_domain' => 'FOSUserBundle'));
     }
 
     public function getParent()

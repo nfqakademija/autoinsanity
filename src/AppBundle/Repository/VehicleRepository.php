@@ -6,6 +6,7 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\VehicleSearch;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * VehicleRepository
@@ -178,8 +179,8 @@ class VehicleRepository extends EntityRepository
                 'compare' => '>='
             ],
         ];
-        foreach ($criteriaMap as $criteriumMap) {
-            $query = $this->addSearchCriterium($query, $criteriumMap);
+        foreach ($criteriaMap as $key => $criteriumMap) {
+            $query = $this->addSearchCriterium($query, $criteriumMap, $key);
         }
 
         // sorting of results
@@ -200,10 +201,11 @@ class VehicleRepository extends EntityRepository
             $sortField = 'lastAdUpdate';
             $sortDir = 'asc';
         }
-        $query = $query->orderBy("v.$sortField", $sortDir);
-        $totalPagesCount = $this->createQueryPagination($query, $page);
+        $query = $query->addOrderBy("v.".$sortField, $sortDir);
+        $paginator = $this->createQueryPagination($query, $page);
+        $totalPagesCount = ceil(count($paginator) / self::RESULTS_PER_PAGE);
         return [
-            'vehicles' => $query->getQuery()->getResult(),
+            'vehicles' => $paginator->getIterator()->getArrayCopy(),
             'total_pages_count' => $totalPagesCount
         ];
     }
@@ -213,25 +215,27 @@ class VehicleRepository extends EntityRepository
         $query = $this->getJoinedTablesQuery();
         $query->innerJoin('v.users', 'u')
             ->where('u.id = :user_id')
-            ->setParameter('user_id', $user->getId());
-        $totalPagesCount = $this->createQueryPagination($query, $page);
+            ->setParameter('user_id', $user->getId())
+            ->orderBy('v.id', 'DESC');
+        $paginator = $this->createQueryPagination($query, $page);
+        $totalPagesCount = ceil(count($paginator) / self::RESULTS_PER_PAGE);
         return [
-            'vehicles' => $query->getQuery()->getResult(),
+            'vehicles' => $paginator->getIterator()->getArrayCopy(),
             'total_pages_count' => $totalPagesCount
         ];
     }
 
-    public static function createQueryPagination(QueryBuilder $query, int $page): int
-    {
-        $allResults = $query->getQuery()->getResult();
-        $totalPagesCount = intdiv(count($allResults), self::RESULTS_PER_PAGE);
-        if (count($allResults) % self::RESULTS_PER_PAGE != 0) {
-            $totalPagesCount++;
-        }
-        // filter results for pagination
-        $query->setFirstResult(self::RESULTS_PER_PAGE * ($page - 1))
-            ->setMaxResults(self::RESULTS_PER_PAGE);
-        return $totalPagesCount;
+    public static function createQueryPagination(
+        QueryBuilder $query,
+        int $page,
+        int $resultsPerPage = self::RESULTS_PER_PAGE,
+        bool $fetchJoinCollection = false
+    ): Paginator {
+
+        $query->setFirstResult($resultsPerPage * ($page - 1))
+            ->setMaxResults($resultsPerPage);
+        $paginator = new Paginator($query, $fetchJoinCollection);
+        return $paginator;
     }
 
     /**
@@ -240,7 +244,7 @@ class VehicleRepository extends EntityRepository
     private function getJoinedTablesQuery(): QueryBuilder
     {
         return $this->getEntityManager()->createQueryBuilder()
-            ->select('v, bra, mod, bod, cli, col, cou, cit, def, fue, pro, tra')
+            ->select('v, bra, mod, bod, cli, col, cou, cit, def, fue, pro, tra, fcou')
             ->from('AppBundle:Vehicle', 'v')
             ->leftJoin('v.brand', 'bra')
             ->leftJoin('v.model', 'mod')
@@ -252,10 +256,11 @@ class VehicleRepository extends EntityRepository
             ->leftJoin('v.defects', 'def')
             ->leftJoin('v.fuelType', 'fue')
             ->leftJoin('v.provider', 'pro')
-            ->leftJoin('v.transmission', 'tra');
+            ->leftJoin('v.transmission', 'tra')
+            ->leftJoin('v.firstCountry', 'fcou');
     }
 
-    private function addSearchCriterium(QueryBuilder $query, array $criterium): QueryBuilder
+    private function addSearchCriterium(QueryBuilder $query, array $criterium, int $i): QueryBuilder
     {
         if (!isset($criterium['criterium_value']) || empty($criterium['criterium_value'])) {
             return $query;
@@ -273,9 +278,9 @@ class VehicleRepository extends EntityRepository
         }
         $whereClause = 'v.' . $criterium['field_name']
             . ' ' . $criterium['compare']
-            . ' (:' . $criterium['field_name'] . ')';
+            . ' (:' . $criterium['field_name'] . $i . ')';
         $query = $query->andWhere($whereClause)
-            ->setParameter($criterium['field_name'], $criterium['criterium_value']);
+            ->setParameter($criterium['field_name'] . $i, $criterium['criterium_value']);
         return $query;
     }
 }

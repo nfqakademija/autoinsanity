@@ -1,14 +1,9 @@
-// automatically submit the search form when type of sort is changed
-$('#sort_type').change(function () {
-    this.form.submit();
-});
-
-// send ajax request to pin vehicle
-$('.vehicle-pin-button').click(function () {
+// send ajax request to pin vehicle search
+$('.vehicle-search-pin-button').click(function () {
     var button = $(this);
     var pin_action = button.hasClass('pin') ? 'pin' : 'unpin';
     $.ajax({
-        url : Routing.generate('pin_vehicle', {id: button.val(), pinAction: pin_action}),
+        url : Routing.generate('pin_vehicle_search', {id: button.val(), pinAction: pin_action}),
         type: 'POST',
         data : '',
         success: function(data) {
@@ -29,7 +24,7 @@ $('.vehicle-pin-button').click(function () {
                     button.html('<span class="glyphicon glyphicon-heart"></span> <b>' + data.button_text + '</b>');
                 }
                 button.addClass(data.pin_action);
-           }
+            }
         },
         error: function(data) {
 

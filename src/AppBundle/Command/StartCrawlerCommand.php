@@ -1,9 +1,11 @@
 <?php
 namespace AppBundle\Command;
 
+use AppBundle\AdsProvider\AdsProvider;
 use AppBundle\Model\Vehicle;
 use AppBundle\Entity\Vehicle as VehicleEntity;
 use Doctrine\ORM\EntityManager;
+use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -34,7 +36,7 @@ class StartCrawlerCommand extends Command
         if (!is_dir($this->imgDirectory)) {
             mkdir($this->imgDirectory);
         }
-
+        $startingTime = time();
         foreach ($this->adsProviders as $adsProvider) {
             $crawlerManager = new $adsProvider($this->em, $this->imgDirectory);
 
@@ -45,6 +47,7 @@ class StartCrawlerCommand extends Command
             );
             $crawlerManager->setProvider($provider);
             $pageNumber = 1;
+            $ads = [];
             while ($pageNumber == 1 || !empty($ads)) {
                 $ads = $crawlerManager->getNewAds($pageNumber);
                 foreach ($ads as $ad) {
@@ -54,14 +57,18 @@ class StartCrawlerCommand extends Command
                 echo "(Page " . $pageNumber . ") Saved to database " . count($ads) . " entries.\n";
 
                 $pageNumber++;
-                sleep(1);
-
-                // --------------------------
-                if ($pageNumber == 5) {
-                    break;
-                }
-                // --------------------------
             }
+            echo 'Deleting expired ads\n';
+            // delete not found vehicles
+            $this->em->createQueryBuilder()
+                ->delete('v')
+                ->from('AppBundle:Vehicle', 'v')
+                ->where('v.lastCheck < :time')
+                ->setParameter('time', $startingTime)
+                ->andWhere('v.provider = :provider')
+                ->setParameter('provider', $provider)
+                ->getQuery()
+                ->execute();
 
             echo "Finishing " . $adsProvider->getName() . "\n";
         }

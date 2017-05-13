@@ -9,6 +9,12 @@ select[multiple] {
     height: 46px !important;
 }
 
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
 /**
  Special fonts
  */
@@ -46,6 +52,17 @@ select[multiple] {
     font-style: normal;
 }
 
+html, body {
+    height: 100%;
+}
+
+body .body {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -50px; /* the bottom margin is the negative value of the footer's height */
+}
+
 /**
  Navigation
  */
@@ -60,6 +77,11 @@ select[multiple] {
 
 .navbar-right {
     margin-right: 0px;
+}
+
+.navbar-inverse .navbar-toggle {
+    background-color: #001f3f !important;
+    border-color: #ddd;
 }
 
 
@@ -88,7 +110,6 @@ select[multiple] {
 .index-jumbotron-content {
     background: rgba(0, 16, 63, 0.5);
     display: table-cell;
-    font-family: 'nerisblack', Helvetica;
     min-height: 30vh;
     height: 30vh;
     vertical-align: middle;
@@ -96,6 +117,7 @@ select[multiple] {
 
 .index-jumbotron-content .container h1,h2 {
     color: white;
+    font-family: 'nerisblack', Helvetica;
 }
 
 .index-jumbotron-content .container {
@@ -110,6 +132,7 @@ select[multiple] {
 #index-form-container {
     background-color: rgba(0, 16, 63, 0.5);
     padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 #index-form-container label {
@@ -128,6 +151,33 @@ select[multiple] {
     display: inline-block;
 }
 
+.index-part-header {
+    padding-top: 48px;
+}
+
+.index-part-header h1 {
+    margin-bottom: 48px;
+}
+
+.why-us-panel {
+    padding: 24px;
+}
+
+#footer {
+    background-color: #001f3f;
+    border-top-color: #000d1b;
+    border-top-style: solid;
+    border-top-width: 1px;
+    color: white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#footer, .wrap {
+    height: 50px;
+}
+
+
 /**
  Style of an advertisment
  */
@@ -141,7 +191,7 @@ select[multiple] {
     margin-top: 0px;
     text-decoration: underline;
 }
-.ad-fields-list b {
+.ad-container b {
     letter-spacing: 0.5px;
 }
 
@@ -186,8 +236,14 @@ select[multiple] {
 
 .multiselect-native-select .btn-group > button > .caret {
     position: absolute;
-    left: 95%;
+    right: 8px;
     top: 45%;
 }
 
+/*
+ * Popups
+ */
+.popup {
+    min-width: 200px;
+}
 

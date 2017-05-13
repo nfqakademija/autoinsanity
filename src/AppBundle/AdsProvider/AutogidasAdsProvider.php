@@ -3,6 +3,7 @@
 namespace AppBundle\AdsProvider;
 
 use Doctrine\ORM\EntityManager;
+use Exception;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
@@ -33,13 +34,19 @@ class AutogidasAdsProvider extends AdsProvider
             }
             $innerUrl = $row->filter('.item-link')->attr('href');
             $innerUrl = 'https://autogidas.lt' . $innerUrl;
-            $car = $this->parseAd($innerUrl);
+            $car = null;
+            try {
+                $car = $this->parseAd($innerUrl);
+            } catch (Exception $e) {
+                echo $e->getMessage() . "\n" . $e->getTraceAsString() . "\n";
+            }
             if ($car !== null) {
                 $car['last_update'] = $lastUpdateDate;
                 $accessor = PropertyAccess::createPropertyAccessor();
                 $vehicle = $this->saveToModel($accessor, $car);
                 $cars[] = $vehicle;
             }
+            sleep(1);
         }
         return $cars;
     }
@@ -54,9 +61,13 @@ class AutogidasAdsProvider extends AdsProvider
         if ($innerCrawler->filter('.container .sold')->count() > 0) {
             return null;
         }
-
         $brand = trim($innerCrawler->filter('.bread-crumb a')->eq(1)->text());
         $model = trim($innerCrawler->filter('.bread-crumb a')->eq(2)->text());
+
+        $brandModelRegex = '(?<=[A-Za-z0-9])+-(?=[A-Za-z0-9])+';
+        preg_replace($brandModelRegex, ' ', $brand);
+        preg_replace($brandModelRegex, ' ', $model);
+
         $price = trim($innerCrawler->filter('.params-block .price')->text());
         $price = (int)str_replace(' ', '', $price);
 
@@ -203,10 +214,18 @@ class AutogidasAdsProvider extends AdsProvider
 
     protected function adParseColor($value)
     {
-        if ($value == 'Raudona') {
+        if ($value == 'Raudona' || $value == 'Raudona/Vyšninė') {
             $value = 'Raudona / vyšninė';
         } elseif ($value == 'Žalia') {
             $value = 'Žalia / chaki';
+        } elseif ($value == 'Ruda/Smėlio') {
+            $value = 'Ruda';
+        } elseif ($value == 'Pilka/Sidabrinė') {
+            $value = 'Sidabrinė';
+        } elseif ($value == 'Geltona/Aukso') {
+            $value = 'Auksinė';
+        } elseif ($value == 'Mėlyna/Žydra') {
+            $value = 'Mėlyna';
         }
         return $value;
     }

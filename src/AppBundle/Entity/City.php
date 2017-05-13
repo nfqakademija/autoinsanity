@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="city")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CityRepository")
  */
-class City
+class City implements \JsonSerializable
 {
     /**
      * @var int
@@ -83,5 +83,13 @@ class City
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' =>  $this->name,
+        ];
     }
 }

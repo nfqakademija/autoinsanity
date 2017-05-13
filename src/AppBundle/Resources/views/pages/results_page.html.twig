@@ -1,9 +1,10 @@
-{% extends '@App/default/search_form.html.twig' %}
+{% extends '@App/includes/search_form.html.twig' %}
 
-{% use('@App/default/ad_list.html.twig') %}
+{% use('@App/includes/ad_list.html.twig') %}
 
 {% set page = app.request.get('page') %}
-{% set current_path = 'detailed_search' %}
+
+{% set current_path = app.request.attributes.get('_route') %}
 {% set search_form_id = 'search_form' %}
 
 {% block title %}
@@ -14,27 +15,29 @@
 {% endblock %}
 
 {% block pagination %}
-    {% include('@App/default/pagination.html.twig') %}
+    {% include('@App/includes/pagination.html.twig') %}
 {% endblock %}
-
-{% set header_title = 'title.results'|trans({'%page%': page, '%pages%': total_pages_count}) %}
 
 {% block body %}
     <div class="row">
-        <div class="col-md-9">
-            <h3>{{ header_title }}</h3>
+        <div class="col-md-9 col-xs-12">
+            <h3>
+                {{ block('title') }}
+                {% include('@App/includes/searches_pin_button.html.twig') %}
+            </h3>
+
         {% if items|length == 0 %}
             <div class="alert alert-danger">{{ 'results.error.no_results'|trans() }}</div>
         {% else %}
             <div class="row">
                 <div class="col-xs-12">
                     <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-9 col-xs-12">
                             {{ block('pagination') }}
                         </div>
-                        <div class="col-md-3">
-                                {{ form_label(searchForm.sort_type, null, {'attr': {'class': 'inline-block'}}) }}
-                                {{ form_widget(searchForm.sort_type, {'attr': {'class': 'inline-block', 'form': search_form_id}}) }}
+                        <div class="col-md-3 col-xs-12">
+                            {{ form_label(searchForm.sort_type, null, {'attr': {'class': 'inline-block'}}) }}
+                            {{ form_widget(searchForm.sort_type, {'attr': {'class': 'inline-block', 'form': search_form_id}}) }}
                         </div>
                     </div>
                     {{ block('ad_list') }}
@@ -43,8 +46,8 @@
             </div>
            {% endif %}
         </div>
-        <div class="col-md-3">
-            {% include('@App/default/detailed_search_side.html.twig') %}
+        <div class="col-md-3 col-xs-12">
+            {% include('@App/includes/detailed_search_side.html.twig') %}
         </div>
     </div>
 {% endblock %}
@@ -52,6 +55,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/search_form_results.js') }}"></script>
+    <script src="{{ asset('js/searches.js') }}"></script>
     {{ block('ad_list_javascripts') }}
 {% endblock %}
 

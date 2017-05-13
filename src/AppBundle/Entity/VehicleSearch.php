@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * VehicleSearch
@@ -12,7 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\VehicleSearchRepository")
  * @ORM\Table(name="vehicle_search")
  */
-
 class VehicleSearch
 {
     /**
@@ -37,12 +38,12 @@ class VehicleSearch
      *
      * @ORM\Column(name="pinned", type="integer", nullable=true)
      */
-    private $pinned;
+    private $pinned = 0;
 
     /**
      * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="Provider", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="Provider", fetch="LAZY")
      * @ORM\JoinTable(name="searches_providers")
      */
     private $provider;
@@ -58,7 +59,7 @@ class VehicleSearch
     /**
      * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="Model", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="Model", fetch="LAZY")
      * @ORM\JoinTable(name="searches_models")
      */
     private $model;
@@ -102,7 +103,7 @@ class VehicleSearch
     /**
      * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="City", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="City", fetch="LAZY")
      * @ORM\JoinTable(name="searches_cities")
      */
     private $city;
@@ -124,7 +125,7 @@ class VehicleSearch
     /**
      * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="BodyType", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="BodyType", fetch="LAZY")
      * @ORM\JoinTable(name="searches_body_types")
      */
     private $bodyType;
@@ -146,7 +147,7 @@ class VehicleSearch
     /**
      * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="FuelType", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="FuelType", fetch="LAZY")
      * @ORM\JoinTable(name="searches_fuel_types")
      */
     private $fuelType;
@@ -175,7 +176,7 @@ class VehicleSearch
     /**
      * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="Transmission", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="Transmission", fetch="LAZY")
      * @ORM\JoinTable(name="searches_transmissions")
      */
     private $transmission = null;
@@ -183,7 +184,7 @@ class VehicleSearch
     /**
      * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="ClimateControl", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="ClimateControl", fetch="LAZY")
      * @ORM\JoinTable(name="searches_climate_controls")
      */
     private $climateControl = null;
@@ -191,7 +192,7 @@ class VehicleSearch
     /**
      * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="Color", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="Color", fetch="LAZY")
      * @ORM\JoinTable(name="searches_colors")
      */
     private $color;
@@ -199,7 +200,7 @@ class VehicleSearch
     /**
      * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="Defects", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="Defects", fetch="LAZY")
      * @ORM\JoinTable(name="searches_defects")
      */
     private $defects;
@@ -242,7 +243,7 @@ class VehicleSearch
     /**
      * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="Country", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="Country", fetch="LAZY")
      * @ORM\JoinTable(name="searches_first_countries")
      */
     private $firstCountry;
@@ -255,9 +256,9 @@ class VehicleSearch
     private $gearsNumber = null;
 
     /**
-     * @var \DateTime
+     * @var int
      *
-     * @ORM\Column(name="last_ad_update", type="datetime", nullable=true)
+     * @ORM\Column(name="last_ad_update", type="integer", nullable=true)
      */
     private $lastAdUpdate;
 
@@ -712,7 +713,7 @@ class VehicleSearch
     /**
      * Set lastAdUpdate
      */
-    public function setLastAdUpdate(\DateTime $lastAdUpdate): VehicleSearch
+    public function setLastAdUpdate(int $lastAdUpdate = null): VehicleSearch
     {
         $this->lastAdUpdate = $lastAdUpdate;
 
@@ -964,7 +965,7 @@ class VehicleSearch
     /**
      * Get pinned
      */
-    public function getPinned(): int
+    public function getPinned()
     {
         return $this->pinned;
     }

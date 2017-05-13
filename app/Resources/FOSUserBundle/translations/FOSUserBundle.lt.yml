@@ -1,3 +1,15 @@
+form:
+    group_name: 'Grupės vardas'
+    username: 'Naudotojo vardas'
+    email: 'El. paštas'
+    current_password: 'Įveskite dabartinį slaptažodį'
+    password: 'Slaptažodis'
+    password_confirmation: 'Pakartokite slaptažodį'
+    new_password: 'Įveskite naują slaptažodį'
+    new_password_confirmation: 'Pakartokite naują slaptažodį'
+    current_email: 'Dabartinis el. pašto adresas'
+    new_email: 'Įveskite naują el. pašto adresą'
+
 resetting:
     request:
         email: 'Jūsų el. pašto adresas'

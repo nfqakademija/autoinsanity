@@ -32,3 +32,10 @@ services:
         class: AppBundle\Type\RegistrationFormType
         tags:
             - {name: form.type, alias: app_user_registration}
+
+    app.twig_extension:
+        class: AppBundle\Twig\Extension\AppExtension
+        public: false
+        arguments: ['@translator.default']
+        tags:
+            - { name: twig.extension }

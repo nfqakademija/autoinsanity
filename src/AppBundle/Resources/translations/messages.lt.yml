@@ -34,12 +34,26 @@ advert:
                 manual: 'mechaninė'
                 auto: 'automatinė'
 
+date:
+    short:
+        year: 'm.'
+        month: 'mėn.'
+        week: 'sav.'
+        day: 'd.'
+        hour: 'val.'
+        minute: 'min'
+        second: 's'
+    others:
+        ago: 'prieš'
+
 header:
     link:
         detailed_search: 'Detalioji paieška'
         searches: 'Mano paieškos'
         pinned: 'Išsaugoti skelbimai'
-        profile: 'Mano profilis'
+        settings: 'Nustatymai'
+        change_password: 'Keisti slaptažodį'
+        change_email: 'Keisti el. pašto adresą'
         logout: 'Atsijungti'
         register: 'Užsiregistruoti'
         login: 'Prisijungti'
@@ -72,7 +86,7 @@ form:
             manual: 'Mechaninė'
             auto: 'Automatinė'
     header:
-        update_form: 'Pakeiskite paieškos nustatymus'
+        update_form: 'Pakeiskite dabartinę paiešką'
     field:
         brand: 'Markė'
         model: 'Modelis'
@@ -124,12 +138,20 @@ form:
             next_check: 'Nesvarbu'
             first_country: 'Visos valstybės'
             not_older_than: 'Nesvarbu'
+            doors_number: 'Nesvarbu'
+            seats_number: 'Nesvarbu'
+            wheels_diameter: 'Nesvarbu'
+            gears_number: 'Nesvarbu'
+            not_specified: 'Nesvarbu'
         choices: 'pasirinkimai'
         search: 'Ieškoti...'
 
 pagination:
-    previous: 'Ankstesnis'
+    previous: 'Atgal'
     next: 'Kitas'
+
+popup:
+    login: 'Norėdami naudotis šia funkcija privalote prisijungti'
 
 results:
     error:
@@ -140,6 +162,55 @@ results:
     pin:
         pinned: 'Išsaugota'
         unpinned: 'Išsaugoti'
+
+searches:
+    button:
+        view: 'Ieškoti skelbimų'
+        view_more: 'Žiūrėti paieškas'
+        view_less: 'Slėpti paieškas'
+    field:
+        brand: 'Markė'
+        models: 'Modeliai'
+        country: 'Valstybė'
+        cities: 'Miestai'
+        body_type: 'Kėbulo tipai'
+        fuel_type: 'Kuro tipai'
+        price_from: 'Kaina nuo'
+        price_to: 'Kaina iki'
+        year_from: 'Metai nuo'
+        year_to: 'Metai iki'
+        engine_size_from: 'Variklio tūris nuo'
+        engine_size_to: 'Variklio tūris iki'
+        power_from: 'Galia nuo'
+        power_to: 'Galia iki'
+        doors_number: 'Durų skaičius'
+        seats_number: 'Sėdimų vietų skaičius'
+        defects: 'Defektai'
+        drive_type: 'Pavarų dėžė'
+        climate_control: 'Klimato kontrolė'
+        colors: 'Spalvos'
+        steering_wheel: 'Vairo padėtis'
+        wheels_diameter: 'Padangų diametras'
+        mileage_from: 'Rida nuo'
+        mileage_to: 'Rida iki'
+        transmission: 'Varantieji ratai'
+        sort_type: 'Rūšiavimas'
+        next_check_year: 'Tech. apžiūra galioja iki'
+        gears_number: 'Pavarų skaičius'
+        first_countries: 'Pirmosios registracijos valstybės'
+        providers: 'Skelbimų šaltiniai'
+        last_ad_update: 'Paskutinį kartą atnaujintas'
+    name:
+        search: 'Paieška'
+    pin:
+        pinned: 'Paieška išsaugota'
+        unpinned: 'Išsaugoti paiešką'
+    value:
+        sort:
+            cost_min: 'pirmiau pigiausi'
+            cost_max: 'pirmiau brangiausi'
+            date_new: 'pirmiau naujausi'
+            date_old: 'pirmiau seniausi'
 
 subtitle:
     searches_recent: 'Mano paskutinės paieškos'
@@ -153,5 +224,11 @@ title:
     results: 'Paieškos rezultatai'
     pagination: '(%page% psl. iš %pages%)'
     website_name: 'AutoInsanity'
+    login: 'Prisijungimas'
+    register: 'Registracija'
+    change_password: 'Slaptažodžio keitimas'
+    remind_password: 'Slaptažodžio priminimas'
+    reset_password: 'Slaptažodžio atkūrimas'
+    edit_profile: 'El. pašto adreso atnaujinimas'
 
 
