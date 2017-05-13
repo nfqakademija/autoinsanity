@@ -43,6 +43,7 @@ class AutopliusAdsProvider extends AdsProvider
                     $cars[] = $vehicle;
                 }
             }
+            sleep(1);
         }
         return $cars;
     }

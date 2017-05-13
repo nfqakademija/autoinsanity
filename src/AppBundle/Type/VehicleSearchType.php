@@ -315,7 +315,7 @@ class VehicleSearchType extends AbstractType
                 ],
                 'label' => 'form.field.mileage_from',
                 'choices' => array_merge(
-                    $this->generateNumberRange(10000, 100000, false, 10000, ' km', false),
+                    $this->generateNumberRange(0, 100000, false, 10000, ' km', false),
                     $this->generateNumberRange(100000, 400000, false, 100000, ' km', false)
                 ),
                 'placeholder' => 'form.placeholder.all.not_specified',
@@ -327,7 +327,7 @@ class VehicleSearchType extends AbstractType
                 ],
                 'label' => 'form.field.mileage_to',
                 'choices' => array_merge(
-                    $this->generateNumberRange(10000, 100000, false, 10000, ' km', false),
+                    $this->generateNumberRange(0, 100000, false, 10000, ' km', false),
                     $this->generateNumberRange(100000, 400000, false, 100000, ' km', false)
                 ),
                 'placeholder' => 'form.placeholder.all.not_specified',

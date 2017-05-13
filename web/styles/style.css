@@ -79,7 +79,7 @@ select[multiple] {
  */
 #index-container {
     background-attachment: fixed;
-    background-image: url('../img/index-background-min.jpg');
+    /*background-image: url('../img/index-background-min.jpg');*/
     background-position: center;
     background-repeat: no-repeat;
     -ms-background-size: cover;
@@ -121,6 +121,7 @@ select[multiple] {
 #index-form-container {
     background-color: rgba(0, 16, 63, 0.5);
     padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 #index-form-container label {
@@ -138,6 +139,29 @@ select[multiple] {
 .inline-block {
     display: inline-block;
 }
+
+.index-part-header {
+    padding-top: 48px;
+}
+
+.index-part-header h1 {
+    margin-bottom: 48px;
+}
+
+.why-us-panel {
+    padding: 24px;
+}
+
+#footer {
+    background-color: #001f3f;
+    border-top-color: #000d1b;
+    border-top-style: solid;
+    border-top-width: 1px;
+    color: white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
 
 /**
  Style of an advertisment

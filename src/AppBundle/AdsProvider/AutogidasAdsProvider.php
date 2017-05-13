@@ -40,6 +40,7 @@ class AutogidasAdsProvider extends AdsProvider
                 $vehicle = $this->saveToModel($accessor, $car);
                 $cars[] = $vehicle;
             }
+            sleep(1);
         }
         return $cars;
     }

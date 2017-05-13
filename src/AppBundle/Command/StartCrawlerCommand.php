@@ -54,13 +54,6 @@ class StartCrawlerCommand extends Command
                 echo "(Page " . $pageNumber . ") Saved to database " . count($ads) . " entries.\n";
 
                 $pageNumber++;
-                sleep(1);
-
-                // --------------------------
-                if ($pageNumber == 5) {
-                    break;
-                }
-                // --------------------------
             }
 
             echo "Finishing " . $adsProvider->getName() . "\n";
