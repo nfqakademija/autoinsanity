@@ -2,7 +2,6 @@
 $('.vehicle-search-pin-button').click(function () {
     var button = $(this);
     var pin_action = button.hasClass('pin') ? 'pin' : 'unpin';
-    button.removeClass(pin_action);
     $.ajax({
         url : Routing.generate('pin_vehicle_search', {id: button.val(), pinAction: pin_action}),
         type: 'POST',
@@ -13,11 +12,12 @@ $('.vehicle-search-pin-button').click(function () {
                     'animation': true,
                     'html': true,
                     'placement': 'bottom',
-                    'trigger': 'click|focus'
+                    'trigger': 'focus'
                 })
                 button.popover('show');
             }
             else if (typeof data.pin_action !== 'undefined') {
+                button.removeClass(pin_action);
                 if (data.pin_action === 'pin') {
                     button.html('<span class="glyphicon glyphicon-heart-empty"></span> ' + data.button_text);
                 } else {

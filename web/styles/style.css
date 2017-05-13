@@ -240,4 +240,10 @@ body .body {
     top: 45%;
 }
 
+/*
+ * Popups
+ */
+.popup {
+    min-width: 200px;
+}
 

@@ -7,7 +7,6 @@ $('#sort_type').change(function () {
 $('.vehicle-pin-button').click(function () {
     var button = $(this);
     var pin_action = button.hasClass('pin') ? 'pin' : 'unpin';
-    button.removeClass(pin_action);
     $.ajax({
         url : Routing.generate('pin_vehicle', {id: button.val(), pinAction: pin_action}),
         type: 'POST',
@@ -23,6 +22,7 @@ $('.vehicle-pin-button').click(function () {
                 button.popover('show');
             }
             else if (typeof data.pin_action !== 'undefined') {
+                button.removeClass(pin_action);
                 if (data.pin_action === 'pin') {
                     button.html('<span class="glyphicon glyphicon-heart-empty"></span> ' + data.button_text);
                 } else {

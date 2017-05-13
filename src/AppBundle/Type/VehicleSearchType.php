@@ -191,6 +191,7 @@ class VehicleSearchType extends AbstractType
                     new GreaterThanOrEqual(0),
                 ],
                 'label' => 'form.field.engine_size_to',
+                'choice_translation_domain' => false,
                 'choices' => array_merge(
                     $this->generateNumberRange(1000, 3000, false, 100, ' cm³', false),
                     $this->generateNumberRange(3000, 6000, false, 200, ' cm³', false)
@@ -203,6 +204,7 @@ class VehicleSearchType extends AbstractType
                     new GreaterThanOrEqual(0),
                 ],
                 'label' => 'form.field.power_from',
+                'choice_translation_domain' => false,
                 'choices' => array_merge(
                     $this->generateNumberRange(20, 100, false, 10, ' kW', false),
                     $this->generateNumberRange(100, 300, false, 30, ' kW', false)
@@ -215,6 +217,7 @@ class VehicleSearchType extends AbstractType
                     new GreaterThanOrEqual(0),
                 ],
                 'label' => 'form.field.power_to',
+                'choice_translation_domain' => false,
                 'choices' => array_merge(
                     $this->generateNumberRange(20, 100, false, 10, ' kW', false),
                     $this->generateNumberRange(100, 300, false, 30, ' kW', false)
@@ -314,6 +317,7 @@ class VehicleSearchType extends AbstractType
                     new GreaterThanOrEqual(0),
                 ],
                 'label' => 'form.field.mileage_from',
+                'choice_translation_domain' => false,
                 'choices' => array_merge(
                     $this->generateNumberRange(0, 100000, false, 10000, ' km', false),
                     $this->generateNumberRange(100000, 400000, false, 100000, ' km', false)
@@ -326,6 +330,7 @@ class VehicleSearchType extends AbstractType
                     new GreaterThanOrEqual(0),
                 ],
                 'label' => 'form.field.mileage_to',
+                'choice_translation_domain' => false,
                 'choices' => array_merge(
                     $this->generateNumberRange(0, 100000, false, 10000, ' km', false),
                     $this->generateNumberRange(100000, 400000, false, 100000, ' km', false)
