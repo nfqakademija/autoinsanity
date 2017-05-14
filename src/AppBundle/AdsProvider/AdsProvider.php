@@ -137,6 +137,7 @@ abstract class AdsProvider
             Chrome/57.0.2987.133 Safari/537.36"
         );
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_FRESH_CONNECT, TRUE);
         $html = curl_exec($curl);
         curl_close($curl);
         return $html;

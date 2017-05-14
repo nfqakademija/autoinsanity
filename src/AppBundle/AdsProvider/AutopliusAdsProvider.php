@@ -43,7 +43,7 @@ class AutopliusAdsProvider extends AdsProvider
                     }
                 }
             }
-            sleep(1);
+            sleep(2);
         }
         return $cars;
     }
@@ -58,8 +58,8 @@ class AutopliusAdsProvider extends AdsProvider
         $model = trim($innerCrawler->filter('.content-container .breadcrumbs li')->eq(3)->text());
 
         $brandModelRegex = '~(?<=[A-Za-z0-9])-(?=[A-Za-z0-9])~';
-        preg_replace($brandModelRegex, ' ', $brand);
-        preg_replace($brandModelRegex, ' ', $model);
+        $brand = preg_replace($brandModelRegex, ' ', $brand);
+        $model = preg_replace($brandModelRegex, ' ', $model);
 
         $price = trim($innerCrawler->filter('.classifieds-info .view-price')->text());
         $price = (int)str_replace(' ', '', $price);
@@ -68,6 +68,7 @@ class AutopliusAdsProvider extends AdsProvider
         $location = trim($innerCrawler->filter('.owner-contacts .owner-location')->text());
         $tempArr = explode(",", $location);
         $city = trim($tempArr[0]);
+        $city = $this->checkCity($city);
         $country = trim($tempArr[1]);
         $imageUrl = ($innerCrawler->filter('.announcement-media-gallery .thumbnail')->count()) ?
             trim($innerCrawler->filter('.announcement-media-gallery .thumbnail')->eq(0)->attr('style')):
@@ -138,6 +139,12 @@ class AutopliusAdsProvider extends AdsProvider
         return $date;
     }
 
+    protected function checkCity($city) {
+        if ($city == "Rīga") {
+            return 'Ryga';
+        }
+    }
+
     protected function getKeyName(string $title)
     {
         $keyMap = [
@@ -205,13 +212,16 @@ class AutopliusAdsProvider extends AdsProvider
     protected function adParseColor($value)
     {
         if ($value == 'Geltona / aukso') {
-            $value = 'Geltona';
-        } elseif ($value == 'Mėlyna / žydra') {
-            $value = 'Mėlyna';
-        } elseif ($value == 'Pilka / sidabrinė') {
-            $value = 'Sidabrinė';
-        } elseif ($value == 'Ruda / smėlio') {
-            $value = 'Ruda';
+            return 'Geltona';
+        }
+        if ($value == 'Mėlyna / žydra') {
+            return 'Mėlyna';
+        }
+        if ($value == 'Pilka / sidabrinė') {
+            return 'Sidabrinė';
+        }
+        if ($value == 'Ruda / smėlio') {
+            return 'Ruda';
         }
         return $value;
     }
@@ -219,11 +229,11 @@ class AutopliusAdsProvider extends AdsProvider
     protected function adParseDriveType($value)
     {
         if ($value == 'Mechaninė') {
-            $value = 0;
+            return 0;
         } elseif ($value == 'Automatinė') {
-            $value = 1;
+            return 1;
         }
-        return $value;
+        return null;
     }
 
     protected function adParseMileage($value)
@@ -245,11 +255,12 @@ class AutopliusAdsProvider extends AdsProvider
     protected function adParseSteeringWheel($value)
     {
         if ($value == 'Kairėje') {
-            $value = 0;
-        } elseif ($value == 'Dešinėje') {
-            $value = 1;
+            return 0;
         }
-        return $value;
+        if ($value == 'Dešinėje') {
+            return 1;
+        }
+        return null;
     }
 
     protected function adParseDoorsNumber($value)

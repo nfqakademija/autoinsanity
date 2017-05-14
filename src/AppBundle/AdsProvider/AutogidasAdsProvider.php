@@ -46,7 +46,7 @@ class AutogidasAdsProvider extends AdsProvider
                 $vehicle = $this->saveToModel($accessor, $car);
                 $cars[] = $vehicle;
             }
-            sleep(1);
+            sleep(2);
         }
         return $cars;
     }
@@ -65,8 +65,8 @@ class AutogidasAdsProvider extends AdsProvider
         $model = trim($innerCrawler->filter('.bread-crumb a')->eq(2)->text());
 
         $brandModelRegex = '~(?<=[A-Za-z0-9])-(?=[A-Za-z0-9])~';
-        preg_replace($brandModelRegex, ' ', $brand);
-        preg_replace($brandModelRegex, ' ', $model);
+        $brand = preg_replace($brandModelRegex, ' ', $brand);
+        $model = preg_replace($brandModelRegex, ' ', $model);
 
         $price = trim($innerCrawler->filter('.params-block .price')->text());
         $price = (int)str_replace(' ', '', $price);
@@ -187,15 +187,19 @@ class AutogidasAdsProvider extends AdsProvider
     protected function adParseFuelType($value)
     {
         if ($value == 'Benzinas/Dujos') {
-            $value = 'Benzinas / dujos';
-        } elseif ($value == 'Benzinas/Elektra') {
-            $value = 'Benzinas / elektra';
-        } elseif ($value == 'Dyzelinas/Elektra') {
-            $value = 'Dyzelinas / elektra';
-        } elseif ($value == 'Benzinas/Gamtinės dujos') {
-            $value = 'Benzinas / gamtinės dujos';
-        } elseif ($value == 'Etanolis') {
-            $value = 'Bioetanolis (E85)';
+            return 'Benzinas / dujos';
+        }
+		if ($value == 'Benzinas/Elektra') {
+            return 'Benzinas / elektra';
+        }
+		if ($value == 'Dyzelinas/Elektra') {
+            return 'Dyzelinas / elektra';
+        }
+		if ($value == 'Benzinas/Gamtinės dujos') {
+            return 'Benzinas / gamtinės dujos';
+        }
+		if ($value == 'Etanolis') {
+            return 'Bioetanolis (E85)';
         }
         return $value;
     }
@@ -203,11 +207,13 @@ class AutogidasAdsProvider extends AdsProvider
     protected function adParseBodyType($value)
     {
         if ($value == 'Coupe') {
-            $value = 'Kupė (Coupe)';
-        } elseif ($value == 'Kabrioletas') {
-            $value = 'Kabrioletas / Roadster';
-        } elseif ($value == 'Komercinis auto(su būda)') {
-            $value = 'Komercinis';
+            return 'Kupė (Coupe)';
+        }
+		if ($value == 'Kabrioletas') {
+            return 'Kabrioletas / Roadster';
+        }
+		if ($value == 'Komercinis auto(su būda)') {
+            return 'Komercinis';
         }
         return $value;
     }
@@ -215,17 +221,22 @@ class AutogidasAdsProvider extends AdsProvider
     protected function adParseColor($value)
     {
         if ($value == 'Raudona' || $value == 'Raudona/Vyšninė') {
-            $value = 'Raudona / vyšninė';
-        } elseif ($value == 'Žalia') {
-            $value = 'Žalia / chaki';
-        } elseif ($value == 'Ruda/Smėlio') {
-            $value = 'Ruda';
-        } elseif ($value == 'Pilka/Sidabrinė') {
-            $value = 'Sidabrinė';
-        } elseif ($value == 'Geltona/Aukso') {
-            $value = 'Auksinė';
-        } elseif ($value == 'Mėlyna/Žydra') {
-            $value = 'Mėlyna';
+            return 'Raudona / vyšninė';
+        }
+		if ($value == 'Žalia') {
+            return 'Žalia / chaki';
+        }
+		if ($value == 'Ruda/Smėlio') {
+            return 'Ruda';
+        }
+		if ($value == 'Pilka/Sidabrinė') {
+            return 'Sidabrinė';
+        }
+		if ($value == 'Geltona/Aukso') {
+            return 'Auksinė';
+        }
+		if ($value == 'Mėlyna/Žydra') {
+            return 'Mėlyna';
         }
         return $value;
     }
@@ -233,11 +244,12 @@ class AutogidasAdsProvider extends AdsProvider
     protected function adParseDriveType($value)
     {
         if ($value == 'Mechaninė') {
-            $value = 0;
-        } elseif ($value == 'Automatinė') {
-            $value = 1;
+            return 0;
         }
-        return $value;
+		if ($value == 'Automatinė') {
+            return 1;
+        }
+        return null;
     }
 
     protected function adParseMileage($value)
@@ -249,13 +261,15 @@ class AutogidasAdsProvider extends AdsProvider
     protected function adParseTransmission($value)
     {
         if ($value == 'Priekiniai varantys ratai') {
-            $value = 'Priekiniai';
-        } elseif ($value == 'Galiniai varantys ratai') {
-            $value = 'Galiniai';
-        } elseif ($value == 'Visi varantys ratai') {
-            $value = 'Visi varantys (4х4)';
+            return 'Priekiniai';
         }
-        return $value;
+		if ($value == 'Galiniai varantys ratai') {
+            return 'Galiniai';
+        }
+		if ($value == 'Visi varantys ratai') {
+            return 'Visi varantys (4х4)';
+        }
+        return null;
     }
 
     protected function adParseDefects($value)
@@ -266,11 +280,12 @@ class AutogidasAdsProvider extends AdsProvider
     protected function adParseSteeringWheel($value)
     {
         if ($value == 'Kairėje') {
-            $value = 0;
-        } elseif ($value == 'Dešinėje') {
-            $value = 1;
+            return 0;
         }
-        return $value;
+		if ($value == 'Dešinėje') {
+            return 1;
+        }
+        return null;
     }
 
     protected function adParseGearsNumber($value)
