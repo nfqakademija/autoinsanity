@@ -13,8 +13,6 @@ class AutopliusAdsProvider extends AdsProvider
     {
         $this->em = $em;
         $this->imgDirectory = $imgDirectory;
-        //$this->link = 'https://autoplius.lt/skelbimai/naudoti-automobiliai?older_not=30&page_nr=%psl%';
-        $this->link = 'https://autoplius.lt/skelbimai/naudoti-automobiliai?page_nr=%psl%';
         $this->link = 'https://autoplius.lt/skelbimai/naudoti-automobiliai?page_nr=%psl%';
         $this->providerName = 'Autoplius.lt';
     }
