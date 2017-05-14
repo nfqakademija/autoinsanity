@@ -89,7 +89,7 @@ fos_user:
 
 liip_imagine :
     driver:               gd
-    cache:                ~
+    cache:                default
     data_loader:          default
     default_image:        null
 
