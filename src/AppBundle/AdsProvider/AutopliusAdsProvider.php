@@ -3,6 +3,7 @@
 namespace AppBundle\AdsProvider;
 
 use Doctrine\ORM\EntityManager;
+use Exception;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
@@ -33,17 +34,22 @@ class AutopliusAdsProvider extends AdsProvider
                 if ($lastUpdate->count() > 0) {
                     $lastUpdate = preg_replace('/\W\w+\s*(\W*)$/', '$1', $lastUpdate->text());
                     $lastUpdateDate = $this->parseDate($lastUpdate);
-                    $innerUrl = $row->filter('.title-list a')->attr('href');
+                }
+                $innerUrl = $row->filter('.title-list a')->attr('href');
+                $car = null;
+                try {
                     $car = $this->parseAd($innerUrl);
-                    if ($car !== null) {
-                        $car['last_update'] = $lastUpdateDate;
-                        $accessor = PropertyAccess::createPropertyAccessor();
-                        $vehicle = $this->saveToModel($accessor, $car);
-                        $cars[] = $vehicle;
-                    }
+                } catch (Exception $e) {
+                    echo $e->getMessage() . "\n" . $e->getTraceAsString() . "\n";
+                }
+                if ($car !== null) {
+                    $car['last_update'] = $lastUpdateDate;
+                    $accessor = PropertyAccess::createPropertyAccessor();
+                    $vehicle = $this->saveToModel($accessor, $car);
+                    $cars[] = $vehicle;
                 }
             }
-            sleep(2);
+            sleep(1);
         }
         return $cars;
     }
@@ -60,6 +66,8 @@ class AutopliusAdsProvider extends AdsProvider
         $brandModelRegex = '~(?<=[A-Za-z0-9])-(?=[A-Za-z0-9])~';
         $brand = preg_replace($brandModelRegex, ' ', $brand);
         $model = preg_replace($brandModelRegex, ' ', $model);
+
+        $model = $this->checkModel($model);
 
         $price = trim($innerCrawler->filter('.classifieds-info .view-price')->text());
         $price = (int)str_replace(' ', '', $price);
@@ -139,10 +147,18 @@ class AutopliusAdsProvider extends AdsProvider
         return $date;
     }
 
+    protected function checkModel($model) {
+        if ($model == "Kita") {
+            return '-kita-';
+        }
+        return $model;
+    }
+
     protected function checkCity($city) {
         if ($city == "Rīga") {
             return 'Ryga';
         }
+        return $city;
     }
 
     protected function getKeyName(string $title)

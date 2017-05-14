@@ -210,8 +210,10 @@
                         </div>
                         <div class="col-md-4 col-xs-6">
                             <h4 class="ad-location">
-                                {{ item.city.name }}
-                                {% if item.country.name != 'Lietuva' %}
+                                {% if item.city.name is defined %}
+                                    {{ item.city.name }}
+                                {% endif %}
+                                {% if item.country.name is defined and item.country.name != 'Lietuva' %}
                                     , {{ item.country.name }}
                                 {% endif %}
                             </h4>

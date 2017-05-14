@@ -9,3 +9,4 @@ fuel_types:
     - { name: "Bioetanolis (E85)" }
     - { name: "Dujos" }
     - { name: "Benzinas / gamtinės dujos" }
+    - { name: "Kita" }

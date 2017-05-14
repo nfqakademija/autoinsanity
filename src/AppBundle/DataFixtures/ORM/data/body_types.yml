@@ -13,6 +13,7 @@ body_types:
     - { name: "Kombi mikroautobusas" }
     - { name: "Krovininis mikroautobusas" }
     - { name: "Savadarbis auto" }
+    - { name: "Kita" }
 
 
 

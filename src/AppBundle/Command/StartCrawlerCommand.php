@@ -116,7 +116,7 @@ class StartCrawlerCommand extends Command
                 ['name' => $ad->getFirstCountry(),],
             ],
         ];
-        $firstRelations = $this->resolveFields($relationsMap);
+        $firstRelations = $this->resolveFields($relationsMap, $ad->getLink());
         if ($firstRelations == null) {
             return 0;
         }
@@ -131,7 +131,7 @@ class StartCrawlerCommand extends Command
                 ['name' => $ad->getCity(), 'country' => $relations['country'],],
             ],
         ];
-        $secondRelations = $this->resolveFields($dependedRelationsMap);
+        $secondRelations = $this->resolveFields($dependedRelationsMap, $ad->getLink());
         if ($secondRelations == null) {
             return 0;
         }
@@ -184,7 +184,7 @@ class StartCrawlerCommand extends Command
         return 1;
     }
 
-    private function resolveFields($fieldsMap)
+    private function resolveFields($fieldsMap, $link)
     {
         $relations = [];
         foreach ($fieldsMap as $key => $relationMap) {
@@ -192,7 +192,8 @@ class StartCrawlerCommand extends Command
             if ($relations[$key] == null && !empty($relationMap[1]['name'])) {
                 echo "Skipped: Failed to find element in " . $relationMap[0]
                     . " with parameters: " . $relationMap[1]['name']
-                    . "\n";
+                    . "\n"
+                    . "Ad link: " . $link . "\n";
                 return null;
             }
         }

@@ -34,7 +34,6 @@ class AutogidasAdsProvider extends AdsProvider
             }
             $innerUrl = $row->filter('.item-link')->attr('href');
             $innerUrl = 'https://autogidas.lt' . $innerUrl;
-            $car = null;
             try {
                 $car = $this->parseAd($innerUrl);
             } catch (Exception $e) {
@@ -46,7 +45,7 @@ class AutogidasAdsProvider extends AdsProvider
                 $vehicle = $this->saveToModel($accessor, $car);
                 $cars[] = $vehicle;
             }
-            sleep(2);
+            sleep(1);
         }
         return $cars;
     }
