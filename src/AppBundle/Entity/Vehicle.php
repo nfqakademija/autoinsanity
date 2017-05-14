@@ -352,7 +352,7 @@ class Vehicle
     /**
      * Get engineSize
      */
-    public function getEngineSize(): int
+    public function getEngineSize()
     {
         return $this->engineSize;
     }
@@ -569,7 +569,7 @@ class Vehicle
     /**
      * Get city
      */
-    public function getCity(): City
+    public function getCity()
     {
         return $this->city;
     }
