@@ -12,14 +12,19 @@ services:
         class: AppBundle\AdsProvider\AutogidasAdsProvider
         arguments: ['@doctrine.orm.entity_manager', '%images_directory%']
 
+    app.ads_provider.alio:
+        class: AppBundle\AdsProvider\AlioAdsProvider
+        arguments: ['@doctrine.orm.entity_manager', '%images_directory%']
+
     app.command.start_crawler:
         class: AppBundle\Command\StartCrawlerCommand
         tags:
             - { name: console.command }
         arguments:
         -
-            - '@app.ads_provider.autoplius'
-            - '@app.ads_provider.autogidas'
+#            - '@app.ads_provider.autoplius'
+#            - '@app.ads_provider.autogidas'
+            - '@app.ads_provider.alio'
         - '@doctrine.orm.entity_manager'
         - '%images_directory%'
 
