@@ -17,7 +17,7 @@ class AutogidasAdsProvider extends AdsProvider
         $this->providerName = 'Autogidas.lt';
     }
 
-    protected function parseAdsPage($html)
+    protected function parseAdsPage($html, $maxLastCheck)
     {
         $cars = [];
 
@@ -32,22 +32,24 @@ class AutogidasAdsProvider extends AdsProvider
             if ($lastUpdate->count() > 0) {
                 $lastUpdateDate = $this->parseDate($lastUpdate->text());
             }
-            $innerUrl = $row->filter('.item-link')->attr('href');
-            $innerUrl = 'https://autogidas.lt' . $innerUrl;
-            $car = null;
-            try {
-                $car = $this->parseAd($innerUrl);
-            } catch (Exception $e) {
-                echo $e->getMessage() . "\n" . $e->getTraceAsString() . "\n";
-                echo "Link: " . $innerUrl . "\n\n";
+            if ($lastUpdateDate == null || $lastUpdateDate > $maxLastCheck) {
+                $innerUrl = $row->filter('.item-link')->attr('href');
+                $innerUrl = 'https://autogidas.lt' . $innerUrl;
+                $car = null;
+                try {
+                    $car = $this->parseAd($innerUrl);
+                } catch (Exception $e) {
+                    echo $e->getMessage() . "\n" . $e->getTraceAsString() . "\n";
+                    echo "Link: " . $innerUrl . "\n\n";
+                }
+                if ($car !== null) {
+                    $car['last_update'] = $lastUpdateDate;
+                    $accessor = PropertyAccess::createPropertyAccessor();
+                    $vehicle = $this->saveToModel($accessor, $car);
+                    $cars[] = $vehicle;
+                }
+                sleep(1);
             }
-            if ($car !== null) {
-                $car['last_update'] = $lastUpdateDate;
-                $accessor = PropertyAccess::createPropertyAccessor();
-                $vehicle = $this->saveToModel($accessor, $car);
-                $cars[] = $vehicle;
-            }
-            sleep(1);
         }
         return $cars;
     }
@@ -129,6 +131,16 @@ class AutogidasAdsProvider extends AdsProvider
         $dateString = str_replace('m.', 'years', $dateString);
         $date->setTimestamp(strtotime($dateString));
         return $date;
+    }
+
+    protected function checkModel($model, $brand) {
+        if ($brand == 'Mercedes Benz') {
+            return preg_replace('/ /', '', $model, 1);
+        }
+        if ($model == "Kitas") {
+            return '-kita-';
+        }
+        return $model;
     }
 
     protected function getKeyName(string $title)

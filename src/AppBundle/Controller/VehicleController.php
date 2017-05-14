@@ -15,7 +15,7 @@ class VehicleController extends Controller
     /**
      * @Route("/getmodels/{id}", name="get_models", options = {"expose" = true}, requirements={"id": "\d+"})
      */
-    public function getModelsAction($id)
+    public function getModelsAction($id = null)
     {
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
         $repo = $entityManager->getRepository('AppBundle:Model');
@@ -27,7 +27,7 @@ class VehicleController extends Controller
     /**
      * @Route("/getcities/{id}", name="get_cities", options = {"expose" = true}, requirements={"id": "\d+"})
      */
-    public function getCitiesAction($id)
+    public function getCitiesAction($id = null)
     {
         $entityManager = $this->get('doctrine.orm.default_entity_manager');
         $repo = $entityManager->getRepository('AppBundle:City');

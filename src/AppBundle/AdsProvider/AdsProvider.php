@@ -12,15 +12,15 @@ abstract class AdsProvider
     protected $link;
     protected $providerName;
 
-    public function getNewAds(int $pageNumber): array
+    public function getNewAds(int $pageNumber, $maxLastCheck): array
     {
         $url = str_replace('%psl%', $pageNumber, $this->link);
         $html = $this->getHtml($url);
-        $cars = $this->parseAdsPage($html);
+        $cars = $this->parseAdsPage($html, $maxLastCheck);
         return $cars;
     }
 
-    abstract protected function parseAdsPage($html);
+    abstract protected function parseAdsPage($html, $maxLastCheck);
 
     public function saveToModel($accessor, $car)
     {

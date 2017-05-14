@@ -247,3 +247,11 @@ body .body {
     min-width: 200px;
 }
 
+/*
+ * Vehicle search form
+ */
+.search-form-button {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+

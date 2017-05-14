@@ -4,7 +4,7 @@
             <div class="row ad-container">
                 <div class="col-md-5 col-xs-12">
                     <a href="{{ item.link }}" target="_blank">
-                        <img src="{{ asset(img_dir ~ '/' ~ item.image) | imagine_filter('ad_thumb') }}"
+                        <img src="{{ url(img_dir ~ '/' ~ item.image) | imagine_filter('ad_thumb') }}"
                              class="img-responsive ad-image" />
                     </a>
                 </div>

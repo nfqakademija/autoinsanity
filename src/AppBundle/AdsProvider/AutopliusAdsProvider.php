@@ -19,7 +19,7 @@ class AutopliusAdsProvider extends AdsProvider
         $this->providerName = 'Autoplius.lt';
     }
 
-    protected function parseAdsPage($html)
+    protected function parseAdsPage($html, $maxLastCheck)
     {
         $cars = [];
 
@@ -37,22 +37,24 @@ class AutopliusAdsProvider extends AdsProvider
                     $lastUpdate = preg_replace('/\W\w+\s*(\W*)$/', '$1', $lastUpdate->text());
                     $lastUpdateDate = $this->parseDate($lastUpdate);
                 }
-                $innerUrl = $row->filter('.title-list a')->attr('href');
-                $car = null;
-                try {
-                    $car = $this->parseAd($innerUrl);
-                } catch (Exception $e) {
-                    echo $e->getMessage() . "\n" . $e->getTraceAsString() . "\n";
-                    echo "Link: " . $innerUrl . "\n\n";
-                }
-                if ($car !== null) {
-                    $car['last_update'] = $lastUpdateDate;
-                    $accessor = PropertyAccess::createPropertyAccessor();
-                    $vehicle = $this->saveToModel($accessor, $car);
-                    $cars[] = $vehicle;
+                if ($lastUpdateDate == null || $lastUpdateDate > $maxLastCheck) {
+                    $innerUrl = $row->filter('.title-list a')->attr('href');
+                    $car = null;
+                    try {
+                        $car = $this->parseAd($innerUrl);
+                    } catch (Exception $e) {
+                        echo $e->getMessage() . "\n" . $e->getTraceAsString() . "\n";
+                        echo "Link: " . $innerUrl . "\n\n";
+                    }
+                    if ($car !== null) {
+                        $car['last_update'] = $lastUpdateDate;
+                        $accessor = PropertyAccess::createPropertyAccessor();
+                        $vehicle = $this->saveToModel($accessor, $car);
+                        $cars[] = $vehicle;
+                    }
+                    sleep(1);
                 }
             }
-            sleep(1);
         }
         return $cars;
     }

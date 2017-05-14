@@ -66,18 +66,18 @@ doctrine:
 # Swiftmailer Configuration
 swiftmailer:
     transport: '%mailer_transport%'
-    host: '%mailer_host%'
     username: '%mailer_user%'
     password: '%mailer_password%'
-    spool: { type: memory }
 
 fos_user:
+    service:
+        mailer: fos_user.mailer.twig_swift
     db_driver: orm # other valid values are 'mongodb' and 'couchdb'
     firewall_name: main
     user_class: AppBundle\Entity\User
     from_email:
         address: 'test@example.com'
-        sender_name: 'test'
+        sender_name: 'AutoInsanity'
     profile:
         form:
             type: AppBundle\Type\ProfileFormType
@@ -89,7 +89,7 @@ fos_user:
 
 liip_imagine :
     driver:               gd
-    cache:                default
+    cache:                ~
     data_loader:          default
     default_image:        null
 

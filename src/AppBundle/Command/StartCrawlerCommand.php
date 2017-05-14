@@ -5,9 +5,11 @@ use AppBundle\AdsProvider\AdsProvider;
 use AppBundle\Model\Vehicle;
 use AppBundle\Entity\Vehicle as VehicleEntity;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\NoResultException;
 use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class StartCrawlerCommand extends Command
@@ -29,12 +31,31 @@ class StartCrawlerCommand extends Command
     {
         $this->setName('crawler:start')
             ->setDescription('Start a crawler');
+        $this->addOption('update', null, InputOption::VALUE_NONE,
+            "Browses only these ads that were updated after the last date found on the database");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if (!is_dir($this->imgDirectory)) {
             mkdir($this->imgDirectory);
+        }
+        $maxLastCheck = (new \DateTime())->setTimestamp(strtotime("1970-01-01"));
+        if ($input->getOption('update')) {
+            $query = $this->em->createQueryBuilder()
+                ->select('MAX(v.lastCheck) AS maxLastCheck')
+                ->from('AppBundle:Vehicle', 'v');
+            try {
+                $lastCheckResult = $query->getQuery()->getSingleScalarResult();
+                if ($lastCheckResult == null) {
+                    $maxLastCheck = (new \DateTime())->setTimestamp(strtotime("1970-01-01"));
+                } else {
+                    $maxLastCheck = (new \DateTime())->setTimestamp(strtotime($lastCheckResult));
+                }
+            } catch (NoResultException $e) {
+                $maxLastCheck->setTimestamp(strtotime("1970-01-01"));
+            }
+
         }
         $startingTime = new \DateTime();
         foreach ($this->adsProviders as $adsProvider) {
@@ -49,7 +70,7 @@ class StartCrawlerCommand extends Command
             $pageNumber = 1;
             $ads = [];
             while ($pageNumber == 1 || !empty($ads)) {
-                $ads = $crawlerManager->getNewAds($pageNumber);
+                $ads = $crawlerManager->getNewAds($pageNumber, $maxLastCheck);
                 foreach ($ads as $ad) {
                     $this->save($ad);
                 }
@@ -58,17 +79,18 @@ class StartCrawlerCommand extends Command
 
                 $pageNumber++;
             }
-            echo "Deleting expired ads\n";
-            // delete not found vehicles
-            $this->em->createQueryBuilder()
-                ->delete('AppBundle:Vehicle', 'v')
-                ->where('v.lastCheck < :time')
-                ->setParameter('time', $startingTime)
-                ->andWhere('v.provider = :provider')
-                ->setParameter('provider', $provider)
-                ->getQuery()
-                ->execute();
-
+            if ($input->getOption('update')) {
+                echo "Deleting expired ads\n";
+                // delete not found vehicles
+                $this->em->createQueryBuilder()
+                    ->delete('AppBundle:Vehicle', 'v')
+                    ->where('v.lastCheck < :time')
+                    ->setParameter('time', $startingTime)
+                    ->andWhere('v.provider = :provider')
+                    ->setParameter('provider', $provider)
+                    ->getQuery()
+                    ->execute();
+            }
             echo "Finishing " . $adsProvider->getName() . "\n";
         }
     }
@@ -203,6 +225,11 @@ class StartCrawlerCommand extends Command
     {
         $repository = $this->em->getRepository($repository);
         $item = $repository->findOneBy($params);
+        // when search was unsuccessful, try to mark as "Other" category
+        if ($item == null) {
+            $params['name'] = '-kita-';
+            $item = $repository->findOneBy($params);
+        }
         return $item;
     }
 }

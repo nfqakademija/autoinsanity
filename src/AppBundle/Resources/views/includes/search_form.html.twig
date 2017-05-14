@@ -52,9 +52,19 @@
             enableCaseInsensitiveFiltering: true
         });
 
+        // when coming back from another page, models and cities list is lost, update needed
+        $(document).ready(function () {
+            loadModelsByBrand();
+            loadCitiesByCountry();
+        });
+
         // get models when brand is selected
-        var $brand = $('#brand');
-        $brand.change(function () {
+        $('#brand').change(function () {
+            loadModelsByBrand();
+        });
+
+        function loadModelsByBrand() {
+            var $brand = $('#brand');
             var id = $brand.val();
             $.ajax({
                 url : Routing.generate('get_models', {id: id}),
@@ -71,11 +81,15 @@
                     $('#model').multiselect('rebuild');
                 }
             });
-        });
+        }
 
         // get cities when country is selected
-        var $country = $('#country');
-        $country.change(function () {
+        $('#country').change(function () {
+            loadCitiesByCountry();
+        });
+
+        function loadCitiesByCountry() {
+            var $country = $('#country');
             var id = $country.val();
             $.ajax({
                 url : Routing.generate('get_cities', {id: id}),
@@ -92,7 +106,7 @@
                     $('#city').multiselect('rebuild');
                 }
             });
-        });
+        }
 
         $(document).ready(function() {
             $('#brand').multiselect(Object.assign({}, multiselectDefaults, {

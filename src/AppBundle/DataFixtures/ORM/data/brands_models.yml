@@ -1,18 +1,24 @@
 cars:
     -   name: "Abarth"
         models:
+            - "-kita-"
             - "Punto Evo"
+
     -   name: "AC"
         models:
+            - "-kita-"
             - "Ace"
             - "Aceca"
             - "Cobra"
+
     -   name: "Acura"
         models:
+            - "-kita-"
             - "CL"
             - "EL"
             - "ILX"
             - "Integra"
+            - "Legend"
             - "MDX"
             - "NSX"
             - "RDX"
@@ -25,17 +31,28 @@ cars:
             - "TSX"
             - "Vigor"
             - "ZDX"
+
     -   name: "Aixam"
         models:
+            - "-kita-"
             - "400"
             - "500"
+            - "A721"
+            - "A741"
             - "A751"
             - "City"
+            - "Coupe"
             - "Crossline"
+            - "Crossover"
+            - "GTO"
+            - "Roadline"
             - "Ligier"
             - "Scouty"
+            - "Scouty R"
+
     -   name: "Alfa Romeo"
         models:
+            - "-kita-"
             - "145"
             - "146"
             - "147"
@@ -53,6 +70,7 @@ cars:
             - "Alfetta"
             - "Arna"
             - "Brera"
+            - "Crosswagon"
             - "Crosswagon Q4"
             - "Giulia"
             - "Giulietta"
@@ -64,8 +82,11 @@ cars:
             - "Spider"
             - "Sportwagon"
             - "Sprint"
+            - "Stelvio"
+
     -   name: "Alpina"
         models:
+            - "-kita-"
             - "B12"
             - "B3"
             - "B5"
@@ -75,8 +96,10 @@ cars:
             - "D10"
             - "D3"
             - "Roadster S"
+
     -   name: "AMC"
         models:
+            - "-kita-"
             - "Ambassador"
             - "Concord"
             - "Eagle"
@@ -87,39 +110,61 @@ cars:
             - "Rambler"
             - "Rebel"
             - "Spirit"
+
     -   name: "ARO"
         models:
+            - "-kita-"
             - "10"
+            - "10-4"
+            - "11-4"
             - "24"
             - "243"
             - "244"
             - "245"
             - "246"
             - "K450"
+            - "Dragon"
+            - "M 461"
+            - "Muscel"
+            - "Serija 10"
+            - "Serija 240"
+            - "Serija 320"
             - "Spartana"
+
     -   name: "Asia"
         models:
+            - "-kita-"
             - "Hi Topic"
             - "Retona"
             - "Rocsta"
             - "Towner"
+
     -   name: "Aston Martin"
         models:
+            - "-kita-"
             - "AR1"
+            - "Bulldog"
             - "Cygnet"
             - "DB"
+            - "DB6"
             - "DB7"
             - "DB9"
             - "DBS"
             - "Lagonda"
+            - "One-77"
             - "Rapide"
+            - "V12 Vanquish"
+            - "V12 Vantage"
+            - "V8"
             - "Vanquish"
             - "Vantage"
             - "Virage"
             - "Volante"
             - "Zagato"
+
     -   name: "Audi"
         models:
+            - "-kita-"
             - "100"
             - "200"
             - "5000"
@@ -166,22 +211,44 @@ cars:
             - "TT RS"
             - "TTS"
             - "V8"
+
     -   name: "Austin Rover"
         models:
+            - "-kita-"
+            - "Allegro"
+            - "Ambasador"
+            - "Healey"
+            - "Maxi"
+            - "Metro"
+            - "Mini"
+            - "Montego"
+
+    -   name: "Autobianchi"
+        models:
+            - "-kita-"
+            - "Bianchina"
+
+
     -   name: "Bentley"
         models:
+            - "-kita-"
             - "Arnage"
             - "Azure"
             - "Bentayga"
             - "Brooklands"
             - "Continental"
+            - "Continental Flying Spur"
             - "Eight"
             - "Flying Spur"
             - "Mulsanne"
             - "S1"
             - "Turbo R"
+            - "Turbo RT"
+            - "Turbo S"
+
     -   name: "BMW"
         models:
+            - "-kita-"
             - "1 serija"
             - "114"
             - "116"
@@ -205,6 +272,7 @@ cars:
             - "225"
             - "225 Active Tourer"
             - "228"
+            - "230"
             - "3 serija"
             - "315"
             - "316"
@@ -253,6 +321,7 @@ cars:
             - "545"
             - "550"
             - "550 Gran turismo"
+            - "5GT (F07)"
             - "Active Hybrid 5"
             - "6 serija"
             - "628"
@@ -288,12 +357,14 @@ cars:
             - "M Roadster"
             - "M1"
             - "M135"
+            - "M135i"
             - "M2"
             - "M235"
             - "M3"
             - "M4"
             - "M5"
             - "M550"
+            - "M550d"
             - "M6"
             - "X serija"
             - "X1"
@@ -315,19 +386,27 @@ cars:
             - "1802"
             - "2002"
             - "2800CS"
+
     -   name: "Briliance"
         models:
+            - "-kita-"
             - "Andere"
             - "BC3"
             - "BS2"
             - "BS4"
             - "BS6"
+
     -   name: "Bugatti"
         models:
+            - "-kita-"
+            - "EB 110"
             - "Veyron"
+
     -   name: "Buick"
         models:
+            - "-kita-"
             - "Century"
+            - "Centurion"
             - "Electra"
             - "Enclave"
             - "Encore"
@@ -344,8 +423,10 @@ cars:
             - "Skylark"
             - "Terraza"
             - "Verano"
+
     -   name: "Cadillac"
         models:
+            - "-kita-"
             - "Allante"
             - "ATS"
             - "BLS"
@@ -362,8 +443,10 @@ cars:
             - "Vizon"
             - "XLR"
             - "XTS"
+
     -   name: "Chevrolet"
         models:
+            - "-kita-"
             - "2500"
             - "Alero"
             - "Astro"
@@ -424,8 +507,10 @@ cars:
             - "Uplander"
             - "Venture"
             - "Volt"
+
     -   name: "Chrysler"
         models:
+            - "-kita-"
             - "200"
             - "300"
             - "300C"
@@ -458,8 +543,10 @@ cars:
             - "Viper"
             - "Vision"
             - "Voyager"
+
     -   name: "Citroen"
         models:
+            - "-kita-"
             - "2 CV"
             - "AX"
             - "Berlingo"
@@ -502,18 +589,24 @@ cars:
             - "Xsara"
             - "Xsara Picasso"
             - "ZX"
+
     -   name: "Cobra"
         models:
+            - "-kita-"
             - "AC"
+
     -   name: "Dacia"
         models:
+            - "-kita-"
             - "Dokker"
             - "Duster"
             - "Lodgy"
             - "Logan"
             - "Sandero"
+
     -   name: "Daewoo"
         models:
+            - "-kita-"
             - "Espero"
             - "Evanda"
             - "Istana"
@@ -536,16 +629,20 @@ cars:
             - "Rezzo"
             - "Tacuma"
             - "Tico"
+
     -   name: "DAF"
         models:
+            - "-kita-"
             - "33"
             - "44"
             - "46"
             - "55"
             - "600"
             - "66"
+
     -   name: "Daihatsu"
         models:
+            - "-kita-"
             - "1000"
             - "1000"
             - "Applause"
@@ -572,14 +669,20 @@ cars:
             - "Trevis"
             - "Valera"
             - "YRV"
+
     -   name: "Datsun"
         models:
+            - "-kita-"
             - "260z"
             - "280z"
+
     -   name: "Delorean"
         models:
+            - "-kita-"
+
     -   name: "Desoto"
         models:
+            - "-kita-"
             - "Adventurer"
             - "Airflow"
             - "Airstream"
@@ -590,8 +693,10 @@ cars:
             - "Fireflite"
             - "Firesweep"
             - "Powermaster"
+
     -   name: "Dodge"
         models:
+            - "-kita-"
             - "Avenger"
             - "Caliber"
             - "Caravan"
@@ -614,16 +719,22 @@ cars:
             - "Stratus"
             - "Viper"
             - "Voyager"
+
     -   name: "DR Motor"
         models:
+            - "-kita-"
+
     -   name: "Eagle"
         models:
+            - "-kita-"
             - "Summit"
             - "Summit Wagon"
             - "Talon"
             - "Vision"
+
     -   name: "Ferrari"
         models:
+            - "-kita-"
             - "F 360"
             - "208"
             - "246"
@@ -660,8 +771,10 @@ cars:
             - "Mondial"
             - "Superamerica"
             - "Testarossa"
+
     -   name: "Fiat"
         models:
+            - "-kita-"
             - "124"
             - "126"
             - "127"
@@ -711,12 +824,16 @@ cars:
             - "Ulysse"
             - "Uno"
             - "X 1/9"
+
     -   name: "Fisker"
         models:
+            - "-kita-"
             - "Atlantic"
             - "Karma "
+
     -   name: "Ford"
         models:
+            - "-kita-"
             - "Aerostar"
             - "Aspire"
             - "B MAX"
@@ -786,8 +903,10 @@ cars:
             - "Transit Connect"
             - "Transit Custom"
             - "Windstar"
+
     -   name: "GAZ"
         models:
+            - "-kita-"
             - "22"
             - "11 73"
             - "12 ZiM"
@@ -814,15 +933,19 @@ cars:
             - "M 20 Pobeda"
             - "M1"
             - "Volga"
+
     -   name: "Geo"
         models:
+            - "-kita-"
             - "Metro"
             - "Prizm"
             - "Spectrum"
             - "Storm"
             - "Tracker"
+
     -   name: "GMC"
         models:
+            - "-kita-"
             - "Acadia"
             - "Envoy"
             - "Jimmy"
@@ -835,12 +958,16 @@ cars:
             - "Terrain"
             - "Typhoon"
             - "Yukon"
+
     -   name: "Gonow"
         models:
+            - "-kita-"
             - "GA200"
             - "GX6"
+
     -   name: "Great Wall"
         models:
+            - "-kita-"
             - "Deer"
             - "Hover"
             - "Pegasus"
@@ -849,8 +976,10 @@ cars:
             - "Sing"
             - "Socool"
             - "Wingle"
+
     -   name: "Honda"
         models:
+            - "-kita-"
             - "Accord"
             - "Aerodeck"
             - "Avancier"
@@ -887,13 +1016,17 @@ cars:
             - "Shuttle"
             - "Stream"
             - "Today"
+
     -   name: "Hummer"
         models:
+            - "-kita-"
             - "H1"
             - "H2"
             - "H3"
+
     -   name: "Hyundai"
         models:
+            - "-kita-"
             - "Accent"
             - "Atos"
             - "Azera"
@@ -940,8 +1073,10 @@ cars:
             - "XG"
             - "XG 350"
             - "XG30"
+
     -   name: "Infiniti"
         models:
+            - "-kita-"
             - "EX"
             - "EX30"
             - "EX35"
@@ -973,12 +1108,16 @@ cars:
             - "QX56"
             - "QX60"
             - "QX70"
+
     -   name: "International"
         models:
+            - "-kita-"
             - "Scout"
             - "Scout II"
+
     -   name: "Isuzu"
         models:
+            - "-kita-"
             - "Amigo"
             - "Ascender"
             - "Aska"
@@ -1000,13 +1139,17 @@ cars:
             - "Turkuaz"
             - "Vehi Cross"
             - "Wizard"
+
     -   name: "Iveco"
         models:
+            - "-kita-"
             - "Daily"
             - "35 12"
             - "Massif"
+
     -   name: "Jaguar"
         models:
+            - "-kita-"
             - "Daimler"
             - "E Type"
             - "F Pace"
@@ -1030,8 +1173,10 @@ cars:
             - "XK Series"
             - "XK8"
             - "XKR"
+
     -   name: "Jeep"
         models:
+            - "-kita-"
             - "Cherokee"
             - "CJ"
             - "Comanche"
@@ -1044,8 +1189,10 @@ cars:
             - "Wagoneer"
             - "Willys"
             - "Wrangler"
+
     -   name: "Kia"
         models:
+            - "-kita-"
             - "Avella"
             - "Besta"
             - "Borrego"
@@ -1086,8 +1233,10 @@ cars:
             - "Spectra"
             - "Sportage"
             - "Venga"
+
     -   name: "Koenigsegg"
         models:
+            - "-kita-"
             - "Agera"
             - "CC8S"
             - "CCGT"
@@ -1098,8 +1247,10 @@ cars:
             - "CCXR Edition"
             - "CCXR Special Edition"
             - "Trevita"
+
     -   name: "Lada"
         models:
+            - "-kita-"
             - "110"
             - "111"
             - "112"
@@ -1144,8 +1295,10 @@ cars:
             - "Priora"
             - "Samara"
             - "Vis"
+
     -   name: "Lamborghini"
         models:
+            - "-kita-"
             - "Aventador"
             - "Countach"
             - "Diablo"
@@ -1157,8 +1310,10 @@ cars:
             - "Miura"
             - "Murcielago"
             - "Urraco"
+
     -   name: "Lancia"
         models:
+            - "-kita-"
             - "Beta"
             - "Dedra"
             - "Delta"
@@ -1178,22 +1333,28 @@ cars:
             - "Y"
             - "Ypsilon"
             - "Zeta"
+
     -   name: "Land Rover"
         models:
+            - "-kita-"
             - "Defender"
             - "Discovery"
             - "Evoque"
             - "Freelander"
             - "Range Rover"
             - "Range Rover Sport"
+
     -   name: "Landwind"
         models:
+            - "-kita-"
             - "-kita-"
             - "S"
             - "SC 2"
             - "SC 4"
+
     -   name: "Lexus"
         models:
+            - "-kita-"
             - "CT 200h"
             - "ES klasė"
             - "ES 300"
@@ -1255,8 +1416,10 @@ cars:
             - "SC 400"
             - "SC 430"
             - "SL"
+
     -   name: "Ligier"
         models:
+            - "-kita-"
             - "Ambra"
             - "Andere"
             - "ixo"
@@ -1264,8 +1427,10 @@ cars:
             - "Nova"
             - "Optima"
             - "X - Too"
+
     -   name: "Lincoln"
         models:
+            - "-kita-"
             - "Aviator"
             - "Continental"
             - "LS"
@@ -1277,8 +1442,10 @@ cars:
             - "Navigator"
             - "Town Car"
             - "Zephyr"
+
     -   name: "Lotus"
         models:
+            - "-kita-"
             - "340 R"
             - "Cortina"
             - "Eagle"
@@ -1292,15 +1459,21 @@ cars:
             - "Exige"
             - "Super Seven"
             - "V8"
+
     -   name: "LuAZ"
         models:
+            - "-kita-"
             - "1302"
             - "967M"
             - "969M"
+
     -   name: "Mahindra"
         models:
+            - "-kita-"
+
     -   name: "Maserati"
         models:
+            - "-kita-"
             - "222"
             - "224"
             - "228"
@@ -1325,12 +1498,16 @@ cars:
             - "Merak"
             - "Quattroporte"
             - "Spyder"
+
     -   name: "Maybach"
         models:
+            - "-kita-"
             - "57"
             - "62"
+
     -   name: "Mazda"
         models:
+            - "-kita-"
             - "121"
             - "2"
             - "3"
@@ -1375,8 +1552,10 @@ cars:
             - "Vantred"
             - "Xedos 6"
             - "Xedos 9"
+
     -   name: "Mclaren"
         models:
+            - "-kita-"
             - "570S"
             - "650S"
             - "650S Coupe"
@@ -1386,19 +1565,25 @@ cars:
             - "Andere"
             - "MP4 12C"
             - "P1"
+
     -   name: "Mercedes Benz"
         models:
+            - "-kita-"
             - "100"
             - "108"
             - "110"
             - "123"
             - "124"
+            - "180"
             - "190"
             - "200"
             - "207"
             - "208"
+            - "209"
+            - "210"
             - "211"
             - "212"
+            - "219"
             - "220"
             - "230"
             - "240"
@@ -1443,6 +1628,7 @@ cars:
             - "B180"
             - "B200"
             - "B220"
+            - "B246"
             - "B250"
             - "C klasė"
             - "C160"
@@ -1700,8 +1886,10 @@ cars:
             - "Vario"
             - "Viano"
             - "Vito"
+
     -   name: "Mercury"
         models:
+            - "-kita-"
             - "Tiffany"
             - "Capri"
             - "Cougar"
@@ -1714,8 +1902,10 @@ cars:
             - "Topaz"
             - "Tracer"
             - "Villager"
+
     -   name: "MG"
         models:
+            - "-kita-"
             - "Express"
             - "Maestro"
             - "Metro"
@@ -1730,12 +1920,16 @@ cars:
             - "ZR"
             - "ZS"
             - "ZT"
+
     -   name: "Microcar"
         models:
+            - "-kita-"
             - "Mc 1 "
             - "Mgo"
+
     -   name: "Mini"
         models:
+            - "-kita-"
             - "1000"
             - "1300"
             - "Clubman"
@@ -1745,8 +1939,10 @@ cars:
             - "Mini"
             - "One"
             - "Paceman"
+
     -   name: "Mitsubishi"
         models:
+            - "-kita-"
             - "3000 GT"
             - "ASX"
             - "Canter"
@@ -1785,15 +1981,19 @@ cars:
             - "Space Star"
             - "Space Wagon"
             - "Starion"
+
     -   name: "Morgan"
         models:
+            - "-kita-"
             - "4/4"
             - "Aero 8"
             - "Plus 4"
             - "Plus 8"
             - "Roadster"
+
     -   name: "Moskvich"
         models:
+            - "-kita-"
             - "407"
             - "423"
             - "2140"
@@ -1806,8 +2006,10 @@ cars:
             - "M 402"
             - "M 408"
             - "M 412"
+
     -   name: "Nissan"
         models:
+            - "-kita-"
             - "100 NX"
             - "200 SX"
             - "240 SX"
@@ -1873,14 +2075,20 @@ cars:
             - "Wingroad"
             - "X Terra"
             - "X Trail"
+
     -   name: "Norster"
         models:
+            - "-kita-"
             - "600R"
+
     -   name: "Nysa"
         models:
+            - "-kita-"
             - "522"
+
     -   name: "Oldsmobile"
         models:
+            - "-kita-"
             - "Achieva"
             - "Alero"
             - "Aurora"
@@ -1894,8 +2102,10 @@ cars:
             - "Silhouette"
             - "Super 88"
             - "Toronado"
+
     -   name: "Opel"
         models:
+            - "-kita-"
             - "Adam"
             - "Agila"
             - "Ampera"
@@ -1933,8 +2143,10 @@ cars:
             - "Vivaro"
             - "Zafira"
             - "Zafira tourer"
+
     -   name: "Packard"
         models:
+            - "-kita-"
             - "110"
             - "120"
             - "180"
@@ -1948,8 +2160,10 @@ cars:
             - "Patrician"
             - "Station Sedan"
             - "Super Eight"
+
     -   name: "Peugeot"
         models:
+            - "-kita-"
             - "1007"
             - "104"
             - "106"
@@ -1995,15 +2209,19 @@ cars:
             - "RCZ"
             - "Traveller"
             - "Vivacity"
+
     -   name: "Plymouth"
         models:
+            - "-kita-"
             - "Breeze"
             - "Grand Voyager"
             - "Neon"
             - "Prowler"
             - "Voyager"
+
     -   name: "Pontiac"
         models:
+            - "-kita-"
             - "6000"
             - "Aztek"
             - "Bonneville"
@@ -2023,8 +2241,10 @@ cars:
             - "Trans Am"
             - "Trans Sport"
             - "Vibe"
+
     -   name: "Porsche"
         models:
+            - "-kita-"
             - "356"
             - "911"
             - "912"
@@ -2040,16 +2260,20 @@ cars:
             - "Cayman"
             - "Macan"
             - "Panamera"
+
     -   name: "Proton"
         models:
+            - "-kita-"
             - "313"
             - "315"
             - "416"
             - "Gen 2"
             - "Persona"
             - "Satria"
+
     -   name: "Renault"
         models:
+            - "-kita-"
             - "11"
             - "19"
             - "21"
@@ -2094,18 +2318,24 @@ cars:
             - "Vel Satis"
             - "Wind"
             - "Zoe"
+
     -   name: "Rolls Royce"
         models:
+            - "-kita-"
             - "Corniche"
             - "Flying Spur"
             - "Ghost"
             - "Park Ward"
             - "Phantom"
             - "Silver"
+
     -   name: "Roosevelt"
         models:
+            - "-kita-"
+
     -   name: "Rover"
         models:
+            - "-kita-"
             - "25"
             - "45"
             - "75"
@@ -2141,8 +2371,10 @@ cars:
             - "Mini"
             - "Montego"
             - "Streetwise"
+
     -   name: "Saab"
         models:
+            - "-kita-"
             - "9 2X"
             - "9 3"
             - "9 4X"
@@ -2155,13 +2387,17 @@ cars:
             - "96"
             - "97"
             - "99"
+
     -   name: "Santana"
         models:
+            - "-kita-"
             - "300"
             - "350"
             - "PS 10"
+
     -   name: "Saturn"
         models:
+            - "-kita-"
             - "Aura"
             - "ION"
             - "LS"
@@ -2172,16 +2408,20 @@ cars:
             - "SL"
             - "SW"
             - "VUE"
+
     -   name: "Scion"
         models:
+            - "-kita-"
             - "iM"
             - "IQ"
             - "TC"
             - "XA"
             - "XB"
             - "XD"
+
     -   name: "Seat"
         models:
+            - "-kita-"
             - "Alhambra"
             - "Altea"
             - "Altea XL"
@@ -2197,17 +2437,23 @@ cars:
             - "Mii"
             - "Terra"
             - "Toledo"
+
     -   name: "Secma"
         models:
+            - "-kita-"
             - "Extrem 500"
             - "F16"
             - "Fun Family"
+
     -   name: "Shuanghuan"
         models:
+            - "-kita-"
             - "CEO"
             - "Sceo"
+
     -   name: "Skoda"
         models:
+            - "-kita-"
             - "105"
             - "120"
             - "130"
@@ -2225,8 +2471,10 @@ cars:
             - "Roomster"
             - "Superb"
             - "Yeti"
+
     -   name: "Smart"
         models:
+            - "-kita-"
             - "City"
             - "Coupe"
             - "Crossblade"
@@ -2235,16 +2483,22 @@ cars:
             - "Fortwo Coupe"
             - "MCC"
             - "Roadster"
+
     -   name: "Spartan"
         models:
+            - "-kita-"
             - "Roadster"
             - "Sherwood"
             - "Starcraft"
             - "Treka"
+
     -   name: "Spyker"
         models:
+            - "-kita-"
+
     -   name: "SsangYong"
         models:
+            - "-kita-"
             - "Actyon"
             - "Actyon Sports"
             - "Chairman"
@@ -2257,8 +2511,10 @@ cars:
             - "Rexton"
             - "Rodius"
             - "Tivoli"
+
     -   name: "Studebaker"
         models:
+            - "-kita-"
             - "Avanti"
             - "Big Six"
             - "Champion"
@@ -2286,8 +2542,10 @@ cars:
             - "Standard Six"
             - "Starlight"
             - "Wagonaire"
+
     -   name: "Subaru"
         models:
+            - "-kita-"
             - "Baja"
             - "BRZ"
             - "Forester"
@@ -2307,8 +2565,10 @@ cars:
             - "Vivio"
             - "XT Coupe"
             - "XV"
+
     -   name: "Suzuki"
         models:
+            - "-kita-"
             - "Aerio"
             - "Alto"
             - "Baleno"
@@ -2341,16 +2601,22 @@ cars:
             - "Wagon R+"
             - "X 90"
             - "XL7"
+
     -   name: "Talbot"
         models:
+            - "-kita-"
             - "Andere"
             - "Horizon"
             - "Samba"
+
     -   name: "Tartan"
         models:
+            - "-kita-"
             - "Prancer"
+
     -   name: "Tata"
         models:
+            - "-kita-"
             - "Indica"
             - "Indigo"
             - "Nano"
@@ -2359,27 +2625,37 @@ cars:
             - "Telcoline"
             - "Telcosport"
             - "Xenon"
+
     -   name: "Tatra"
         models:
+            - "-kita-"
             - "603"
             - "613"
             - "700"
             - "77"
             - "80"
             - "87"
+
     -   name: "Tazzari"
         models:
+            - "-kita-"
+
     -   name: "Tesla"
         models:
+            - "-kita-"
             - "Andere"
             - "Model S"
             - "Model X"
             - "Roadster"
+
     -   name: "Think"
         models:
+            - "-kita-"
             - "City"
+
     -   name: "Toyota"
         models:
+            - "-kita-"
             - "4Runner"
             - "Allion"
             - "Alphard"
@@ -2439,17 +2715,23 @@ cars:
             - "Verso S"
             - "Yaris"
             - "Yaris Verso"
+
     -   name: "Trabant"
         models:
+            - "-kita-"
             - "601"
+
     -   name: "Triumph"
         models:
+            - "-kita-"
             - "Dolomite"
             - "Moss"
             - "Spitfire"
             - "TR6"
+
     -   name: "UAZ"
         models:
+            - "-kita-"
             - "2103"
             - "2206"
             - "3151"
@@ -2462,19 +2744,25 @@ cars:
             - "Hunter"
             - "Patriot"
             - "Pickup"
+
     -   name: "Vauxhall"
         models:
+            - "-kita-"
             - "Astra"
             - "Insignia"
             - "Vectra"
+
     -   name: "Venturi"
         models:
+            - "-kita-"
             - "210"
             - "260"
             - "300"
             - "400"
+
     -   name: "Volkswagen"
         models:
+            - "-kita-"
             - "Amarok"
             - "Beetle"
             - "Bora"
@@ -2515,8 +2803,10 @@ cars:
             - "Transporter"
             - "Up"
             - "Vento"
+
     -   name: "Volvo"
         models:
+            - "-kita-"
             - "240"
             - "244"
             - "245"
@@ -2558,15 +2848,21 @@ cars:
             - "XC60"
             - "XC70"
             - "XC90"
+
     -   name: "Wanderer"
         models:
+            - "-kita-"
             - "W 25K"
+
     -   name: "Wartburg"
         models:
+            - "-kita-"
             - "311"
             - "353"
+
     -   name: "ZAZ"
         models:
+            - "-kita-"
             - "965"
             - "966"
             - "968"
