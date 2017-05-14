@@ -34,10 +34,12 @@ class AutogidasAdsProvider extends AdsProvider
             }
             $innerUrl = $row->filter('.item-link')->attr('href');
             $innerUrl = 'https://autogidas.lt' . $innerUrl;
+            $car = null;
             try {
                 $car = $this->parseAd($innerUrl);
             } catch (Exception $e) {
                 echo $e->getMessage() . "\n" . $e->getTraceAsString() . "\n";
+                echo "Link: " . $innerUrl . "\n\n";
             }
             if ($car !== null) {
                 $car['last_update'] = $lastUpdateDate;
@@ -208,7 +210,7 @@ class AutogidasAdsProvider extends AdsProvider
         if ($value == 'Coupe') {
             return 'Kupė (Coupe)';
         }
-		if ($value == 'Kabrioletas') {
+		if ($value == 'Kabrioletas' || $value == 'Kabrioletas/Rodsteris') {
             return 'Kabrioletas / Roadster';
         }
 		if ($value == 'Komercinis auto(su būda)') {

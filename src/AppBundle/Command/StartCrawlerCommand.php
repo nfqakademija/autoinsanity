@@ -36,7 +36,7 @@ class StartCrawlerCommand extends Command
         if (!is_dir($this->imgDirectory)) {
             mkdir($this->imgDirectory);
         }
-        $startingTime = time();
+        $startingTime = new \DateTime();
         foreach ($this->adsProviders as $adsProvider) {
             $crawlerManager = new $adsProvider($this->em, $this->imgDirectory);
 
@@ -58,11 +58,10 @@ class StartCrawlerCommand extends Command
 
                 $pageNumber++;
             }
-            echo 'Deleting expired ads\n';
+            echo "Deleting expired ads\n";
             // delete not found vehicles
             $this->em->createQueryBuilder()
-                ->delete('v')
-                ->from('AppBundle:Vehicle', 'v')
+                ->delete('AppBundle:Vehicle', 'v')
                 ->where('v.lastCheck < :time')
                 ->setParameter('time', $startingTime)
                 ->andWhere('v.provider = :provider')
@@ -193,7 +192,7 @@ class StartCrawlerCommand extends Command
                 echo "Skipped: Failed to find element in " . $relationMap[0]
                     . " with parameters: " . $relationMap[1]['name']
                     . "\n"
-                    . "Ad link: " . $link . "\n";
+                    . "Ad link: " . $link . "\n\n";
                 return null;
             }
         }

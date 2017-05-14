@@ -13,7 +13,9 @@ class AutopliusAdsProvider extends AdsProvider
     {
         $this->em = $em;
         $this->imgDirectory = $imgDirectory;
-        $this->link = 'https://autoplius.lt/skelbimai/naudoti-automobiliai?older_not=30&page_nr=%psl%';
+        //$this->link = 'https://autoplius.lt/skelbimai/naudoti-automobiliai?older_not=30&page_nr=%psl%';
+        $this->link = 'https://autoplius.lt/skelbimai/naudoti-automobiliai?page_nr=%psl%';
+        $this->link = 'https://autoplius.lt/skelbimai/naudoti-automobiliai?page_nr=%psl%';
         $this->providerName = 'Autoplius.lt';
     }
 
@@ -41,6 +43,7 @@ class AutopliusAdsProvider extends AdsProvider
                     $car = $this->parseAd($innerUrl);
                 } catch (Exception $e) {
                     echo $e->getMessage() . "\n" . $e->getTraceAsString() . "\n";
+                    echo "Link: " . $innerUrl . "\n\n";
                 }
                 if ($car !== null) {
                     $car['last_update'] = $lastUpdateDate;
