@@ -50,7 +50,7 @@ class AutopliusAdsProvider extends AdsProvider
                         $vehicle = $this->saveToModel($accessor, $car);
                         $cars[] = $vehicle;
                     }
-                    sleep(1);
+                    sleep(3);
                 }
             }
         }
