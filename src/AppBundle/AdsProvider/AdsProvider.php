@@ -148,6 +148,8 @@ abstract class AdsProvider
         $funcMap = [
             'year' => 'adParseYear',
             'engine' => 'adParseEngine',
+            'engine_size' => 'adParseEngineSize',
+            'engine_power' => 'adParseEnginePower',
             'fuel_type' => 'adParseFuelType',
             'body_type' => 'adParseBodyType',
             'color' => 'adParseColor',

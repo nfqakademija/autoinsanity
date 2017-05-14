@@ -17,20 +17,38 @@ class AlioAdsProvider extends AdsProvider
         $this->providerName = 'Alio.lt';
     }
 
-    protected function parseAdsPage($html)
+    protected function parseAdsPage($html, $maxLastCheck)
     {
         $cars = [];
 
         $crawler = new Crawler($html);
-        $crawler = $crawler->filter('.vertiselink');
+        $crawler = $crawler->filter('.result');
 
         foreach ($crawler as $domRow) {
             $row = new Crawler($domRow);
 
-            $innerUrl = $row->filter('.vertiselink')->attr('href');
-            $this->parseAd($innerUrl);
-
-            sleep(1);
+            $lastUpdate = $row->filter('.uptodate');
+            $lastUpdateDate = null;
+            if ($lastUpdate->count() > 0) {
+                $lastUpdateDate = $this->parseDate($lastUpdate->text());
+            }
+            if ($lastUpdateDate == null || $lastUpdateDate > $maxLastCheck) {
+                $innerUrl = $row->filter('.showmobile')->attr('href');
+                $car = null;
+                try {
+                    $car = $this->parseAd($innerUrl);
+                } catch (Exception $e) {
+                    echo $e->getMessage() . "\n" . $e->getTraceAsString() . "\n";
+                    echo "Link: " . $innerUrl . "\n\n";
+                }
+                if ($car !== null) {
+                    $car['last_update'] = $lastUpdateDate;
+                    $accessor = PropertyAccess::createPropertyAccessor();
+                    $vehicle = $this->saveToModel($accessor, $car);
+                    $cars[] = $vehicle;
+                }
+                sleep(1);
+            }
         }
         return $cars;
     }
@@ -55,36 +73,12 @@ class AlioAdsProvider extends AdsProvider
         $providerId = trim($innerCrawler->filter('#data_vertise_id_text_b')->text());
         $providerId = intval(preg_replace('/[^0-9]+/', '', $providerId));
 
-        $lastUpdate = $innerCrawler->filter('.details_main_more_b .data_moreinfo_b')->eq(0)->filter(' .timeago')->text();
-        $lastUpdateDate = $innerCrawler->filter('.details_main_more_b .data_moreinfo_b')->eq(1)->filter(' .timeago')->text();
-
-        if ($lastUpdateDate->count() > 0) {
-            $lastUpdateDate = $this->parseDate($lastUpdateDate->text());
-        } else {
-            $lastUpdateDate = $this->parseDate($lastUpdate->text());
-        }
-
-        $car = null;
-            try {
-                $car = $this->parseAd($innerUrl);
-            } catch (Exception $e) {
-                echo $e->getMessage() . "\n" . $e->getTraceAsString() . "\n";
-                echo "Link: " . $innerUrl . "\n\n";
-            }
-            if ($car !== null) {
-                $car['last_update'] = $lastUpdateDate;
-                $accessor = PropertyAccess::createPropertyAccessor();
-                $vehicle = $this->saveToModel($accessor, $car);
-                $cars[] = $vehicle;
-            }
-
         $imageElement = $innerCrawler->filter('#adv_photo_main > img');
         $imageUrl = trim($imageElement->attr('src'));
+        $imageUrl = str_replace("_popup", "_large", $imageUrl);
         $car['image'] = $this->saveImages($imageUrl, $this->provider->getName(), $providerId);
 
         $items = $innerCrawler->filterXPath('//div[contains(@class, "col_left")]//div[@class="data_moreinfo_b "]');
-
-        $car = [];
 
         foreach ($items as $innerDomRow) {
 
@@ -95,6 +89,7 @@ class AlioAdsProvider extends AdsProvider
             $value = ($row->filterXPath('//div[@class="a_line_val"]')->count()) ?
                 trim($row->filterXPath('//div[@class="a_line_val"]')->text()) :
                 '';
+            echo $key . "\n";
             $key = $this->getKeyName($key);
             if ($key !== null) {
                 $func = $this->getFunctionFromKey($key);
@@ -136,7 +131,7 @@ class AlioAdsProvider extends AdsProvider
         $keyMap = [
             'Pagaminimo metai' => 'year',
             'Darbinis tūris' => 'engine_size',
-            'Galia' => 'engine',
+            'Galia' => 'engine_power',
             'Kuro tipas' => 'fuel_type',
             'Kėbulo tipas' => 'body_type',
             'Spalva' => 'color',
@@ -166,30 +161,33 @@ class AlioAdsProvider extends AdsProvider
         return $value;
     }
 
-    protected function adParseEngine($value)
+    protected function adParseEngineSize($value)
     {
-        $dummy = explode(" ", $value);
+        $dummy = $value;
         $value = [];
-        // parsing engine size
-        if (isset($dummy[0])) {
-            $dummy[0] = floatval(preg_replace("/[^0-9,.]/", "", $dummy[0]));
-            $dummy[0] = intval($dummy[0] * 1000);
-            $value['engine_size'] = $dummy[0];
-        }
-        // parsing engine power
-        if (isset($dummy[1])) {
-            $dummy[1] = intval(preg_replace("/[^0-9,.]/", "", $dummy[1]));
-            $value['power'] = $dummy[1];
-        }
+        $dummy = floatval(preg_replace("/[^0-9,.]/", "", $dummy));
+        $dummy = intval($dummy * 1000);
+        $value['engine_size'] = $dummy;
+        return $value;
+    }
+
+    protected function adParseEnginePower($value)
+    {
+        $dummy = $value;
+        $value = [];
+        $power = null;
+        preg_match('~\((.*?)\)~', $dummy, $power);
+        $power = intval(preg_replace("/[^0-9,.]/", "", $power[1]));
+        $value['power'] = $power;
         return $value;
     }
 
     protected function adParseFuelType($value)
     {
-        if ($value == 'Benzinas/Dujos') {
+        if ($value == 'Benzinas - Dujos') {
             return 'Benzinas / dujos';
         }
-        if ($value == 'Benzinas/Elektra') {
+        if ($value == 'Benzinas - Elektra') {
             return 'Benzinas / elektra';
         }
         if ($value == 'Dyzelinas/Elektra') {

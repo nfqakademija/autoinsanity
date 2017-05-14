@@ -22,8 +22,9 @@ services:
             - { name: console.command }
         arguments:
         -
-#            - '@app.ads_provider.autoplius'
-#            - '@app.ads_provider.autogidas'
+            - '@app.ads_provider.alio'
+            - '@app.ads_provider.autoplius'
+            - '@app.ads_provider.autogidas'
             - '@app.ads_provider.alio'
         - '@doctrine.orm.entity_manager'
         - '%images_directory%'
