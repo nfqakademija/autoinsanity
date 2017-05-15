@@ -71,7 +71,7 @@ class Vehicle
     /**
      * @var int
      *
-     * @ORM\Column(name="year", type="integer")
+     * @ORM\Column(name="year", type="integer", nullable=true)
      */
     private $year;
 
@@ -649,7 +649,7 @@ class Vehicle
     /**
      * Set image
      */
-    public function setImage(string $image): Vehicle
+    public function setImage(string $image = null): Vehicle
     {
         $this->image = $image;
 

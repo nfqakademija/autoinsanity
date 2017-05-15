@@ -1,6 +1,7 @@
 countries:
 -   name: "Lietuva"
     cities:
+        - "-kita-"
         - "Vilnius"
         - "Kaunas"
         - "Klaipėda"

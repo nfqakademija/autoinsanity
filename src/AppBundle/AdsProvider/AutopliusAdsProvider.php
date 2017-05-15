@@ -29,6 +29,7 @@ class AutopliusAdsProvider extends AdsProvider
 
             //vehicle is not saved if it is sold
             if ($row->filter('.is-sold')->count() == 0) {
+                $car = [];
                 $lastUpdate = $row->filter('.details-list  .tools-right');
                 $lastUpdateDate = null;
                 if ($lastUpdate->count() > 0) {
@@ -37,21 +38,18 @@ class AutopliusAdsProvider extends AdsProvider
                 }
                 if ($lastUpdateDate == null || $lastUpdateDate > $maxLastCheck) {
                     $innerUrl = $row->filter('.title-list a')->attr('href');
-                    $car = null;
                     try {
                         $car = $this->parseAd($innerUrl);
                     } catch (Exception $e) {
                         echo $e->getMessage() . "\n" . $e->getTraceAsString() . "\n";
                         echo "Link: " . $innerUrl . "\n\n";
                     }
-                    if ($car !== null) {
-                        $car['last_update'] = $lastUpdateDate;
-                        $accessor = PropertyAccess::createPropertyAccessor();
-                        $vehicle = $this->saveToModel($accessor, $car);
-                        $cars[] = $vehicle;
-                    }
-                    sleep(3);
                 }
+                $car['last_update'] = $lastUpdateDate;
+                $accessor = PropertyAccess::createPropertyAccessor();
+                $vehicle = $this->saveToModel($accessor, $car);
+                $cars[] = $vehicle;
+                sleep(3);
             }
         }
         return $cars;

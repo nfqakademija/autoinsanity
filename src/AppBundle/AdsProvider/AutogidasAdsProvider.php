@@ -27,6 +27,7 @@ class AutogidasAdsProvider extends AdsProvider
         foreach ($crawler as $domRow) {
             $row = new Crawler($domRow);
 
+            $car = [];
             $lastUpdate = $row->filter('.inserted-before');
             $lastUpdateDate = null;
             if ($lastUpdate->count() > 0) {
@@ -35,21 +36,18 @@ class AutogidasAdsProvider extends AdsProvider
             if ($lastUpdateDate == null || $lastUpdateDate > $maxLastCheck) {
                 $innerUrl = $row->filter('.item-link')->attr('href');
                 $innerUrl = 'https://autogidas.lt' . $innerUrl;
-                $car = null;
                 try {
                     $car = $this->parseAd($innerUrl);
                 } catch (Exception $e) {
                     echo $e->getMessage() . "\n" . $e->getTraceAsString() . "\n";
                     echo "Link: " . $innerUrl . "\n\n";
                 }
-                if ($car !== null) {
-                    $car['last_update'] = $lastUpdateDate;
-                    $accessor = PropertyAccess::createPropertyAccessor();
-                    $vehicle = $this->saveToModel($accessor, $car);
-                    $cars[] = $vehicle;
-                }
-                sleep(3);
             }
+            $car['last_update'] = $lastUpdateDate;
+            $accessor = PropertyAccess::createPropertyAccessor();
+            $vehicle = $this->saveToModel($accessor, $car);
+            $cars[] = $vehicle;
+            sleep(3);
         }
         return $cars;
     }
@@ -135,7 +133,7 @@ class AutogidasAdsProvider extends AdsProvider
 
     protected function checkModel($model, $brand) {
         if ($brand == 'Mercedes Benz') {
-            return preg_replace('/ /', '', $model, 1);
+            return preg_replace('/\s/', '', $model, 1);
         }
         if ($model == "Kitas") {
             return '-kita-';

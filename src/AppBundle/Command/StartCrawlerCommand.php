@@ -158,6 +158,10 @@ class StartCrawlerCommand extends Command
         }
         $relations = array_merge($relations, $secondRelations);
 
+        if ($ad->getProviderId() == null || $ad->getPrice() == null) {
+            return 0;
+        }
+
         // update vehicle if it already exists
         $repository = $em->getRepository("AppBundle:Vehicle");
         $vehicle = $repository->findOneBy(
