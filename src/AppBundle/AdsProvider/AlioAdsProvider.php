@@ -13,7 +13,8 @@ class AlioAdsProvider extends AdsProvider
     {
         $this->em = $em;
         $this->imgDirectory = $imgDirectory;
-        $this->link = 'http://www.alio.lt/paieska.html?category_id=613&search_hash=28f73874e16073f2d48552657680cf215b5d6b84&page=%psl%';
+        $this->link = 'http://www.alio.lt/paieska.html?category_id=613 ' .
+            '&search_hash=28f73874e16073f2d48552657680cf215b5d6b84&page=%psl%';
         $this->providerName = 'Alio.lt';
     }
 
@@ -83,7 +84,7 @@ class AlioAdsProvider extends AdsProvider
         $providerId = intval(preg_replace('/[^0-9]+/', '', $providerId));
 
         $car['image'] = null;
-        if(!empty($imageElement = $innerCrawler->filter('#adv_photo_main > img'))) {
+        if (!empty($imageElement = $innerCrawler->filter('#adv_photo_main > img'))) {
             $imageUrl = trim($imageElement->attr('src'));
             $imageUrl = str_replace("_popup", "_large", $imageUrl);
             $car['image'] = $this->saveImages($imageUrl, $this->provider->getName(), $providerId);
@@ -92,7 +93,6 @@ class AlioAdsProvider extends AdsProvider
         $items = $innerCrawler->filterXPath('//div[contains(@class, "col_left")]//div[@class="data_moreinfo_b "]');
 
         foreach ($items as $innerDomRow) {
-
             $row = new Crawler($innerDomRow);
             $key = ($row->filterXPath('//div[@class="a_line_key"]')->count()) ?
                 trim($row->filterXPath('//div[@class="a_line_key"]')->text()) :

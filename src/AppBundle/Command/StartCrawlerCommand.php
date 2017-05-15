@@ -55,7 +55,6 @@ class StartCrawlerCommand extends Command
             } catch (NoResultException $e) {
                 $maxLastCheck->setTimestamp(strtotime("1970-01-01"));
             }
-
         }
         $startingTime = new \DateTime();
         foreach ($this->adsProviders as $adsProvider) {

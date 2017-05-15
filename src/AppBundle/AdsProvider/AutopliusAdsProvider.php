@@ -148,14 +148,16 @@ class AutopliusAdsProvider extends AdsProvider
         return $date;
     }
 
-    protected function checkModel($model) {
+    protected function checkModel($model)
+    {
         if ($model == "Kita") {
             return '-kita-';
         }
         return $model;
     }
 
-    protected function checkCity($city) {
+    protected function checkCity($city)
+    {
         if ($city == "Rīga") {
             return 'Ryga';
         }
