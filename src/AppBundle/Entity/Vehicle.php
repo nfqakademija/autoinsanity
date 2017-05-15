@@ -334,7 +334,7 @@ class Vehicle
     /**
      * Get year
      */
-    public function getYear(): int
+    public function getYear()
     {
         return $this->year;
     }

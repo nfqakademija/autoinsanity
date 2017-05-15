@@ -84,7 +84,7 @@ class AlioAdsProvider extends AdsProvider
         $providerId = intval(preg_replace('/[^0-9]+/', '', $providerId));
 
         $car['image'] = null;
-        if (!empty($imageElement = $innerCrawler->filter('#adv_photo_main > img'))) {
+        if (!empty($imageElement = $innerCrawler->filter('#adv_photo_main > img')) && $imageElement->attr('src') !== null) {
             $imageUrl = trim($imageElement->attr('src'));
             $imageUrl = str_replace("_popup", "_large", $imageUrl);
             $car['image'] = $this->saveImages($imageUrl, $this->provider->getName(), $providerId);
