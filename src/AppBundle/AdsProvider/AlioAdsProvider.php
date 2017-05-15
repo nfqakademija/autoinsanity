@@ -13,7 +13,7 @@ class AlioAdsProvider extends AdsProvider
     {
         $this->em = $em;
         $this->imgDirectory = $imgDirectory;
-        $this->link = 'http://www.alio.lt/paieska.html?category_id=613 ' .
+        $this->link = 'http://www.alio.lt/paieska.html?category_id=613' .
             '&search_hash=28f73874e16073f2d48552657680cf215b5d6b84&page=%psl%';
         $this->providerName = 'Alio.lt';
     }
@@ -32,7 +32,7 @@ class AlioAdsProvider extends AdsProvider
             $lastUpdate = $row->filter('.uptodate');
             $lastUpdateDate = null;
             if ($lastUpdate->count() > 0) {
-                $lastUpdateDate = $this->parseDate($lastUpdate->text());
+                $lastUpdateDate = $this->parseDate($lastUpdate->attr('datetime'));
             }
             if ($lastUpdateDate == null || $lastUpdateDate > $maxLastCheck) {
                 $innerUrl = $row->filter('.showmobile')->attr('href');
@@ -125,13 +125,9 @@ class AlioAdsProvider extends AdsProvider
     public function parseDate(string $dateString): \DateTime
     {
         $date = new \DateTime();
-        $dateString = str_replace("Prieš ", "-", $dateString);
-        $dateString = str_replace('val.', 'hours', $dateString);
-        $dateString = str_replace('min.', 'minutes', $dateString);
-        $dateString = str_replace('d.', 'days', $dateString);
-        $dateString = str_replace('sav.', 'weeks', $dateString);
-        $dateString = str_replace('mėn.', 'months', $dateString);
-        $dateString = str_replace('m.', 'years', $dateString);
+        $dateString = str_replace("T", " ", $dateString);
+        $dateString = explode("+", $dateString);
+        $dateString = $dateString[0];
         $date->setTimestamp(strtotime($dateString));
         return $date;
     }
